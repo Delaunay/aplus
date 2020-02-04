@@ -1,3 +1,5 @@
+src/main/aplus
+build/
 *.la
 *.lo
 Makefile.in
@@ -5,4 +7,5 @@ Makefile
 *.o
 .deps/
 .libs/
+CMakeLists.txt.user
 autom4te.cache/

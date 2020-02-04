@@ -21,11 +21,7 @@
 struct sgnl
 {
 	int set;
-#if defined(HAVE_SIGACTION)
 	struct sigaction orig;
-#else
-	struct sigvec orig;
-#endif
 	int flag;
 	void (*func)();
 };

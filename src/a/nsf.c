@@ -40,7 +40,7 @@ char *strdup();
 
 #ifndef HAVE_STRERROR 
   extern int sys_nerr;
-  extern char *sys_errlist[];
+  extern const char * const sys_errlist[];
 #endif
 
 extern C Fs[];

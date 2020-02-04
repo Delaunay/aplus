@@ -41,6 +41,9 @@ extern I Tf;
 #define POR_OFFTRACK    (8)
 #include <version.h>		/* per tree definitions */
 
+
+#define _INTERPRETER_ONLY
+
 /* internal function declarations */
 static void initReleaseData(C*);
 static void initVersion(void);

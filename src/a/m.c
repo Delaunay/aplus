@@ -75,7 +75,7 @@ I map(int,int);
 void aplus_nan(void);
 
 #ifndef HAVE_STRERROR
-  extern char *sys_errlist[];
+  extern const char * const sys_errlist[];
   extern int sys_nerr;
 #endif
 I log_EWouldBlock(I i,I rc,I nern,C *path,C *fcn)
