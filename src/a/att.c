@@ -27,13 +27,14 @@ HT hti(unsigned long nb)
     ht->nb = nb;
     ht->ni = 0;
     bzero(ht->b, nb * sizeof(I));
-    R ht;
+    return ht;
 }
 
 void mvht(HT oht, HT nht)
 {
     I i;
-    HTN node, *bp;
+    HTN node;
+    HTN *bp;
     for (i = 0; i < oht->nb; ++i)
         for (node = (HTN)oht->b[i]; node; node = node->n) {
             bp = (HTN*)HTHASH(nht, node->s);
@@ -45,20 +46,21 @@ void mvht(HT oht, HT nht)
 /* htgi - get val of key from ht.  If !found,(*gf)() to create, and *pnew=1.*/
 I htgi(HT ht, S key, I (*gf)(void), I* pnew)
 {
-    HTN *htn = (HTN*)HTHASH(ht, key), n, hd;
+    HTN *htn = (HTN*)HTHASH(ht, key);
+    HTN n;
+    HTN hd;
     if (gf && pnew)
         *pnew = 0;
     for (n = *htn; n; n = n->n)
         if (key == n->s)
-            R(I)
-            n;
+            return ( I ) n;
     if (!gf)
-        R 0;
+        return 0;
     if (pnew)
         *pnew = 1;
     n = (HTN)((*gf)());
     if (!n)
-        R 0;
+        return 0;
     n->s = key;
     hd = *htn;
     if (hd) {
@@ -69,27 +71,28 @@ I htgi(HT ht, S key, I (*gf)(void), I* pnew)
         n->n = 0;
     }
     ++ht->ni;
-    R(I)
-    n;
+    return ( I ) n;
 }
 
 /* htsi - set val of key in ht to d.  If no entry exists, create w gf. 
    if aq is true, use ic() and dc(). */
 I htsi(HT ht, S key, I a, I aq, I (*gf)(void))
 {
-    HTN *htn = (HTN*)HTHASH(ht, key), n, hd;
+    HTN *htn = (HTN*)HTHASH(ht, key);
+    HTN n;
+    HTN hd;
     for (n = *htn; n; n = n->n)
         if (key == n->s) {
             if (aq)
                 dc((A)n->a);
             n->a = (aq) ? ic((A)a) : a;
-            R 0;
+            return 0;
         }
     if (!gf)
-        R 0;
+        return 0;
     n = (HTN)((*gf)());
     if (!n)
-        R 0;
+        return 0;
     n->s = key;
     n->a = (aq) ? ic((A)a) : a;
     hd = *htn;
@@ -105,20 +108,21 @@ I htsi(HT ht, S key, I a, I aq, I (*gf)(void))
 }
 
 /* htxi - remove key in ht.  If aq is true dc() n->a before removal. */
-I htxi(HT ht, S key, I aq)
-{
-    HTN *htn = (HTN*)HTHASH(ht, key), n, p;
+I htxi(HT ht, S key, I aq){
+    HTN* htn = ( HTN* ) HTHASH(ht, key);
+    HTN n;
+    HTN p;
     if (!*htn)
-        R 1;
+        return 1;
     if (!(n = *htn))
-        R 1;
+        return 1;
     if (key == n->s) {
         if (aq)
             dc((A)n->a);
         *htn = n->n;
         bfree((char*)n);
         --ht->ni;
-        R 0;
+        return 0;
     }
     for (p = n; n = n->n; p = n)
         if (key == n->s) {
@@ -127,34 +131,33 @@ I htxi(HT ht, S key, I aq)
             p->n = n->n;
             bfree((char*)n);
             --ht->ni;
-            R 0;
+            return 0;
         }
-    R 1;
+    return 1;
 }
 
 /*----------  utilities  -----------*/
 
-Z V av(A a)
-{
+Z V av(A a){
     I n = a->n - 1;
     if (!sym(a) || n > 1)
         R(V)
-        0;
-    R sv(n ? cxi(XS(*a->p)) : Cx, XS(a->p[n]));
+    0;
+    return sv(n ? cxi(XS(*a->p)) : Cx, XS(a->p[n]));
 }
 
 #define AttHTSIZE 1 << 5
 
 Z HT atbi(void)
 {
-    R hti(AttHTSIZE);
+    return hti(AttHTSIZE);
 }
 
 Z ATT atti(void)
 {
     ATT att = (ATT)balloc(sizeof(*att));
     bzero(att, sizeof(*att));
-    R att;
+    return att;
 }
 
 /*--------- Entrypoints --------------*/
@@ -162,8 +165,7 @@ Z ATT atti(void)
 A ep_gatt(V v, S s)
 {
     ATT z;
-    R(A)
-    ((!v->atb) ? 0 : (z = (ATT)htgi(v->atb, s, 0, 0)) ? ic((A)z->a) : 0);
+    return (A)((!v->atb) ? 0 : (z = ( ATT ) htgi(v->atb, s, 0, 0)) ? ic(( A ) z->a) : 0);
 }
 
 A ep_get(A var, A att)
@@ -173,8 +175,7 @@ A ep_get(A var, A att)
     v = av(var);
     if (!v || !sym(att) || att->n != 1)
         ERROUT(ERR_DOMAIN);
-    R(A)
-    ep_gatt(v, XS(*att->p));
+    return ( A ) ep_gatt(v, XS(*att->p));
 }
 
 I ep_satt(V v, S s, I val)
@@ -182,56 +183,59 @@ I ep_satt(V v, S s, I val)
     I z = qz((A)val);
     if (!v->atb) {
         if (z)
-            R 1;
-        else
-            v->atb = atbi();
+            return 1;
+
+        v->atb = atbi();
     }
-    R(z ? htxi(v->atb, s, 1) : htsi(v->atb, s, val, 1, (I(*)())atti));
+    return (z ? htxi(v->atb, s, 1) : htsi(v->atb, s, val, 1, ( I(*)() ) atti));
 }
 
 I ep_set(A a, A w)
 {
     V v;
-    A att, val;
+    A att;
+    A val;
     NDC2(a, w);
     v = av(a);
     Q(!v || QF(w) || Et != w->t || 2 != w->n, ERR_DOMAIN);
     att = (A)w->p[0];
     val = (A)w->p[1];
     Q(!sym(att) || att->n != 1, ERR_DOMAIN);
-    R ep_satt(v, XS(*att->p), (I)val);
+    return ep_satt(v, XS(*att->p), ( I ) val);
 }
 
 A ep_atts(A var, A pre)
 {
-    V v;
-    I i, count = 0;
-    ATT att;
-    A result;
-    HT ht;
-    S spre, st;
-    I z;
     NDC2(var, pre);
-    v = av(var);
-    z = qz(pre);
+
+    V v = av(var);
+    I z = qz(pre);
+
     if (!v || (!sym(pre) || pre->n != 1) && !z)
         ERROUT(ERR_DOMAIN);
+
     if (!v->atb)
-        R(A)
-        aplus_nl;
-    ht = v->atb;
-    spre = XS(*pre->p);
-    for (i = 0; i < ht->nb; ++i)
-        for (att = (ATT)ht->b[i]; att; att = att->n)
+        return ( A ) aplus_nl;
+
+    HT ht = v->atb;
+    S st;
+    S spre  = XS(*pre->p);
+    I count = 0;
+
+    for (I i = 0; i < ht->nb; ++i)
+        for (ATT att = ( ATT ) ht->b[i]; att; att = att->n)
             if (z || symsplit(att->s, &st) && spre == st)
                 ++count;
-    result = gv(Et, count);
-    count = 0;
-    for (i = 0; i < ht->nb; ++i)
-        for (att = (ATT)ht->b[i]; att; att = att->n)
+
+    A result = gv(Et, count);
+    count    = 0;
+
+    for (I i = 0; i < ht->nb; ++i)
+        for (ATT att = ( ATT ) ht->b[i]; att; att = att->n)
             if (z || symsplit(att->s, &st) && spre == st)
                 result->p[count++] = MS(att->s);
-    R result;
+
+    return result;
 }
 
 void rmatb(V v)
@@ -240,7 +244,8 @@ void rmatb(V v)
     HTN n;
     I i;
     if (!ht)
-        R;
+        return;
+
     for (i = 0; i < ht->nb; ++i)
         for (n = (HTN)ht->b[i]; n; n = n->n) {
             dc((A)n->a);
@@ -248,7 +253,6 @@ void rmatb(V v)
         }
     bfree((char*)ht);
     v->atb = 0;
-    R;
 }
 
 void attInstall(void)

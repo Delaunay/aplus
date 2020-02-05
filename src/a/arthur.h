@@ -22,12 +22,11 @@
 #define CSR(n, x) \
     case n:       \
         x;
-#define DO(n, x)              \
-    {                         \
-        I i = 0, _i = (n);    \
-        for (; i < _i; ++i) { \
-            x;                \
-        }                     \
+#define DO(n, x)                               \
+    {                                          \
+        for (I i = 0, _i = (n); i < _i; ++i) { \
+            x;                                 \
+        }                                      \
     }
 #define PERR(s, x)        \
     {                     \

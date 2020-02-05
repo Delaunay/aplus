@@ -114,7 +114,7 @@ ENDIF (BUILD_DOCUMENTATION)
 # this will create a make command for us
 
 # cmake shortcuts
-ADD_CUSTOM_TARGET(compile-db DEBUG
+ADD_CUSTOM_TARGET(compile-db
     cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ${CMAKE_SOURCE_DIR})
 
 # Qt creator cmake integration makes this useless
@@ -125,8 +125,9 @@ ADD_CUSTOM_TARGET(desactivate-examples DEBUG
     cmake -DBUILD_EXAMPLES=OFF ${CMAKE_SOURCE_DIR})
 
 # should I pass tests too ?
-ADD_CUSTOM_TARGET(clang-tidy DEBUG
-    clang-tidy -p= ${CMAKE_BINARY_DIR} -header-filter=.*
+# clang-tidy-9 --checks=modernize -p build/ src/a/*.c src/*.h
+ADD_CUSTOM_TARGET(clang-tidy
+    clang-tidy-9 --checks=modernize -p= ${CMAKE_BINARY_DIR} -header-filter=.*
         ${CMAKE_SOURCE_DIR}/src/*.cpp ${CMAKE_SOURCE_DIR}/src/*.h)
 
 # clang sanitizer require compilation

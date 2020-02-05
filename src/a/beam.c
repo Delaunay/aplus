@@ -71,7 +71,8 @@ static I hostEndian(void)
 /* non-overlapping endian-swapping copy!! - Method 1 - one loop */
 static void ndnicopy(I* from, I* to, I nints)
 {
-    unsigned char *cfrom = (unsigned char*)from, *cto = (unsigned char*)to;
+    unsigned char* cfrom = ( unsigned char* ) from;
+    unsigned char* cto   = ( unsigned char* ) to;
     for (; nints--; cfrom += 4, cto += 4) {
         cto[3] = cfrom[0];
         cto[2] = cfrom[1];
@@ -82,7 +83,8 @@ static void ndnicopy(I* from, I* to, I nints)
 
 static void ndnfcopy(F* from, F* to, I nfs)
 {
-    unsigned char *cfrom = (unsigned char*)from, *cto = (unsigned char*)to;
+    unsigned char* cfrom = ( unsigned char* ) from;
+    unsigned char* cto   = ( unsigned char* ) to;
     for (; nfs--; cfrom += 8, cto += 8) {
         cto[7] = cfrom[0];
         cto[6] = cfrom[1];
@@ -99,7 +101,8 @@ static void ndnfcopy(F* from, F* to, I nfs)
 static void ndniswap(I* start, I nints)
 {
     I tempi;
-    EndianUnion tu, eu;
+    EndianUnion tu;
+    EndianUnion eu;
 
     tu.i = &tempi;
     for (eu.i = start; nints--; ++eu.i) {
@@ -114,7 +117,8 @@ static void ndniswap(I* start, I nints)
 static void ndnfswap(F* start, I nfs)
 {
     F tempf;
-    EndianUnion tu, eu;
+    EndianUnion tu;
+    EndianUnion eu;
 
     tu.f = &tempf;
     for (eu.f = start; nfs--; ++eu.f) {
@@ -366,7 +370,8 @@ A cvt64(A32* aobj)
 
 Z A vetteMappedFile(I fsize, I aarg, int mode, C* name, int* rc, I cvtInPlace)
 {
-    A aobj = (A)aarg, z;
+    A aobj = ( A ) aarg;
+    A z;
 
     /*   return  0, no conversion,         z is set to aobj */
     /*   return  1, conversion successful, z is new object in memory */
@@ -382,42 +387,46 @@ typedef struct {
 } MFInfo;
 /* n field used for "next" in freelist */
 
-Z I maxMFAlimit = 2000;
-Z I maxMFAindex = 0;
-Z I freeMFAindex = 0;
+Z I maxMFAlimit           = 2000;
+Z I maxMFAindex           = 0;
+Z I freeMFAindex          = 0;
 Z MFInfo* MappedFileArray = 0;
+
 Z C MFAErrorMsg[128];
 
 Z int MFArealloc(I newlim)
 {
     Z MFInfo* newMFA;
-    I i, count = 0;
+    I         count = 0;
+
     if (0 == newlim || newlim < maxMFAindex) {
         strcpy(MFAErrorMsg, "New limit is less than Mapped File Array length");
-        R - 1;
+        return -1;
     }
     newMFA = (MFInfo*)ma(newlim * (sizeof(MFInfo) / sizeof(I)));
     if (0 == newMFA) {
         strcpy(MFAErrorMsg, "Error allocating new Mapped File Array");
-        R - 1;
+        return -1;
     }
     if (MappedFileArray) {
-        for (i = 0; i < maxMFAindex; i++)
+        for (I i = 0; i < maxMFAindex; i++)
             if (MappedFileArray[i].a)
                 tmv(It, (I*)(newMFA + count++), (I*)(MappedFileArray + i),
                     sizeof(MFInfo) / sizeof(I));
     }
     if (newlim > count) {
         bzero(newMFA + count, sizeof(MFInfo) * (newlim - count));
-        for (i = count; i < newlim; i++)
+        for (I i = count; i < newlim; i++)
             newMFA[i].n = i + 1;
     }
     if (0 != MappedFileArray)
-        mf((I*)MappedFileArray);
+        mf(( I* ) MappedFileArray);
+
     MappedFileArray = newMFA;
     maxMFAlimit = newlim;
     freeMFAindex = maxMFAindex = count;
-    R 0;
+
+    return 0;
 }
 
 void MFALimitSysCmd(I newlim)
@@ -454,9 +463,14 @@ void MFALimitSet(I newlim)
 Z MFInfo* findMFInfoStruct(A aobj)
 {
     if (aplus_nl == aobj || 0 == MappedFileArray)
-        R 0;
-    DO(maxMFAindex, if (MappedFileArray[i].a == (I)aobj) R MappedFileArray + i);
-    R 0;
+        return 0;
+
+    for (I i = 0, _i = maxMFAindex; i < _i; ++i) {
+        if (MappedFileArray[i].a == ( I ) aobj)
+            return MappedFileArray + i;
+    }
+
+    return 0;
 }
 
 Z MFInfo* getFreeMFInfoStruct(void)
@@ -464,13 +478,17 @@ Z MFInfo* getFreeMFInfoStruct(void)
     MFInfo* p;
     if (0 == MappedFileArray && 0 != maxMFAlimit)
         MFArealloc(maxMFAlimit);
+
     if (freeMFAindex >= maxMFAlimit)
-        R 0;
+        return 0;
+
     p = MappedFileArray + freeMFAindex;
+
     if (freeMFAindex >= maxMFAindex)
         maxMFAindex = freeMFAindex + 1;
+
     freeMFAindex = p->n;
-    R p;
+    return p;
 }
 
 Z void unmapDotMFile(A a, MFInfo* p)
@@ -493,6 +511,7 @@ Z void unmapDotMFile(A a, MFInfo* p)
     p->s = p->t = (C*)0;
     p->n = freeMFAindex;
     freeMFAindex = (p - MappedFileArray);
+
     if (p == MappedFileArray + (maxMFAindex - 1))
         --maxMFAindex;
 }
@@ -509,7 +528,8 @@ Z I mapDotMFile(int fd, int mode, C* fname, C* t)
     Q(!mfile, 9); /* Set domain error if map fails */
     /* printf("mfile = %ld, n = %ld\n", mfile, n) ; */
     aobj = vetteMappedFile(n, mfile, mode, fname, &rc,
-        mode == BEAM_RW && autoBeamConvert);
+                           mode == BEAM_RW && autoBeamConvert);
+
     if (!aobj || rc == -1) {
         if (dbg_tb)
             beamtrc(t, 2, 0);
@@ -539,9 +559,11 @@ Z I mapDotMFile(int fd, int mode, C* fname, C* t)
 
         if (dbg_tb)
             beamtrc(t, 2, 0);
-        munmap((caddr_t)mfile, n); /* unmap previous */
+
+        munmap(( caddr_t ) mfile, n); /* unmap previous */
         mapOut(t, aobj); /* write new .m with converted data */
-        dc(aobj); /* free a object */
+        dc(aobj);        /* free a object */
+
         /* reset the items to match orignal*/
         {
             A mFile = gsv(0, t);
@@ -587,15 +609,17 @@ Z I mapDotMFile(int fd, int mode, C* fname, C* t)
 I isWritableFile(I a)
 {
     MFInfo* p = findMFInfoStruct((A)a);
-    R p ? p->w : 0;
+    return p ? p->w : 0;
 }
+
 I im(I a)
 {
     MFInfo* p = findMFInfoStruct((A)a);
     if (p)
         ++p->c;
-    R a;
+    return a;
 }
+
 void dm(A a)
 {
     MFInfo* p = findMFInfoStruct(a);
@@ -611,7 +635,7 @@ void dm(A a)
 I mf_length(A aobj)
 {
     MFInfo* p = findMFInfoStruct(aobj);
-    R p ? p->n : 0;
+    return p ? p->n : 0;
 }
 
 I mf_info(A aobj, I* pw, C** pt)
@@ -620,9 +644,9 @@ I mf_info(A aobj, I* pw, C** pt)
     if (p) {
         *pw = p->w;
         *pt = p->t;
-        R 0;
+        return 0;
     }
-    R 1;
+    return 1;
 }
 
 Z void dbg_mfapp(MFInfo* p)
@@ -639,9 +663,15 @@ void dbg_mfa(void)
         H("\343 Mapped File Array not initialized.\n");
         R;
     }
-    DO(maxMFAindex, H("\343  %ld: ", i);
-        if (MappedFileArray[i].a) dbg_mfapp(MappedFileArray + i);
-        else H("<free>  next:%ld\n", MappedFileArray[i].n));
+
+    for (I i = 0, _i = (maxMFAindex); i < _i; ++i) {
+        H("\343  %ld: ", i);
+        if (MappedFileArray[i].a)
+            dbg_mfapp(MappedFileArray + i);
+        else
+            H("<free>  next:%ld\n", MappedFileArray[i].n);
+    }
+
     H("\343  --  -----------------\n");
     for (i = maxMFAindex; i < maxMFAindex + 10; i++) {
         if (i >= maxMFAlimit)
@@ -659,10 +689,12 @@ Z void dbg_mfrpp(MFInfo* p)
     H("\343 %ld\340\"%s\": [%s]  addr:%lu  refcnt:%ld  bytes:%ld\n",
         p->w, p->s, p->t, p->a, p->c, p->n);
 }
+
 void dbg_mfr(void)
 {
     if (0 == MappedFileArray)
         R;
+
     DO(maxMFAindex, if (MappedFileArray[i].a) dbg_mfrpp(MappedFileArray + i));
 }
 
@@ -810,22 +842,25 @@ Z I setSizeOfFile(int fd, off_t n)
 #ifdef __VISUAL_C_2_0__
     I j = CLBYTES, k = lseek(fd, 0, SEEK_END);
 #else
-    size_t j = getpagesize(), k = lseek(fd, 0, SEEK_END);
+    size_t j = getpagesize();
+    size_t k = lseek(fd, 0, SEEK_END);
 #endif
     C junk[4];
     /* printf("In setSizeOfFile; n = %ld, j = %ld, k = %ld\n",
 		n, j, k) ;*/
     junk[0] = '\0';
     if (-1 == k)
-        R k;
+        return k;
+
     n = ((n + j - 1) / j) * j;
     for (; n < k; n += j) {
         if (-1 == lseek(fd, n, SEEK_SET))
-            R - 1;
+            return -1;
+
         if (-1 == write(fd, junk, 1))
-            R - 1;
+            return -1;
     }
-    R 0;
+    return 0;
 }
 
 Z I items(I n, A z)
