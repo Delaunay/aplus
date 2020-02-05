@@ -47,7 +47,8 @@ typedef void Sigfunc(int);
 Sigfunc*
 aplus_signal(int signo, Sigfunc* func)
 {
-    struct sigaction act, oact;
+    struct sigaction act;
+    struct sigaction oact;
 
     act.sa_handler = func;
     sigemptyset(&act.sa_mask);
@@ -86,18 +87,12 @@ I log_EWouldBlock(I i, I rc, I nern, C* path, C* fcn)
                 "A+ %s failed for '%s' after %d EWOULDBLOCKs", fcn, path, i);
             H("\343 A+ %s failed for '%s' after %ld tries\n", fcn, path, i);
         } else {
-#ifndef HAVE_STRERROR
-            syslog(LOG_INFO,
-                "A+ %s failed for '%s' after %d EWOULDBLOCKs with: %m", fcn, path, i);
-            H("\343 A+ %s failed for '%s' after %ld tries with: %s\n",
-                fcn, path, i, (nern < sys_nerr) ? sys_errlist[nern] : "unknown system error");
-#else
             char* errstr = strerror(nern);
+
             syslog(LOG_INFO,
                 "A+ %s failed for '%s' after %d EWOULDBLOCKs with: %m", fcn, path, i);
             H("\343 A+ %s failed for '%s' after %ld tries with: %s\n",
                 fcn, path, i, errstr ? errstr : "unknown system error");
-#endif
         }
     } else {
         syslog(LOG_INFO,

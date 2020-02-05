@@ -11,12 +11,15 @@
  * formats of mmap'd files used by A+
  */
 
-#include <a/beam.h>
-#include <a/fncdcls.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#include <string.h>
+
+#include <a/beam.h>
+#include <a/fncdcls.h>
 
 extern I dbg_tb;
 

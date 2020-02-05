@@ -1094,16 +1094,10 @@ A ep_load(A aname)
         ERROUT(ERR_TYPE);
     rname = doloadafile(name, 0);
     if (rname == (C*)0) {
-#ifdef HAVE_STRERROR
         char* errstr = strerror(errno);
         z = gv(Et, 2);
         z->p[0] = (I)gsym("error");
         z->p[1] = (I)gsv(0, (errstr) ? errstr : "unknown system error");
-#else
-        z = gv(Et, 2);
-        z->p[0] = (I)gsym("error");
-        z->p[1] = (I)gsv(0, (errno < sys_nerr) ? sys_errlist[errno] : "unknown system error");
-#endif
     } else {
         z = gv(Et, 2);
         z->p[0] = (I)gsym("ok");
@@ -1134,16 +1128,10 @@ A ep_loadrm(A aguard, A aname)
     }
     rname = doloadafile(name, 1);
     if (rname == (C*)0) {
-#ifdef HAVE_STRERROR
         char* errstr = strerror(errno);
         z = gv(Et, 2);
         z->p[0] = (I)gsym("error");
         z->p[1] = (I)gsv(0, (errstr) ? errstr : "unknown system error");
-#else
-        z = gv(Et, 2);
-        z->p[0] = (I)gsym("error");
-        z->p[1] = (I)gsv(0, (errno < sys_nerr) ? sys_errlist[errno] : "unknown system error");
-#endif
     } else {
         z = gv(Et, 2);
         z->p[0] = (I)gsym("ok");
@@ -1226,19 +1214,12 @@ void ep_abortload(void)
 }
 
 Z C pwd[MAXPATHLEN + 8] = "PWD=";
-#if defined(HAVE_SVR4) || defined(__NetBSD__)
+
 void setPWD(void)
 {
     getcwd(pwd + 4, MAXPATHLEN + 8 - 4);
     putenv(pwd);
 }
-#else
-void setPWD(void)
-{
-    getwd(pwd + 4);
-    putenv(pwd);
-}
-#endif
 
 ENTRYPOINT
 A ep_cd(A a)
@@ -1251,16 +1232,10 @@ A ep_cd(A a)
     if (name == (C*)0)
         ERROUT(ERR_TYPE);
     if (chdir(*name ? name : getenv("HOME"))) {
-#ifdef HAVE_STRERROR
         char* errstr = strerror(errno);
         z = gv(Et, 2);
         z->p[0] = (I)gsym("error");
         z->p[1] = (I)gsv(0, (errstr) ? errstr : "unknown system error");
-#else
-        z = gv(Et, 2);
-        z->p[0] = (I)gsym("error");
-        z->p[1] = (I)gsv(0, (errno < sys_nerr) ? sys_errlist[errno] : "unknown system error");
-#endif
     } else {
         setPWD();
         z = gv(Et, 1);
