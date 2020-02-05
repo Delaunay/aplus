@@ -198,15 +198,16 @@ if (~(É5) ½ 1.0 2.0 3.0 4.0 5.0 É 1.0 2.0 3.0 4.0 5.0) {
 }
 
 ã Last Test
-Õ"Testing timers...(will fire in 1 second and print finished message)";
-tf{h;a;d}:{
-  n2ûsys.gettod{0}-.n;
-  if ((+/1000000 1«n2)) {
-    Õ"";
-    Õ"Passed: timer SetTimer";
-  };
-  Õ"!!FINISHED!!";
-  sys.exit 0;
-}
-nûsys.gettod 0;
-adap.SetTimer{`foo;tf;1};
+ã Õ"Testing timers...(will fire in 1 second and print finished message)";
+ã tf{h;a;d}:{
+ã  n2ûsys.gettod{0}-.n;
+ã  if ((+/1000000 1«n2)) {
+ã    Õ"";
+ã    Õ"Passed: timer SetTimer";
+ã  };
+ã  Õ"!!FINISHED!!";
+ã  sys.exit 0;
+ã }
+ã nûsys.gettod 0;
+ã adap.SetTimer{`foo;tf;1};
+

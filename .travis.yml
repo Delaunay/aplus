@@ -22,6 +22,6 @@ before_script:
 
 script:
   - make
-  - # cp ./lib/* ./bin/
-  - # ./bin/aplus ../src/a/fsftest.+
+  - cp ./lib/* ./bin/
+  - ./bin/aplus ../tests/fsftest.+
 

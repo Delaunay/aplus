@@ -128,12 +128,17 @@ ADD_CUSTOM_TARGET(clang-tidy DEBUG
 
 # Resource Files
 # ==============
-# FILE(GLOB_RECURSE JSON_FILES *.json)
+FILE(GLOB_RECURSE APLUS_FILES *.+)
 
 add_custom_target(zothers ALL SOURCES
     ${MAKE_FILES}
     ${JSON_FILES}
     README.md
     .travis.yml
+)
+
+
+add_custom_target(za+ ALL SOURCES
+    ${APLUS_FILES}
 )
 

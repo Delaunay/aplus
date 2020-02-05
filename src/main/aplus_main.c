@@ -94,7 +94,29 @@ static void getm()
 }
 #endif
 
-void aplus_main(long argc, char** argv)
+/*
+ * -bcd:
+ *     b: backing store
+ *     c: core dump
+ *     d: display
+ * -w: worksize in megabytes
+ * -sh
+ *   s: _load_s
+ *   h: Set the heap size to 128 megabytes (holly $hiet)
+ * -qm
+ *   q: quiet/no banners
+ *   m: memory mode
+ *      1. ws_atmp_noreserve
+ *      2. ws_malloc
+ *      3. ws_atmp_heap
+ *      4. ws_atmp_private
+ *      5. ws_atmp_shared
+ *      6. ws_mem_stats
+ * 
+ *  script: file to be invoked
+ *  args ....
+ */
+int aplus_main(long argc, char** argv)
 {
 #if !defined(_INTERPRETER_ONLY)
     extern void AplusLoop();
@@ -133,12 +155,18 @@ void aplus_main(long argc, char** argv)
 #if !defined(_INTERPRETER_ONLY)
     AplusLoop(argc, argv, i);
 #else
-    if (i < argc && argv[i] && *argv[i])
-        loadafile(argv[i], 0);
-    if (Tf)
+    if (i < argc && argv[i] && *argv[i]) {
+        return loadafile(argv[i], 0);
+    }
+
+    // pr = promt
+    if (Tf) {
         pr();
-    while (1)
+    }
+
+    while (1) {
         getm();
+    }
 #endif
     /**********************************************************************
     These functions are moved to AplusLoop 
@@ -148,6 +176,7 @@ void aplus_main(long argc, char** argv)
         if (Tf) pr();                                / * initial prompt * /
         
         **********************************************************************/
+    return 0;
 }
 
 static void startupSyslog(C* version)
