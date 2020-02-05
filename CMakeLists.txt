@@ -134,5 +134,6 @@ add_custom_target(zothers ALL SOURCES
     ${MAKE_FILES}
     ${JSON_FILES}
     README.md
+    .travis.yml
 )
 
