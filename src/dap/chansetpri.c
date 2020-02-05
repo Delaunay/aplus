@@ -10,25 +10,24 @@
 /* The higher the pri value, the higher the priority */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/chan.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void 
-chansetpri(struct chan * p, int pri)
+void chansetpri(struct chan* p, int pri)
 {
-  if (p != (struct chan *) (0)) {
-    struct node *np = p->np;
-    struct node *hp = &chans;
-    struct node *tnp;
+    if (p != (struct chan*)(0)) {
+        struct node* np = p->np;
+        struct node* hp = &chans;
+        struct node* tnp;
 
-    noderemove(np);
-    p->pri = pri;
-    for (tnp = hp->f; tnp != hp; tnp = tnp->f) {
-      if (pri >= CHANAT(tnp)->pri)
-	break;
+        noderemove(np);
+        p->pri = pri;
+        for (tnp = hp->f; tnp != hp; tnp = tnp->f) {
+            if (pri >= CHANAT(tnp)->pri)
+                break;
+        }
+        nodeinsert(np, tnp);
     }
-    nodeinsert(np, tnp);
-  }
-  return;
+    return;
 }

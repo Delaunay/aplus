@@ -8,14 +8,13 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/kvp.h>
+#include <dap/node.h>
 
-void 
-kvpremove(struct node * np)
+void kvpremove(struct node* np)
 {
-  noderemove(np);
-  kvpfree(KVPAT(np));
-  nodefree(np);
-  return;
+    noderemove(np);
+    kvpfree(KVPAT(np));
+    nodefree(np);
+    return;
 }

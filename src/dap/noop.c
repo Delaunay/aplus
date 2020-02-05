@@ -8,8 +8,7 @@
 /* contributed by Daniel F. Fisher */
 
 /* external function definitions */
-void 
-noop(void)
+void noop(void)
 {
-  return;
+    return;
 }

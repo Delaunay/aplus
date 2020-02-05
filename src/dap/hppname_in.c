@@ -13,61 +13,56 @@
  */
 
 /* header file inclusions */
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <dap/notsunos4.h>
-#ifdef PRESUNOS4
-#ifndef _SOCKET_
-#define _SOCKET_
-#include <sys/socket.h>
-#endif
-#else
-#include <sys/socket.h>
-#endif
+
+#include <errno.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include <errno.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+
 #include <dap/Warn.h>
 #include <dap/balloc.h>
 #include <dap/hpp.h>
+#include <dap/notsunos4.h>
 
 /* external function definitions */
-struct sockaddr_in *
-hppname_in(struct hpp * p, int *lenp)
+struct sockaddr_in*
+hppname_in(struct hpp* p, int* lenp)
 {
-  static char fnc[] = "hppname_in";
-  struct hostent *hostp;
-  struct sockaddr_in *name;
+    static char fnc[] = "hppname_in";
+    struct hostent* hostp;
+    struct sockaddr_in* name;
 
-  name = (struct sockaddr_in *) balloc(sizeof(*name));
-  name->sin_family = AF_INET;
-  if (p->host != (char *) (0)) {
-    if ((hostp = gethostbyname(p->host)) == (struct hostent *) (0)) {
-      Warn("%t %s(): error: '%s' not found\n", fnc, p->host);
-      bfree((char *) name);
-      return (struct sockaddr_in *) (0);
+    name = (struct sockaddr_in*)balloc(sizeof(*name));
+    name->sin_family = AF_INET;
+    if (p->host != (char*)(0)) {
+        if ((hostp = gethostbyname(p->host)) == (struct hostent*)(0)) {
+            Warn("%t %s(): error: '%s' not found\n", fnc, p->host);
+            bfree((char*)name);
+            return (struct sockaddr_in*)(0);
+        }
+        if (hostp->h_addrtype != AF_INET) {
+            Warn("%t %s(): error: '%s' not in AF_INET domain\n",
+                fnc, p->host);
+            bfree((char*)name);
+            return (struct sockaddr_in*)(0);
+        }
+        if (hostp->h_length != sizeof(name->sin_addr.s_addr)) {
+            Warn("%t %s(): error: '%s' address length mismatch\n",
+                fnc, p->host);
+            bfree((char*)name);
+            return (struct sockaddr_in*)(0);
+        }
+        bcopy(hostp->h_addr,
+            (char*)(&(name->sin_addr.s_addr)),
+            sizeof(name->sin_addr.s_addr));
+    } else {
+        name->sin_addr.s_addr = INADDR_ANY;
     }
-    if (hostp->h_addrtype != AF_INET) {
-      Warn("%t %s(): error: '%s' not in AF_INET domain\n",
-	   fnc, p->host);
-      bfree((char *) name);
-      return (struct sockaddr_in *) (0);
-    }
-    if (hostp->h_length != sizeof(name->sin_addr.s_addr)) {
-      Warn("%t %s(): error: '%s' address length mismatch\n",
-	   fnc, p->host);
-      bfree((char *) name);
-      return (struct sockaddr_in *) (0);
-    }
-    bcopy(hostp->h_addr,
-	  (char *) (&(name->sin_addr.s_addr)),
-	  sizeof(name->sin_addr.s_addr));
-  } else {
-    name->sin_addr.s_addr = INADDR_ANY;
-  }
-  name->sin_port = htons(p->port);
-  bzero(name->sin_zero, 8);
-  *lenp = sizeof(*name);
+    name->sin_port = htons(p->port);
+    bzero(name->sin_zero, 8);
+    *lenp = sizeof(*name);
 
-  return name;
+    return name;
 }

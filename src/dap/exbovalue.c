@@ -11,8 +11,7 @@
 #include <dap/exbo.h>
 
 /* external function definitions */
-int 
-exbovalue(struct exbo * p)
+int exbovalue(struct exbo* p)
 {
-  return (p->negative ? -1 * (int) (p->current) : (int) (p->current));
+    return (p->negative ? -1 * (int)(p->current) : (int)(p->current));
 }

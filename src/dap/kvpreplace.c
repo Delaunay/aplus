@@ -8,13 +8,12 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/kvp.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void 
-kvpreplace(struct node * np, void *val)
+void kvpreplace(struct node* np, void* val)
 {
-  KVPAT(np)->d = val;
-  return;
+    KVPAT(np)->d = val;
+    return;
 }

@@ -3,13 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-
 
 /***
 INLINELINKAGE MSTypeVector<unsigned long>::MSTypeVector (MSBuiltinVectorImpl *pImpl)
@@ -17,4 +15,4 @@ INLINELINKAGE MSTypeVector<unsigned long>::MSTypeVector (MSBuiltinVectorImpl *pI
 {
 }
 ***/
-#endif  // MSUnsignedLongVectorInlinesHEADER
+#endif // MSUnsignedLongVectorInlinesHEADER

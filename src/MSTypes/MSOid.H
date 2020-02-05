@@ -3,15 +3,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
-#include <memory.h>
 #include <MSTypes/MSSymbol.H>
+#include <memory.h>
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -24,14 +23,12 @@ class istream;
 
 class MSString;
 
-#define NPARTS  4
+#define NPARTS 4
 
-class MSTypesExport MSOid 
-{
+class MSTypesExport MSOid {
 
-  public:
-
-    enum MSOidFormat { MSOidNull=0 };
+public:
+    enum MSOidFormat { MSOidNull = 0 };
 
     MSOid();
     // Create computed OID
@@ -42,12 +39,12 @@ class MSTypesExport MSOid
     MSOid(const MSOidFormat);
     // use a "null oid"
 
-    int set(const char *);
+    int set(const char*);
     // Create from 32 character hex representation.
 
-    void setData(void *);
+    void setData(void*);
     // Create from 16 byte binary representation.
-  
+
     MSOid& operator=(const MSOid& o_);
     // Fast copying
 
@@ -64,7 +61,7 @@ class MSTypesExport MSOid
     // MSOid oid;
     // if (!oid) ...
 
-    operator const void *() const;
+    operator const void*() const;
     // Is this OID null?  Returns (non-zero) address of object
     // if the OID's value is not null, else 0.  Used as a boolean.
     // E.g.
@@ -81,10 +78,10 @@ class MSTypesExport MSOid
     void newOid();
     // If the current OID is null, generates a new non-null value.
 
-    friend MSTypesExport ostream &operator<<(ostream&, const MSOid&);
+    friend MSTypesExport ostream& operator<<(ostream&, const MSOid&);
     // Insert in ostream.
 
-    friend MSTypesExport istream &operator>>(istream&, MSOid&);
+    friend MSTypesExport istream& operator>>(istream&, MSOid&);
     // Extract from istream.
 
     ~MSOid();
@@ -95,15 +92,14 @@ class MSTypesExport MSOid
     long int compare(const MSOid& c) const;
     friend MSTypesExport long int compare(const MSOid& o1_, const MSOid& o2_);
 
-  private:
-
+private:
     static unsigned _pid;
     static unsigned _hid;
     static unsigned _seq;
     static unsigned long _sec;
     static const MSOid null;
 
-    int parse(const char *hexRepresentation);
+    int parse(const char* hexRepresentation);
 
     // Oid definition of broken down into 4, 4 byte pieces, the
     // first 4 bytes are further broken down into 3 pieces
@@ -115,32 +111,28 @@ class MSTypesExport MSOid
     // last 4 bytes is a process id
 
     unsigned _oid[NPARTS];
-
 };
 
-inline
-MSOid::MSOid()
+inline MSOid::MSOid()
 {
     memset((void*)&_oid, 0, sizeof(_oid));
     newOid();
 }
 
-inline
-MSOid::MSOid(const MSOidFormat)
+inline MSOid::MSOid(const MSOidFormat)
 {
     memset((void*)&_oid, 0, sizeof(_oid));
 }
 
-inline
-MSOid::MSOid(const MSOid& o_)
+inline MSOid::MSOid(const MSOid& o_)
 {
     memcpy((void*)&_oid, (void*)&o_._oid, sizeof(_oid));
 }
 
-inline MSOid &
+inline MSOid&
 MSOid::operator=(const MSOid& o_)
 {
-    memcpy(_oid,o_._oid,sizeof(_oid));
+    memcpy(_oid, o_._oid, sizeof(_oid));
     return *this;
 }
 
@@ -157,20 +149,19 @@ MSOid::operator!=(const MSOid& o_) const
 }
 
 inline int
-MSOid::set(const char *hexStr_)
+MSOid::set(const char* hexStr_)
 {
     return parse(hexStr_);
 }
 
 inline void
-MSOid::setData(void * data_)
+MSOid::setData(void* data_)
 {
-  // copy whatever number of bytes from data_ to fill oid
-  memcpy((void*)&_oid, data_, sizeof(_oid));
+    // copy whatever number of bytes from data_ to fill oid
+    memcpy((void*)&_oid, data_, sizeof(_oid));
 }
 
-inline
-MSOid::operator const void *() const
+inline MSOid::operator const void*() const
 {
     return *this == MSOid::null ? 0 : this;
 }
@@ -181,23 +172,19 @@ MSOid::operator!() const
     return *this == MSOid::null ? 1 : 0;
 }
 
-inline
-MSOid::~MSOid()
+inline MSOid::~MSOid()
 {
 }
 
-inline
-long int compare(const MSOid& o1_, const MSOid& o2_)
+inline long int compare(const MSOid& o1_, const MSOid& o2_)
 {
     return memcmp(o1_._oid, o2_._oid, sizeof(o2_._oid));
 }
 
-inline 
-long int MSOid::compare(const MSOid& o_) const
+inline long int MSOid::compare(const MSOid& o_) const
 {
     return ::compare(*this, o_);
 }
-
 
 const MSSymbol MSOID("msoid");
 

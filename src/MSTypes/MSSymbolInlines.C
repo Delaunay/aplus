@@ -3,12 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 #ifndef MS_NO_INLINES
 #define INLINELINKAGE inline
@@ -20,7 +19,9 @@
 // for efficiency and compile performance - i.e. we do not
 // need to include MSNameSpace.H
 
-INLINELINKAGE MSAtom MSSymbol::atom(void) const 
-{ return _atom; } 
+INLINELINKAGE MSAtom MSSymbol::atom(void) const
+{
+    return _atom;
+}
 
 #endif

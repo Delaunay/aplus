@@ -15,13 +15,12 @@ I AplusEvent::ravel(void) { return _ravel; }
 
 const MSSymbol& AplusEvent::symbol(void)
 {
-  static MSSymbol sym("AplusEvent");
-  return sym;
+    static MSSymbol sym("AplusEvent");
+    return sym;
 }
 
-
 AplusVerifyEvent::~AplusVerifyEvent(void) {}
-  
+
 A AplusVerifyEvent::a(void) { return _a; }
 V AplusVerifyEvent::aplusVar(void) { return _aplusVar; }
 MSBoolean AplusVerifyEvent::result(void) { return _result; }
@@ -29,33 +28,36 @@ void AplusVerifyEvent::result(MSBoolean r_) { _result = r_; }
 
 const MSSymbol& AplusVerifyEvent::symbol(void)
 {
-  static MSSymbol sym("AplusVerifyEvent");
-  return sym;
+    static MSSymbol sym("AplusVerifyEvent");
+    return sym;
 }
-
 
 const MSSymbol& AplusUpdateDataEvent::symbol(void)
 {
-  static MSSymbol sym("AplusUpdateDataEvent");
-  return sym;
+    static MSSymbol sym("AplusUpdateDataEvent");
+    return sym;
 }
 
-
-AplusProtectEvent::AplusProtectEvent(void) : MSEvent(AplusProtectEvent::symbol()) {}
+AplusProtectEvent::AplusProtectEvent(void)
+    : MSEvent(AplusProtectEvent::symbol())
+{
+}
 AplusProtectEvent::~AplusProtectEvent(void) {}
 
 const MSSymbol& AplusProtectEvent::symbol(void)
 {
-  static MSSymbol sym("AplusProtectEvent");
-  return sym;
+    static MSSymbol sym("AplusProtectEvent");
+    return sym;
 }
 
-
-AplusUpdateTitleEvent::AplusUpdateTitleEvent(void) : MSEvent(AplusUpdateTitleEvent::symbol()) {}
+AplusUpdateTitleEvent::AplusUpdateTitleEvent(void)
+    : MSEvent(AplusUpdateTitleEvent::symbol())
+{
+}
 AplusUpdateTitleEvent::~AplusUpdateTitleEvent(void) {}
 
 const MSSymbol& AplusUpdateTitleEvent::symbol(void)
 {
-  static MSSymbol sym("AplusUpdateTitleEvent");
-  return sym;
+    static MSSymbol sym("AplusUpdateTitleEvent");
+    return sym;
 }

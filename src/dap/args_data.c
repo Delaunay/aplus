@@ -10,4 +10,4 @@
 /* external data definitions */
 int args_argpos;
 int args_index;
-char *args_value;
+char* args_value;

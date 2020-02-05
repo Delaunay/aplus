@@ -18,18 +18,18 @@
 #include <dap/slpq.h>
 
 /* external function definitions */
-struct slpq *
+struct slpq*
 slpqalloc(int initwakes, int maxwakes)
 {
-  struct slpq *p = (struct slpq *) balloc(sizeof(*p));
+    struct slpq* p = (struct slpq*)balloc(sizeof(*p));
 
-  /* ensure wakes is never greater than maxwakes */
-  if (initwakes > maxwakes)
-    initwakes = maxwakes;
+    /* ensure wakes is never greater than maxwakes */
+    if (initwakes > maxwakes)
+        initwakes = maxwakes;
 
-  p->wq = nodealloc();		/* allocate head of slpqent wait queue */
-  p->wakes = initwakes;		/* set wakes to initwakes value */
-  p->maxwakes = maxwakes;	/* set maxwakes value as given */
+    p->wq = nodealloc(); /* allocate head of slpqent wait queue */
+    p->wakes = initwakes; /* set wakes to initwakes value */
+    p->maxwakes = maxwakes; /* set maxwakes value as given */
 
-  return p;			/* return a pointer to the sleep queue */
+    return p; /* return a pointer to the sleep queue */
 }

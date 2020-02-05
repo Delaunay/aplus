@@ -13,4 +13,3 @@
 #include <AplusGUI/AplusTrace.H>
 
 #endif //AGIFGraphHEADER
-

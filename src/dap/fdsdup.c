@@ -12,12 +12,12 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-fd_set *
-fdsdup(fd_set * p)
+fd_set*
+fdsdup(fd_set* p)
 {
-  fd_set *p2 = (fd_set *) balloc(fds_sizeof);
+    fd_set* p2 = (fd_set*)balloc(fds_sizeof);
 
-  fdscopy(p, p2);
+    fdscopy(p, p2);
 
-  return p2;
+    return p2;
 }

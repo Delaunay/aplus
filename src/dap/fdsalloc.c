@@ -12,12 +12,12 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-fd_set *
+fd_set*
 fdsalloc(void)
 {
-  fd_set *p = (fd_set *) balloc(fds_sizeof);
+    fd_set* p = (fd_set*)balloc(fds_sizeof);
 
-  fdszero(p);
+    fdszero(p);
 
-  return p;
+    return p;
 }

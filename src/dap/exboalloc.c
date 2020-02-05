@@ -27,24 +27,24 @@
 #include <dap/exbo.h>
 
 /* external function definitions */
-struct exbo *
+struct exbo*
 exboalloc(int first, int last)
 {
-  struct exbo *p = (struct exbo *) balloc(sizeof(*p));
+    struct exbo* p = (struct exbo*)balloc(sizeof(*p));
 
-  if (first < 0) {
-    p->negative = 1;
-    first *= -1;
-    last *= -1;
-  } else {
-    p->negative = 0;
-  }
-  if (last < 0)
-    last = 0;
+    if (first < 0) {
+        p->negative = 1;
+        first *= -1;
+        last *= -1;
+    } else {
+        p->negative = 0;
+    }
+    if (last < 0)
+        last = 0;
 
-  p->first = (unsigned) first;
-  p->current = (unsigned) first;
-  p->last = (unsigned) last;
+    p->first = (unsigned)first;
+    p->current = (unsigned)first;
+    p->last = (unsigned)last;
 
-  return p;
+    return p;
 }

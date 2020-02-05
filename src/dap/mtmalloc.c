@@ -9,23 +9,23 @@
 
 /* header file inclusions */
 #include <dap/balloc.h>
-#include <dap/node.h>
 #include <dap/mtm.h>
+#include <dap/node.h>
 
 /* external function definitions */
-struct mtm *
-mtmalloc(void *d)
+struct mtm*
+mtmalloc(void* d)
 {
-  struct mtm *p = (struct mtm *) balloc(sizeof(*p));
-  struct node *np;
+    struct mtm* p = (struct mtm*)balloc(sizeof(*p));
+    struct node* np;
 
-  p->unp = np = nodealloc();
-  np->d = (void *) p;
-  p->up = (void *) (0);
-  p->dnp = np = nodealloc();
-  np->d = (void *) p;
-  p->dp = (void *) (0);
-  p->d = d;
+    p->unp = np = nodealloc();
+    np->d = (void*)p;
+    p->up = (void*)(0);
+    p->dnp = np = nodealloc();
+    np->d = (void*)p;
+    p->dp = (void*)(0);
+    p->d = d;
 
-  return p;
+    return p;
 }

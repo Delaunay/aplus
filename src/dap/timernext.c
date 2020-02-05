@@ -8,17 +8,17 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/tv.h>
 #include <dap/timer.h>
+#include <dap/tv.h>
 
 /* external function definitions */
-struct timeval *
+struct timeval*
 timernext(void)
 {
-  struct timer *p;
+    struct timer* p;
 
-  if ((p = TIMERAT(timers.f)) == (struct timer *) (0)) {
-    return (struct timeval *) (0);
-  }
-  return &(p->expire);
+    if ((p = TIMERAT(timers.f)) == (struct timer*)(0)) {
+        return (struct timeval*)(0);
+    }
+    return &(p->expire);
 }

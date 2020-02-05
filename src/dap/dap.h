@@ -9,7 +9,6 @@
 /*                                                                           */
 /*****************************************************************************/
 
-
 /* header file inclusions */
 #include <dap/Warn.h>
 #include <dap/avl.h>
@@ -34,4 +33,3 @@
 #include <dap/tv.h>
 
 #endif
-

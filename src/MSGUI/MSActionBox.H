@@ -3,79 +3,70 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
-#include <MSGUI/MSLayout.H>
 #include <MSGUI/MSFontObject.H>
+#include <MSGUI/MSLayout.H>
 #include <MSTypes/MSInt.H>
 #include <MSTypes/MSIntVector.H>
 #include <MSTypes/MSSymbolVector.H>
 
 class MSActionButton;
 
-class MSGUIExport MSActionBox : public MSLayout
-{
-friend class MSActionButton;
-public:  
-  MSActionBox(MSWidget *,const char *title_=0);
-  MSActionBox(MSWidget *,const MSStringVector&);
-  ~MSActionBox(void);
+class MSGUIExport MSActionBox : public MSLayout {
+    friend class MSActionButton;
 
-  const MSActionButton *activeButton(void) const;
-  MSActionButton *activeButton(void);
+public:
+    MSActionBox(MSWidget*, const char* title_ = 0);
+    MSActionBox(MSWidget*, const MSStringVector&);
+    ~MSActionBox(void);
 
-  const MSActionButton *button(const MSSymbol&) const;
-  MSActionButton *button(const MSSymbol&);
+    const MSActionButton* activeButton(void) const;
+    MSActionButton* activeButton(void);
 
-  const MSActionButton *button(int) const;
-  MSActionButton *button(int);
+    const MSActionButton* button(const MSSymbol&) const;
+    MSActionButton* button(const MSSymbol&);
 
-  MSSymbolVector symbolicState(void) const;
-  MSIntVector integerState(void) const;
+    const MSActionButton* button(int) const;
+    MSActionButton* button(int);
 
-  unsigned alignment(void) const;
-  void alignment(unsigned);
+    MSSymbolVector symbolicState(void) const;
+    MSIntVector integerState(void) const;
 
-  virtual void activate(void);
+    unsigned alignment(void) const;
+    void alignment(unsigned);
 
-  virtual const MSSymbol& widgetType(void) const;
+    virtual void activate(void);
 
-  virtual MSAttrValueList& get(MSAttrValueList&);
-  virtual void set(MSAttrValueList&);
-  
+    virtual const MSSymbol& widgetType(void) const;
+
+    virtual MSAttrValueList& get(MSAttrValueList&);
+    virtual void set(MSAttrValueList&);
+
 protected:
-  MSActionButton *_activeButton;
+    MSActionButton* _activeButton;
 
-  void init(void);
-  virtual void placement(void);
-  virtual void activate(MSActionButton *);
-  virtual void updateBackground(unsigned long);
-  virtual void updateFont(Font);
-  virtual void childDestroy(MSWidget *);
-  
-  static const MSSymbol& symbol(void);
+    void init(void);
+    virtual void placement(void);
+    virtual void activate(MSActionButton*);
+    virtual void updateBackground(unsigned long);
+    virtual void updateFont(Font);
+    virtual void childDestroy(MSWidget*);
+
+    static const MSSymbol& symbol(void);
 };
 
-inline MSActionButton *MSActionBox::activeButton(void)
-{ return _activeButton; }
-inline const MSActionButton *MSActionBox::activeButton(void) const
-{ return _activeButton; }
+inline MSActionButton* MSActionBox::activeButton(void)
+{
+    return _activeButton;
+}
+inline const MSActionButton* MSActionBox::activeButton(void) const
+{
+    return _activeButton;
+}
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-

@@ -9,21 +9,18 @@
 /*                                                                           */
 /*****************************************************************************/
 
-
 /* header file inclusions */
 #include <signal.h>
 #ifndef NSIG
 #define NSIG _sys_nsig
 #endif
 
-
 /* external struct, union, typedef and enum declarations */
-struct sgnl
-{
-	int set;
-	struct sigaction orig;
-	int flag;
-	void (*func)();
+struct sgnl {
+    int set;
+    struct sigaction orig;
+    int flag;
+    void (*func)();
 };
 
 /* external data declarations */
@@ -31,24 +28,23 @@ extern struct sgnl sgnls[];
 
 /* external function declarations */
 #if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
-# ifdef __cplusplus
+#ifdef __cplusplus
 extern "C" {
-# endif
-  extern void sgnlcatch(int,void (*)());
-  extern void sgnldefault(int);
-  extern void sgnlignore(int);
-  extern void sgnloriginal(int);
-  extern int sgnlproc(void);
-# ifdef __cplusplus
+#endif
+extern void sgnlcatch(int, void (*)());
+extern void sgnldefault(int);
+extern void sgnlignore(int);
+extern void sgnloriginal(int);
+extern int sgnlproc(void);
+#ifdef __cplusplus
 }
-# endif
+#endif
 #else
-  extern void sgnlcatch();
-  extern void sgnldefault();
-  extern void sgnlignore();
-  extern void sgnloriginal();
-  extern int sgnlproc();
+extern void sgnlcatch();
+extern void sgnldefault();
+extern void sgnlignore();
+extern void sgnloriginal();
+extern int sgnlproc();
 #endif
 
 #endif
-

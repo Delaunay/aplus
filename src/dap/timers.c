@@ -16,4 +16,4 @@
 #include <dap/timer.h>
 
 /* external data definitions */
-struct node timers = {&timers, &timers, (void *) (0)};
+struct node timers = { &timers, &timers, (void*)(0) };

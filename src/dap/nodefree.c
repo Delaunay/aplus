@@ -12,11 +12,10 @@
 #include <dap/node.h>
 
 /* external function definitions */
-void 
-nodefree(struct node * p)
+void nodefree(struct node* p)
 {
-  if (p != (struct node *) (0)) {
-    bfree((char *) (p));
-  }
-  return;
+    if (p != (struct node*)(0)) {
+        bfree((char*)(p));
+    }
+    return;
 }

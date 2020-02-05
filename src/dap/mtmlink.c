@@ -8,17 +8,17 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/mtm.h>
+#include <dap/node.h>
 
 /* external function definitions */
-struct mtm *
-mtmlink(struct node * uhp, void *up, struct node * dhp, void *dp, void *d)
+struct mtm*
+mtmlink(struct node* uhp, void* up, struct node* dhp, void* dp, void* d)
 {
-  struct mtm *p = mtmalloc(d);
+    struct mtm* p = mtmalloc(d);
 
-  mtmupins(p, uhp, up);
-  mtmdnins(p, dhp, dp);
+    mtmupins(p, uhp, up);
+    mtmdnins(p, dhp, dp);
 
-  return p;
+    return p;
 }

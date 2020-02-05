@@ -11,14 +11,13 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-void 
-fdsfresh(int fd)
+void fdsfresh(int fd)
 {
-  fdsclr(fds_r, fd);
-  fdsclr(fds_ra, fd);
-  fdsclr(fds_w, fd);
-  fdsclr(fds_wa, fd);
-  fdsclr(fds_x, fd);
-  fdsclr(fds_xa, fd);
-  return;
+    fdsclr(fds_r, fd);
+    fdsclr(fds_ra, fd);
+    fdsclr(fds_w, fd);
+    fdsclr(fds_wa, fd);
+    fdsclr(fds_x, fd);
+    fdsclr(fds_xa, fd);
+    return;
 }

@@ -12,30 +12,30 @@
  */
 
 /* header file inclusions */
-#include <dap/balloc.h>
 #include <dap/avl.h>
+#include <dap/balloc.h>
 
 /* internal function definitions */
-static void _free(void (*remove) (), struct avln * ap);
+static void _free(void (*remove)(), struct avln* ap);
 
 /* external function definitions */
-void 
-avlfree(struct avl * p)
+void avlfree(struct avl* p)
 {
-  if (p != (struct avl *) (0)) {
-    _free(p->remove, p->root);
-    bfree((char *) p);
-  }
-  return;
+    if (p != (struct avl*)(0)) {
+        _free(p->remove, p->root);
+        bfree((char*)p);
+    }
+    return;
 }
 
 /* internal function definitions */
-static void _free(void (*remove) (), struct avln * ap) {
-  if (ap != (struct avln *) (0)) {
-    _free(remove, ap->l);
-    _free(remove, ap->r);
-    (*remove) (ap->d);
-    bfree((char *) ap);
-  }
-  return;
+static void _free(void (*remove)(), struct avln* ap)
+{
+    if (ap != (struct avln*)(0)) {
+        _free(remove, ap->l);
+        _free(remove, ap->r);
+        (*remove)(ap->d);
+        bfree((char*)ap);
+    }
+    return;
 }

@@ -10,18 +10,15 @@
 
 int microsleep(int i)
 {
-	struct timeval tv;
+    struct timeval tv;
 
-	if(i>1000000)
-	  {
-	    tv.tv_sec = (int) i/1000000;
-	    tv.tv_usec = i - tv.tv_sec*1000000;
-	  }
-	else
-	  {
-	    tv.tv_sec = 0;
-	    tv.tv_usec = i;
-	  }
+    if (i > 1000000) {
+        tv.tv_sec = (int)i / 1000000;
+        tv.tv_usec = i - tv.tv_sec * 1000000;
+    } else {
+        tv.tv_sec = 0;
+        tv.tv_usec = i;
+    }
 
-	return select(0, NULL, NULL, NULL, &tv);
+    return select(0, NULL, NULL, NULL, &tv);
 }

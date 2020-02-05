@@ -8,16 +8,15 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <string.h>
 #include <dap/buff.h>
+#include <string.h>
 
 /* external function definitions */
-void 
-buffputs(struct buff * p, char *s)
+void buffputs(struct buff* p, char* s)
 {
-  if ((p != (struct buff *) (0))
-      && (s != (char *) (0))) {
-    buffstuff(p, s, strlen((DEV_STRARG) s));
-  }
-  return;
+    if ((p != (struct buff*)(0))
+        && (s != (char*)(0))) {
+        buffstuff(p, s, strlen((DEV_STRARG)s));
+    }
+    return;
 }

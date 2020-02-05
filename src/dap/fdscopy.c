@@ -12,14 +12,13 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-void 
-fdscopy(fd_set * p1, fd_set * p2)
+void fdscopy(fd_set* p1, fd_set* p2)
 {
-  if (p2 != (fd_set *) (0)) {
-    if (p1 == (fd_set *) (0))
-      bzero((char *) p2, fds_sizeof);
-    else
-      bcopy((char *) p1, (char *) p2, fds_sizeof);
-  }
-  return;
+    if (p2 != (fd_set*)(0)) {
+        if (p1 == (fd_set*)(0))
+            bzero((char*)p2, fds_sizeof);
+        else
+            bcopy((char*)p1, (char*)p2, fds_sizeof);
+    }
+    return;
 }

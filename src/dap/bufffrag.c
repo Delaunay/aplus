@@ -21,23 +21,23 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-struct buff *
-bufffrag(struct buff * p, int frag)
+struct buff*
+bufffrag(struct buff* p, int frag)
 {
-  struct buff *bp = (struct buff *) (0);
-  int len;
+    struct buff* bp = (struct buff*)(0);
+    int len;
 
-  if ((p != (struct buff *) (0))
-      && (p->min != (char *) (0))
-      && ((len = p->put - p->get) >= frag)) {
-    bp = buffalloc();
-    if (frag == len) {
-      *bp = *p;
-      p->min = p->get = p->put = p->max = (char *) (0);
-    } else {
-      buffstuff(bp, p->get, frag);
-      p->get += frag;
+    if ((p != (struct buff*)(0))
+        && (p->min != (char*)(0))
+        && ((len = p->put - p->get) >= frag)) {
+        bp = buffalloc();
+        if (frag == len) {
+            *bp = *p;
+            p->min = p->get = p->put = p->max = (char*)(0);
+        } else {
+            buffstuff(bp, p->get, frag);
+            p->get += frag;
+        }
     }
-  }
-  return bp;
+    return bp;
 }

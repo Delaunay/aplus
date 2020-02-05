@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -13,24 +13,23 @@
 
 class MSShell;
 
-class MSGUIExport MSShellBusy
-{
+class MSGUIExport MSShellBusy {
 public:
-  MSShellBusy(MSShell *shell_);
-  ~MSShellBusy(void);
+    MSShellBusy(MSShell* shell_);
+    ~MSShellBusy(void);
+
 private:
-  MSShell *_shell;
+    MSShell* _shell;
 };
 
-class MSGUIExport MSApplicationBusy
-{
+class MSGUIExport MSApplicationBusy {
 public:
-  MSApplicationBusy(void);
-  ~MSApplicationBusy(void);
-  static int count(void);
-  
+    MSApplicationBusy(void);
+    ~MSApplicationBusy(void);
+    static int count(void);
+
 private:
-  static int _count;
+    static int _count;
 };
 
 #endif

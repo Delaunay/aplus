@@ -12,13 +12,13 @@
 #include <dap/node.h>
 
 /* external function definitions */
-struct node *
+struct node*
 nodealloc(void)
 {
-  struct node *p;
+    struct node* p;
 
-  p = (struct node *) balloc(sizeof(*p));
-  p->f = p->b = p;
-  p->d = (void *) (0);
-  return p;
+    p = (struct node*)balloc(sizeof(*p));
+    p->f = p->b = p;
+    p->d = (void*)(0);
+    return p;
 }

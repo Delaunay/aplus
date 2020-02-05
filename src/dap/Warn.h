@@ -9,7 +9,6 @@
 /*                                                                           */
 /*****************************************************************************/
 
-
 /* header file inclusions */
 #include <stdio.h>
 #if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
@@ -21,30 +20,28 @@ extern char _ErrBuf[];
 
 /* external function declarations */
 #if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
-# ifdef __cplusplus
-    extern "C" {
-# endif
-  extern void vWarn(char *,va_list);
-  extern void Warn(char*,...);
-  extern void Abort(char*,...);
-  extern void Panic(char*,...);
-  extern void Exit(int, char*,...);
-  extern void SetWarn(char*);
-  extern void SetWarnFP(FILE*);
-  extern void SetWarnFunc(void (*f)(char *));
-# ifdef __cplusplus
-   }
-# endif
+#ifdef __cplusplus
+extern "C" {
+#endif
+extern void vWarn(char*, va_list);
+extern void Warn(char*, ...);
+extern void Abort(char*, ...);
+extern void Panic(char*, ...);
+extern void Exit(int, char*, ...);
+extern void SetWarn(char*);
+extern void SetWarnFP(FILE*);
+extern void SetWarnFunc(void (*f)(char*));
+#ifdef __cplusplus
+}
+#endif
 #else
-  extern void Warn();
-  extern void Abort();
-  extern void Panic();
-  extern void Exit();
-  extern void SetWarn();
-  extern void SetWarnFP();
-  extern void SetWarnFunc();
+extern void Warn();
+extern void Abort();
+extern void Panic();
+extern void Exit();
+extern void SetWarn();
+extern void SetWarnFP();
+extern void SetWarnFunc();
 #endif
 
-
 #endif
-

@@ -8,15 +8,14 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/fds.h>
 #include <dap/chan.h>
+#include <dap/fds.h>
 
 /* external function definitions */
-void 
-chandsbl(struct chan * p)
+void chandsbl(struct chan* p)
 {
-  if (p != (struct chan *) (0)) {
-    fdsclr(p->fds, p->fd);
-  }
-  return;
+    if (p != (struct chan*)(0)) {
+        fdsclr(p->fds, p->fd);
+    }
+    return;
 }

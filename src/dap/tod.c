@@ -9,21 +9,21 @@
 
 /* header file inclusions */
 #include <dap/Warn.h>
-#include <dap/tv.h>
 #include <dap/tod.h>
+#include <dap/tv.h>
 
 /* external function definitions */
-struct timeval *
+struct timeval*
 tod(void)
 {
-  static char fnc[] = "tod";
-  struct timeval now;
+    static char fnc[] = "tod";
+    struct timeval now;
 
-  if (gettimeofday(&now, (struct timezone *) (0)) < 0) {
-    Warn("%t %s(): error: gettimeofday(): %m\n", fnc);
-  } else {
-    dap_tod_last = now;
-  }
+    if (gettimeofday(&now, (struct timezone*)(0)) < 0) {
+        Warn("%t %s(): error: gettimeofday(): %m\n", fnc);
+    } else {
+        dap_tod_last = now;
+    }
 
-  return &dap_tod_last;
+    return &dap_tod_last;
 }

@@ -5,23 +5,21 @@
 /*                                                                           */
 /*                                                                           */
 /*****************************************************************************/
-#include <stdlib.h>
-#include <dap/dap.h>
 #include <a/fncdcls.h>
+#include <dap/dap.h>
+#include <stdlib.h>
 
 /* external function definitions */
 void sInstall()
 {
-  char *atree;
-  char *sfile;
+    char* atree;
+    char* sfile;
 
-  if ((atree = getenv("ATREE")) == (char *)(0))
-  {
-    atree = "/usr/local/a+";
-  }
-  sfile = bnstring(atree, "/lib/s.+", (char *)(0));
-  loadafile(sfile,0);
-  bfree(sfile);
-  return;
+    if ((atree = getenv("ATREE")) == (char*)(0)) {
+        atree = "/usr/local/a+";
+    }
+    sfile = bnstring(atree, "/lib/s.+", (char*)(0));
+    loadafile(sfile, 0);
+    bfree(sfile);
+    return;
 }
-

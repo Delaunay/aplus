@@ -3,12 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 /*******************************************************************************
 * FILE NAME: MSMBStringBuffer.H                                                *
@@ -18,18 +17,17 @@
 *     MSMBStringBuffer-DBCS buffer class                                       *
 *                                                                              *
 *******************************************************************************/
-#include <stdlib.h>
 #include <limits.h>
+#include <stdlib.h>
 
 #ifndef MSStringBufferHEADER
 #include <MSTypes/MSStringBuffer.H>
 #endif
 
-class MSTypesExport MSMBStringBuffer : public MSStringBuffer 
-{
-friend MSTypesExport MSStringBuffer *createMSMBStringBuffer(void);
+class MSTypesExport MSMBStringBuffer : public MSStringBuffer {
+    friend MSTypesExport MSStringBuffer* createMSMBStringBuffer(void);
 
-/*******************************************************************************
+    /*******************************************************************************
 * The MSMBStringBuffer class implements the version of MSString contents that  *
 * supports mixed double-byte character set (DBCS) characters.  This            *
 * class ensures that multi-byte characters are processed properly.             *
@@ -37,7 +35,7 @@ friend MSTypesExport MSStringBuffer *createMSMBStringBuffer(void);
 * The use of this class is transparent to the user of class MSString.          *
 *******************************************************************************/
 public:
-/*-------------------------------- Overrides -----------------------------------
+    /*-------------------------------- Overrides -----------------------------------
 | This class re-implements the following MSStringBuffer functions as public:   |
 |   subString           -See MSStringBuffer::subString.                        |
 |   charType            -See MSStringBuffer::charType.                         |
@@ -70,47 +68,47 @@ public:
 |   upperCase           -See MSString::upperCase.                              |
 |   className           -Returns "MSMBStringBuffer".                           |
 ------------------------------------------------------------------------------*/
-  virtual MSStringBuffer *subString(unsigned startPos,unsigned len,char padCharacter) const;
-  virtual MSStringEnum::CharType charType(unsigned index) const;
-  virtual char *next(const char *prev);
-  virtual const char *next(const char *prev) const;
+    virtual MSStringBuffer* subString(unsigned startPos, unsigned len, char padCharacter) const;
+    virtual MSStringEnum::CharType charType(unsigned index) const;
+    virtual char* next(const char* prev);
+    virtual const char* next(const char* prev) const;
 
-  virtual MSBoolean isMBCS() const;
-  virtual MSBoolean isSBCS() const;
-  virtual MSBoolean isValidMBCS() const;
-  virtual MSBoolean includesMBCS() const;
-  virtual MSBoolean includesSBCS() const;
+    virtual MSBoolean isMBCS() const;
+    virtual MSBoolean isSBCS() const;
+    virtual MSBoolean isValidMBCS() const;
+    virtual MSBoolean includesMBCS() const;
+    virtual MSBoolean includesSBCS() const;
 
-  virtual unsigned indexOf(const char *pString,unsigned len,unsigned startPos=0) const;
-  virtual unsigned indexOf(const MSStringTest &aTest,unsigned startPos=0) const;
-  virtual unsigned indexOfAnyBut(const char *pString,unsigned len,unsigned startPos=0) const;
-  virtual unsigned indexOfAnyBut(const MSStringTest &aTest,unsigned startPos=0) const;
-  virtual unsigned indexOfAnyOf(const char *pString,unsigned len,unsigned startPos=0) const;
-  virtual unsigned indexOfAnyOf(const MSStringTest &aTest,unsigned startPos=0) const;
+    virtual unsigned indexOf(const char* pString, unsigned len, unsigned startPos = 0) const;
+    virtual unsigned indexOf(const MSStringTest& aTest, unsigned startPos = 0) const;
+    virtual unsigned indexOfAnyBut(const char* pString, unsigned len, unsigned startPos = 0) const;
+    virtual unsigned indexOfAnyBut(const MSStringTest& aTest, unsigned startPos = 0) const;
+    virtual unsigned indexOfAnyOf(const char* pString, unsigned len, unsigned startPos = 0) const;
+    virtual unsigned indexOfAnyOf(const MSStringTest& aTest, unsigned startPos = 0) const;
 
-  virtual unsigned lastIndexOf(const char *pString,unsigned len,unsigned startPos=UINT_MAX-1) const;
-  virtual unsigned lastIndexOf(const MSStringTest &aTest,unsigned startPos=UINT_MAX-1) const;
-  virtual unsigned lastIndexOfAnyBut(const char *pString,unsigned len,unsigned startPos=UINT_MAX-1) const;
-  virtual unsigned lastIndexOfAnyBut(const MSStringTest &aTest,unsigned startPos=UINT_MAX-1) const;
-  virtual unsigned lastIndexOfAnyOf(const char *pString,unsigned len,unsigned startPos=UINT_MAX-1) const;
-  virtual unsigned lastIndexOfAnyOf(const MSStringTest &aTest,unsigned startPos=UINT_MAX-1) const;
+    virtual unsigned lastIndexOf(const char* pString, unsigned len, unsigned startPos = UINT_MAX - 1) const;
+    virtual unsigned lastIndexOf(const MSStringTest& aTest, unsigned startPos = UINT_MAX - 1) const;
+    virtual unsigned lastIndexOfAnyBut(const char* pString, unsigned len, unsigned startPos = UINT_MAX - 1) const;
+    virtual unsigned lastIndexOfAnyBut(const MSStringTest& aTest, unsigned startPos = UINT_MAX - 1) const;
+    virtual unsigned lastIndexOfAnyOf(const char* pString, unsigned len, unsigned startPos = UINT_MAX - 1) const;
+    virtual unsigned lastIndexOfAnyOf(const MSStringTest& aTest, unsigned startPos = UINT_MAX - 1) const;
 
-  virtual MSStringBuffer *center(unsigned newLen,char padCharacter);
-  virtual MSStringBuffer *insert(const char *pInsert,unsigned insertLen,unsigned pos,char padCharacter);
-  virtual MSStringBuffer *leftJustify(unsigned newLen,char padCharacter);
-  virtual MSStringBuffer *lowerCase();
-  virtual MSStringBuffer *overlayWith(const char *overlay,unsigned len,unsigned pos,char padCharacter);
-  virtual MSStringBuffer *remove(unsigned startPos,unsigned numChars);
-  virtual MSStringBuffer *reverse();
-  virtual MSStringBuffer *rightJustify(unsigned newLen,char padCharacter);
-  virtual MSStringBuffer *strip(const char *pChars,unsigned len,MSStringEnum::StripMode mode);
-  virtual MSStringBuffer *strip(const MSStringTest &aTest,MSStringEnum::StripMode mode);
-  virtual MSStringBuffer *translate(const char *pInputChars,unsigned inputLen,
-                                    const char *pOutputChars,unsigned outputLen,char padCharacter);
-  virtual MSStringBuffer *upperCase();
+    virtual MSStringBuffer* center(unsigned newLen, char padCharacter);
+    virtual MSStringBuffer* insert(const char* pInsert, unsigned insertLen, unsigned pos, char padCharacter);
+    virtual MSStringBuffer* leftJustify(unsigned newLen, char padCharacter);
+    virtual MSStringBuffer* lowerCase();
+    virtual MSStringBuffer* overlayWith(const char* overlay, unsigned len, unsigned pos, char padCharacter);
+    virtual MSStringBuffer* remove(unsigned startPos, unsigned numChars);
+    virtual MSStringBuffer* reverse();
+    virtual MSStringBuffer* rightJustify(unsigned newLen, char padCharacter);
+    virtual MSStringBuffer* strip(const char* pChars, unsigned len, MSStringEnum::StripMode mode);
+    virtual MSStringBuffer* strip(const MSStringTest& aTest, MSStringEnum::StripMode mode);
+    virtual MSStringBuffer* translate(const char* pInputChars, unsigned inputLen,
+        const char* pOutputChars, unsigned outputLen, char padCharacter);
+    virtual MSStringBuffer* upperCase();
 
 protected:
-/*---------------------- Protected Overrides -----------------------------------
+    /*---------------------- Protected Overrides -----------------------------------
 | This class re-implements the following MSStringBuffer functions as protected:|
 |                                                                              |
 |   startSearch         -See MSStringBuffer::startSearch.                      |
@@ -118,13 +116,13 @@ protected:
 |   className           -Returns "MSMBStringBuffer".                           |
 ------------------------------------------------------------------------------*/
 
-  virtual MSStringBuffer *allocate(unsigned newLen) const;
-  virtual const char *className() const;
+    virtual MSStringBuffer* allocate(unsigned newLen) const;
+    virtual const char* className() const;
 
-  virtual unsigned startSearch(unsigned startPos,unsigned searchLen) const;
-  virtual unsigned startBackwardsSearch(unsigned startPos,unsigned searchLen) const;
+    virtual unsigned startSearch(unsigned startPos, unsigned searchLen) const;
+    virtual unsigned startBackwardsSearch(unsigned startPos, unsigned searchLen) const;
 
-/*------------------------------ Implementation --------------------------------
+    /*------------------------------ Implementation --------------------------------
 | These functions provide services used to implement this class:               |
 |   isCharValid-Returns MSTrue if and only if the character at the given       |
 |                 index is in the set of valid characters.                     |
@@ -138,41 +136,47 @@ protected:
 |   isSBC      -returns MSTrue if character is NOT a multibyte character       |
 |                                                                              |
 ------------------------------------------------------------------------------*/
-  MSBoolean isCharValid(unsigned pos,const char *pValidChars,unsigned numValidChars) const;
+    MSBoolean isCharValid(unsigned pos, const char* pValidChars, unsigned numValidChars) const;
 
-  static size_t charLength(char const*);
-  static size_t maxCharLength();
+    static size_t charLength(char const*);
+    static size_t maxCharLength();
 
-  size_t charLength(unsigned pos) const;
-  size_t prevCharLength(unsigned pos) const;
+    size_t charLength(unsigned pos) const;
+    size_t prevCharLength(unsigned pos) const;
 
-  static MSBoolean isSBC(char const*);
+    static MSBoolean isSBC(char const*);
 
-friend class MSStringBuffer;
-/*------------------------------- Constructor ----------------------------------
+    friend class MSStringBuffer;
+    /*------------------------------- Constructor ----------------------------------
 | The constructor for this class is protected.  It is only called from the     |
 | member function allocate and the static member function                      |
 | MSStringBuffer::initialize.                                                  |
 ------------------------------------------------------------------------------*/
-  MSMBStringBuffer(unsigned bufLength);
-  ~MSMBStringBuffer(void);
+    MSMBStringBuffer(unsigned bufLength);
+    ~MSMBStringBuffer(void);
 };
 
-inline size_t MSMBStringBuffer::charLength(char const *pString_)
+inline size_t MSMBStringBuffer::charLength(char const* pString_)
 {
-  if (*pString_==0) return 1;
-  else return mblen(pString_,MB_LEN_MAX);
+    if (*pString_ == 0)
+        return 1;
+    else
+        return mblen(pString_, MB_LEN_MAX);
 }
 
 inline size_t MSMBStringBuffer::charLength(unsigned pos) const
-{ return charLength(contents()+pos-1); }
+{
+    return charLength(contents() + pos - 1);
+}
 
 inline size_t MSMBStringBuffer::maxCharLength()
-{ return MB_CUR_MAX; }
+{
+    return MB_CUR_MAX;
+}
 
-inline MSBoolean MSMBStringBuffer::isSBC(char const *pString_)
-{ return MSBoolean(charLength(pString_)==1); }
+inline MSBoolean MSMBStringBuffer::isSBC(char const* pString_)
+{
+    return MSBoolean(charLength(pString_) == 1);
+}
 
-#endif 
-
-
+#endif

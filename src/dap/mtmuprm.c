@@ -8,16 +8,15 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/mtm.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void 
-mtmuprm(struct mtm * p)
+void mtmuprm(struct mtm* p)
 {
-  if (p != (struct mtm *) (0)) {
-    noderemove(p->unp);
-    p->up = (void *) (0);
-  }
-  return;
+    if (p != (struct mtm*)(0)) {
+        noderemove(p->unp);
+        p->up = (void*)(0);
+    }
+    return;
 }

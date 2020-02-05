@@ -9,26 +9,24 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSGUI/MSCollapsibleLayout.H>
-#include <AplusGUI/Macros.H>
 #include <AplusGUI/AplusEvent.H>
 #include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSCollapsibleLayout.H>
 
-class AplusCollapsible : public MSCollapsibleLayout
-{
+class AplusCollapsible : public MSCollapsibleLayout {
 public:
-  AplusCollapsible(MSWidget *);
-  ~AplusCollapsible(void);
-  virtual void receiveEvent(MSEvent &);
-  virtual MSBoolean verifyData(V,A) { return MSTrue; }
+    AplusCollapsible(MSWidget*);
+    ~AplusCollapsible(void);
+    virtual void receiveEvent(MSEvent&);
+    virtual MSBoolean verifyData(V, A) { return MSTrue; }
 
-  virtual void addSenderNotify(MSEventSender *);
+    virtual void addSenderNotify(MSEventSender*);
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
-  STANDARD_WIDGET_METHODS_H
+    STANDARD_WIDGET_METHODS_H
 };
-
 
 #endif // AplusPanesHEADER

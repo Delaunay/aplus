@@ -12,11 +12,10 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-void 
-fdsfree(fd_set * p)
+void fdsfree(fd_set* p)
 {
-  if (p != (fd_set *) (0)) {
-    bfree((char *) p);
-  }
-  return;
+    if (p != (fd_set*)(0)) {
+        bfree((char*)p);
+    }
+    return;
 }

@@ -18,11 +18,10 @@
 #include <dap/fletch.h>
 
 /* external function definitions */
-void 
-fletchfree(struct fletch * p)
+void fletchfree(struct fletch* p)
 {
-  if (p != (struct fletch *) (0)) {
-    bfree((char *) (p));
-  }
-  return;
+    if (p != (struct fletch*)(0)) {
+        bfree((char*)(p));
+    }
+    return;
 }

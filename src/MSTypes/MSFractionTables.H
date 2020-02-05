@@ -3,21 +3,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
-typedef struct 
+typedef struct
 {
-  int length;
-  struct 
-  {
-    double  value;
-    char   *fraction;
-  } table[512];
+    int length;
+    struct
+    {
+        double value;
+        char* fraction;
+    } table[512];
 } FractionTable;
 
 extern FractionTable EightsTable;

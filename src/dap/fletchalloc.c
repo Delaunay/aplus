@@ -18,15 +18,15 @@
 #include <dap/fletch.h>
 
 /* external function definitions */
-struct fletch *
+struct fletch*
 fletchalloc(void)
 {
-  struct fletch *p;
+    struct fletch* p;
 
-  p = (struct fletch *) balloc(sizeof(*p));
-  p->c0 = p->c1 = 0;
-  p->modfreq = sizeof(int) >= 4 ? 4102 : 14;
-  p->tilmod = p->modfreq;
+    p = (struct fletch*)balloc(sizeof(*p));
+    p->c0 = p->c1 = 0;
+    p->modfreq = sizeof(int) >= 4 ? 4102 : 14;
+    p->tilmod = p->modfreq;
 
-  return p;
+    return p;
 }

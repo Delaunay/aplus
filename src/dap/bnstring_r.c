@@ -19,66 +19,65 @@
 #include <dap/balloc.h>
 
 /* external function definitions */
-char *
-bnstring_r(char *arg0,...)
+char* bnstring_r(char* arg0, ...)
 {
-  int cnt = 0;
-  int size = 0;
-  int *sp = (int *) (0);
-  char **ap = (char **) (0);
-  char *cp;
-  char *cp_end;
-  int *sizes;
-  char **args;
-  char *r;
-  va_list parg;
+    int cnt = 0;
+    int size = 0;
+    int* sp = (int*)(0);
+    char** ap = (char**)(0);
+    char* cp;
+    char* cp_end;
+    int* sizes;
+    char** args;
+    char* r;
+    va_list parg;
 
-  /* count the number of arguments */
-  va_start(parg, arg0);
-  cp = arg0;
-  while (cp != (char *) (0)) {
-    cnt++;
-    cp = va_arg(parg, char *);
-  }
-  va_end(parg);
+    /* count the number of arguments */
+    va_start(parg, arg0);
+    cp = arg0;
+    while (cp != (char*)(0)) {
+        cnt++;
+        cp = va_arg(parg, char*);
+    }
+    va_end(parg);
 
-  /* allocate a sizes array and an args array */
-  if (((sp = (int *) balloc_r(cnt * sizeof(*sizes))) == (int *) (0))
-      || ((ap = (char **) balloc_r(cnt * sizeof(*args))) == (char **) (0))) {
-    bfree((char *) sp);
-    return (char *) (0);
-  }
-  /* fill sizes and args arrays, also compute total size */
-  va_start(parg, arg0);
-  sizes = sp;
-  args = ap;
-  cp = arg0;
-  while (cp != (char *) (0)) {
-    *ap++ = cp;
-    size += *sp++ = strlen(cp);
-    cp = va_arg(parg, char *);
-  }
-  sp = sizes;
-  ap = args;
-  va_end(parg);
+    /* allocate a sizes array and an args array */
+    if (((sp = (int*)balloc_r(cnt * sizeof(*sizes))) == (int*)(0))
+        || ((ap = (char**)balloc_r(cnt * sizeof(*args))) == (char**)(0))) {
+        bfree((char*)sp);
+        return (char*)(0);
+    }
+    /* fill sizes and args arrays, also compute total size */
+    va_start(parg, arg0);
+    sizes = sp;
+    args = ap;
+    cp = arg0;
+    while (cp != (char*)(0)) {
+        *ap++ = cp;
+        size += * sp++ = strlen(cp);
+        cp = va_arg(parg, char*);
+    }
+    sp = sizes;
+    ap = args;
+    va_end(parg);
 
-  /* allocate space for concatentation */
-  if ((r = (char *) balloc(size + 1)) == (char *) (0)) {
-    bfree((char *) ap);
-    bfree((char *) sp);
-    return (char *) (0);
-  }
-  /* copy arguments into the concatentation area */
-  for (cp_end = (cp = r) + size; cp < cp_end; cp += *sp++) {
-    bcopy(*ap++, cp, *sp);
-  }
-  /* place a terminating NUL */
-  *cp = '\0';
+    /* allocate space for concatentation */
+    if ((r = (char*)balloc(size + 1)) == (char*)(0)) {
+        bfree((char*)ap);
+        bfree((char*)sp);
+        return (char*)(0);
+    }
+    /* copy arguments into the concatentation area */
+    for (cp_end = (cp = r) + size; cp < cp_end; cp += *sp++) {
+        bcopy(*ap++, cp, *sp);
+    }
+    /* place a terminating NUL */
+    *cp = '\0';
 
-  /* free args and sizes */
-  bfree((char *) args);
-  bfree((char *) sizes);
+    /* free args and sizes */
+    bfree((char*)args);
+    bfree((char*)sizes);
 
-  /* return pointer to concatenated strings */
-  return r;
+    /* return pointer to concatenated strings */
+    return r;
 }

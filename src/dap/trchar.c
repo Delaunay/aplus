@@ -8,11 +8,10 @@
 /* contributed by Daniel F. Fisher */
 
 /* external function definitions */
-int 
-trchar(unsigned char *tr, char c)
+int trchar(unsigned char* tr, char c)
 {
-  if (tr != (unsigned char *) (0)) {
-    return (int) tr[(unsigned) (c & 0xff)];
-  }
-  return (int) ((unsigned) (c & 0xff));
+    if (tr != (unsigned char*)(0)) {
+        return (int)tr[(unsigned)(c & 0xff)];
+    }
+    return (int)((unsigned)(c & 0xff));
 }

@@ -3,19 +3,17 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 #include <MSTypes/MSStringTest.H>
 
-template<class T >
-class MSStringTestMemberFn : public MSStringTest
-{
-/*******************************************************************************
+template <class T>
+class MSStringTestMemberFn : public MSStringTest {
+    /*******************************************************************************
   The template class MSStringTestMemberFn is used to provide an
   MSStringTest-type wrapper for particular C++ member functions.  This permits
   such member functions to be used in conjunction with the MSString
@@ -58,33 +56,45 @@ class MSStringTestMemberFn : public MSStringTest
     class MSTypesExport T
 *******************************************************************************/
 public:
-/*------------------------------ Related Types ---------------------------------
+    /*------------------------------ Related Types ---------------------------------
   ConstFn   -Const member function of the appropriate type.
   NonconstFn-Non-const member function of the appropriate type.
 ------------------------------------------------------------------------------*/
-  typedef MSBoolean(T::*ConstFn)(int) const;
-  typedef MSBoolean(T::*NonconstFn)(int);
+    typedef MSBoolean (T::*ConstFn)(int) const;
+    typedef MSBoolean (T::*NonconstFn)(int);
 
-/*------------------------------- Constructors ---------------------------------
+    /*------------------------------- Constructors ---------------------------------
   There are two constructors,one supporting const member functions,the
   other non-const member functions.  The constructors also require an object
   of the class T(non-const object for non-const member functions).
 ------------------------------------------------------------------------------*/
-  MSStringTestMemberFn(const T &object,ConstFn constFn)
-   :MSStringTest(user,(void*)&object),cMF(constFn) {}
-  MSStringTestMemberFn(T &object,NonconstFn nonconstFn)
-   :MSStringTest(user,(void*)&object),ncMF(nonconstFn) {}
+    MSStringTestMemberFn(const T& object, ConstFn constFn)
+        : MSStringTest(user, (void*)&object)
+        , cMF(constFn)
+    {
+    }
+    MSStringTestMemberFn(T& object, NonconstFn nonconstFn)
+        : MSStringTest(user, (void*)&object)
+        , ncMF(nonconstFn)
+    {
+    }
 
-/*-------------------------------- Overrides -----------------------------------
+    /*-------------------------------- Overrides -----------------------------------
   test-Overridden to dispatch a member function against an object.
 ------------------------------------------------------------------------------*/
-  virtual MSBoolean test(int aChar_) const
-   {
-     if (type==cMemFn) return MSBoolean(((const T*)data.user->*cMF)(aChar_)>0);
-     else return MSBoolean(((T*)data.user->*ncMF)(aChar_)>0);
-   }
+    virtual MSBoolean test(int aChar_) const
+    {
+        if (type == cMemFn)
+            return MSBoolean(((const T*)data.user->*cMF)(aChar_) > 0);
+        else
+            return MSBoolean(((T*)data.user->*ncMF)(aChar_) > 0);
+    }
+
 private: /*------------------------ PRIVATE ----------------------------------*/
-  union {ConstFn cMF;NonconstFn ncMF;};
+    union {
+        ConstFn cMF;
+        NonconstFn ncMF;
+    };
 };
 
 #endif // MSStringTestMemberFnHEADER

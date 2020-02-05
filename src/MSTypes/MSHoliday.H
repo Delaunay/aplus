@@ -3,15 +3,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
-#include <MSTypes/MSString.H>
 #include <MSTypes/MSDate.H>
+#include <MSTypes/MSString.H>
 
 #if HAVE_IOSTREAM
 #include <iostream>
@@ -21,36 +20,40 @@ using namespace std;
 class ostream;
 #endif
 
-
 typedef MSString MSResourceCode;
 
-class MSTypesExport MSHoliday : public MSDate 
-{
+class MSTypesExport MSHoliday : public MSDate {
 public:
-  MSHoliday(void);
-  MSHoliday(const MSHoliday&);  
-  MSHoliday(const MSDate&,const MSResourceCode&,const MSString& description_="");
+    MSHoliday(void);
+    MSHoliday(const MSHoliday&);
+    MSHoliday(const MSDate&, const MSResourceCode&, const MSString& description_ = "");
 
-  const MSResourceCode& resourceCode(void) const;
-  const MSString& description(void) const;  
+    const MSResourceCode& resourceCode(void) const;
+    const MSString& description(void) const;
 
-  MSHoliday& operator=(const MSHoliday&);
-  
-  friend MSTypesExport ostream& operator<<(ostream&,const MSHoliday&);
+    MSHoliday& operator=(const MSHoliday&);
+
+    friend MSTypesExport ostream& operator<<(ostream&, const MSHoliday&);
 
 private:
-   MSResourceCode _resourceCode;
-   MSString       _description;
+    MSResourceCode _resourceCode;
+    MSString _description;
 };
 
 // MSHoliday inlines
 inline const MSResourceCode& MSHoliday::resourceCode(void) const
-{ return _resourceCode; }
+{
+    return _resourceCode;
+}
 
 inline const MSString& MSHoliday::description(void) const
-{ return _description; }
+{
+    return _description;
+}
 
 inline MSDate const& key(MSHoliday const& holiday_)
-{ return (MSDate const&)holiday_; }
+{
+    return (MSDate const&)holiday_;
+}
 
 #endif

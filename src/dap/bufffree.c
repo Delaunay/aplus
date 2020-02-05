@@ -12,13 +12,12 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-void 
-bufffree(struct buff * p)
+void bufffree(struct buff* p)
 {
-  if ((p != (struct buff *) (0))
-      && (--(p->ref) <= 0)) {
-    bfree(p->min);
-    bfree((char *) p);
-  }
-  return;
+    if ((p != (struct buff*)(0))
+        && (--(p->ref) <= 0)) {
+        bfree(p->min);
+        bfree((char*)p);
+    }
+    return;
 }

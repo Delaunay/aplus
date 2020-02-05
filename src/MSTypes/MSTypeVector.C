@@ -3,12 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 #include <MSTypes/MSTypeVector.H>
 
@@ -20,123 +19,111 @@
 #include <MSTypes/MSTypeData.C>
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector() : MSObjectVector<Type>()
+MSTypeVector<Type>::MSTypeVector()
+    : MSObjectVector<Type>()
 {
 }
-
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector (unsigned int length_) : MSObjectVector<Type> (length_)
+MSTypeVector<Type>::MSTypeVector(unsigned int length_)
+    : MSObjectVector<Type>(length_)
 {
 }
-
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector (unsigned int length_, const Type & filler_)
-  : MSObjectVector<Type> (length_, filler_)
+MSTypeVector<Type>::MSTypeVector(unsigned int length_, const Type& filler_)
+    : MSObjectVector<Type>(length_, filler_)
 {
 }
-
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector (const MSTypeVector<Type> & vect_) : MSObjectVector<Type> (vect_)
+MSTypeVector<Type>::MSTypeVector(const MSTypeVector<Type>& vect_)
+    : MSObjectVector<Type>(vect_)
 {
 }
-
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector (const MSBaseVector<Type,MSVectorModelAllocator<Type> > & vect_) : MSObjectVector<Type> (vect_)
+MSTypeVector<Type>::MSTypeVector(const MSBaseVector<Type, MSVectorModelAllocator<Type>>& vect_)
+    : MSObjectVector<Type>(vect_)
 {
 }
-
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector (const char *pString_) : MSObjectVector<Type> (pString_)
+MSTypeVector<Type>::MSTypeVector(const char* pString_)
+    : MSObjectVector<Type>(pString_)
 {
 }
-
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector (MSTypeData<Type,MSVectorModelAllocator<Type> > *pData_, unsigned int len_)
-  : MSObjectVector<Type> (pData_, len_)
+MSTypeVector<Type>::MSTypeVector(MSTypeData<Type, MSVectorModelAllocator<Type>>* pData_, unsigned int len_)
+    : MSObjectVector<Type>(pData_, len_)
 {
 }
-
 
 template <class Type>
-MSTypeVector<Type>::MSTypeVector (const Type *pElements_, unsigned int len_)
-  : MSObjectVector<Type> (pElements_, len_)
+MSTypeVector<Type>::MSTypeVector(const Type* pElements_, unsigned int len_)
+    : MSObjectVector<Type>(pElements_, len_)
 {
 }
-
 
 template <class Type>
 MSTypeVector<Type>::~MSTypeVector()
 {
 }
 
-
 template <class Type>
-MSTypeVector<Type> & MSTypeVector<Type>::operator= (const MSTypeVector<Type> & vect_)
+MSTypeVector<Type>& MSTypeVector<Type>::operator=(const MSTypeVector<Type>& vect_)
 {
-  return (MSTypeVector<Type> &) MSObjectVector<Type>::operator= (vect_);
+    return (MSTypeVector<Type>&)MSObjectVector<Type>::operator=(vect_);
 }
 
-
 template <class Type>
-MSTypeVector<Type> & MSTypeVector<Type>::operator= (const MSBaseVector<Type,MSVectorModelAllocator<Type> > & vect_)
+MSTypeVector<Type>& MSTypeVector<Type>::operator=(const MSBaseVector<Type, MSVectorModelAllocator<Type>>& vect_)
 {
-  return (*this = (MSTypeVector<Type> &)vect_);
+    return (*this = (MSTypeVector<Type>&)vect_);
 }
 
-
 template <class Type>
-MSTypeVector<Type> & MSTypeVector<Type>::operator= (const Type & value_)
+MSTypeVector<Type>& MSTypeVector<Type>::operator=(const Type& value_)
 {
-  return (MSTypeVector<Type> &) MSObjectVector<Type>::operator= (value_);
+    return (MSTypeVector<Type>&)MSObjectVector<Type>::operator=(value_);
 }
 
-
 template <class Type>
-MSTypeVector<Type> & MSTypeVector<Type>::operator= (const char *pString_)
+MSTypeVector<Type>& MSTypeVector<Type>::operator=(const char* pString_)
 {
-  return (MSTypeVector<Type> &) MSObjectVector<Type>::operator= (pString_);
+    return (MSTypeVector<Type>&)MSObjectVector<Type>::operator=(pString_);
 }
-
 
 template <class Type>
 MSString MSTypeVector<Type>::className() const
 {
-  return name();
+    return name();
 }
-
 
 template <class Type>
-const MSSymbol & MSTypeVector<Type>::type() const
+const MSSymbol& MSTypeVector<Type>::type() const
 {
-  return symbol();
+    return symbol();
 }
-
 
 template <class Type>
-MSModel * MSTypeVector<Type>::clone() const
+MSModel* MSTypeVector<Type>::clone() const
 {
-  return new MSTypeVector<Type> (*this);
+    return new MSTypeVector<Type>(*this);
 }
-
 
 template <class Type>
-MSModel * MSTypeVector<Type>::create() const
+MSModel* MSTypeVector<Type>::create() const
 {
-  return new MSTypeVector<Type>;
+    return new MSTypeVector<Type>;
 }
-
 
 template <class Type>
-const MSSymbol & MSTypeVector<Type>::symbol()
+const MSSymbol& MSTypeVector<Type>::symbol()
 {
-  static MSSymbol sym = MSSymbol(name());
-  return sym;
+    static MSSymbol sym = MSSymbol(name());
+    return sym;
 }
 
-#endif  // MSTypeVectorIMPLEMENTATION
+#endif // MSTypeVectorIMPLEMENTATION

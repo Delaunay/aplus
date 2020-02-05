@@ -12,13 +12,13 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-struct buff *
+struct buff*
 buffalloc(void)
 {
-  struct buff *p;
+    struct buff* p;
 
-  p = (struct buff *) balloc(sizeof(*p));
-  p->ref = 1;
-  p->min = p->get = p->put = p->max = (char *) (0);
-  return p;
+    p = (struct buff*)balloc(sizeof(*p));
+    p->ref = 1;
+    p->min = p->get = p->put = p->max = (char*)(0);
+    return p;
 }

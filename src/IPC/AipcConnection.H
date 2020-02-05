@@ -9,111 +9,116 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <a/k.h>
 #include <a/fncdcls.h>
+#include <a/k.h>
 #include <dap/Warn.h>
 
 #if defined(_AIX)
 #include <sys/select.h>
 #endif
 
-#include <MSIPC/MSProtocolConnection.H>
 #include <AipcService.H>
+#include <MSIPC/MSProtocolConnection.H>
 
 #include <AipcAttributes.H>
 #include <AipcHostPortProtocol.H>
 
-class AipcConnection : public MSProtocolConnection<A>, public AipcService
-{
- public:
-  static I ServiceType;
+class AipcConnection : public MSProtocolConnection<A>, public AipcService {
+public:
+    static I ServiceType;
 
- protected:
-  AipcAttributes _attrs;
+protected:
+    AipcAttributes _attrs;
 
-  // subroutine methods
-  void init(void);
-  void initAttrs(void);
-  int readFileLength(void);
-  
- public:
-  // AipcConnection (Service Control Block) Constructors;
-  AipcConnection(C *name_,C *host_,I port_,A cbfunc_);
-  AipcConnection(C *name_, A cbfunc_);
-  AipcConnection(AipcHostPortProtocol &ahpp_, A cbfunc_);
-  AipcConnection(C *name_,int fd_, A cbfunc_,AipcAttributes &attrs_);
-  virtual ~AipcConnection(void);
+    // subroutine methods
+    void init(void);
+    void initAttrs(void);
+    int readFileLength(void);
 
-  // M:Flags;
-  void turnNoDelayOn(void);
-  void turnNoDelayOff(void);
-  MSBoolean isNoDelay(void) {return _attrs.noDelay();}
+public:
+    // AipcConnection (Service Control Block) Constructors;
+    AipcConnection(C* name_, C* host_, I port_, A cbfunc_);
+    AipcConnection(C* name_, A cbfunc_);
+    AipcConnection(AipcHostPortProtocol& ahpp_, A cbfunc_);
+    AipcConnection(C* name_, int fd_, A cbfunc_, AipcAttributes& attrs_);
+    virtual ~AipcConnection(void);
 
-  void turnInReadOn(void) {set(MSProtocolConnection<A>::Read);}
-  void turnInReadOff(void) {unset(MSProtocolConnection<A>::Read);}
-  MSBoolean isInRead(void) {return isSet(MSProtocolConnection<A>::Read);}
+    // M:Flags;
+    void turnNoDelayOn(void);
+    void turnNoDelayOff(void);
+    MSBoolean isNoDelay(void) { return _attrs.noDelay(); }
 
-  void turnInWriteOn(void) {set(MSProtocolConnection<A>::Write);}
-  void turnInWriteOff(void) {unset(MSProtocolConnection<A>::Write);}
-  MSBoolean isInWrite(void) {return isSet(MSProtocolConnection<A>::Write);}
+    void turnInReadOn(void) { set(MSProtocolConnection<A>::Read); }
+    void turnInReadOff(void) { unset(MSProtocolConnection<A>::Read); }
+    MSBoolean isInRead(void) { return isSet(MSProtocolConnection<A>::Read); }
 
-  void turnReadPauseOn(void);
-  void turnReadPauseOff(void);
-  MSBoolean isReadPause(void) {
-    return isSet(MSProtocolConnection<A>::ReadPause);}
+    void turnInWriteOn(void) { set(MSProtocolConnection<A>::Write); }
+    void turnInWriteOff(void) { unset(MSProtocolConnection<A>::Write); }
+    MSBoolean isInWrite(void) { return isSet(MSProtocolConnection<A>::Write); }
 
-  void turnWritePauseOn(void);
-  void turnWritePauseOff(void);
-  MSBoolean isWritePause(void) {
-    return isSet(MSProtocolConnection<A>::WritePause);}
+    void turnReadPauseOn(void);
+    void turnReadPauseOff(void);
+    MSBoolean isReadPause(void)
+    {
+        return isSet(MSProtocolConnection<A>::ReadPause);
+    }
 
-  void turnRetryOn(void) {_retry=MSConnection::Yes;}
-  void turnRetryOff(void) {_retry=MSConnection::No;}
-  MSBoolean isRetry(void) {return (MSConnection::Yes==_retry)?MSTrue:MSFalse;}
+    void turnWritePauseOn(void);
+    void turnWritePauseOff(void);
+    MSBoolean isWritePause(void)
+    {
+        return isSet(MSProtocolConnection<A>::WritePause);
+    }
 
-  void turnInResetOn(void) {set(MSProtocolConnection<A>::Reset);}
-  void turnInResetOff(void) {unset(MSProtocolConnection<A>::Reset);}
-  MSBoolean isInReset(void) {return isSet(MSProtocolConnection<A>::Reset);}
+    void turnRetryOn(void) { _retry = MSConnection::Yes; }
+    void turnRetryOff(void) { _retry = MSConnection::No; }
+    MSBoolean isRetry(void) { return (MSConnection::Yes == _retry) ? MSTrue : MSFalse; }
 
-  // M:Attribute interface;
-  virtual A setableAttrlist(void);
-  virtual A getableAttrlist(void);
-  virtual MSBoolean setAttr(C *attr_,A aobj);
-  virtual A getAttr(C *attr_);
+    void turnInResetOn(void) { set(MSProtocolConnection<A>::Reset); }
+    void turnInResetOff(void) { unset(MSProtocolConnection<A>::Reset); }
+    MSBoolean isInReset(void) { return isSet(MSProtocolConnection<A>::Reset); }
 
-  // M:Callbacks;
-  virtual void readNotify(const A&);
-  virtual void doConnect(void);
-  virtual void connectNotify(void);
-  virtual void sentNotify(int);
-  virtual void resetNotify(MSProtocolConnection<A>::State);
-  virtual void resetNotify(const C *errmsg_);
-  virtual void resetWithError(const C *errmsg_){reset();resetNotify(errmsg_);}
-  virtual void resetWithError(State){resetWithError("unknown State");}
+    // M:Attribute interface;
+    virtual A setableAttrlist(void);
+    virtual A getableAttrlist(void);
+    virtual MSBoolean setAttr(C* attr_, A aobj);
+    virtual A getAttr(C* attr_);
 
-  // M:Other methods;
-  // C *name(void) {return (C*)MSProtocolConnection<A>::name().string();}
-  virtual void initFromListener(void);
-  virtual I serviceType(void) {return AipcConnection::ServiceType;}
-  virtual int send(const A &aobj)
-  {
-    static char fmt[]="this connection does not send\n";
-    Warn(fmt);
-    return aobj?0:0;
-  }
-  virtual void reset(void);
-  MSBoolean isOpen(void) {return(-1==fd())?MSFalse:MSTrue;}
-  A writeQueueStatus(void);
-  A readQueueStatus(void);
+    // M:Callbacks;
+    virtual void readNotify(const A&);
+    virtual void doConnect(void);
+    virtual void connectNotify(void);
+    virtual void sentNotify(int);
+    virtual void resetNotify(MSProtocolConnection<A>::State);
+    virtual void resetNotify(const C* errmsg_);
+    virtual void resetWithError(const C* errmsg_)
+    {
+        reset();
+        resetNotify(errmsg_);
+    }
+    virtual void resetWithError(State) { resetWithError("unknown State"); }
 
-  // M:Syncronous Send and Read;
-  virtual A syncSendCover(A,A){R aplus_nl;}
-  virtual A syncReadCover(A){R aplus_nl;}
-  virtual A syncTimeout(A){R aplus_nl;}
+    // M:Other methods;
+    // C *name(void) {return (C*)MSProtocolConnection<A>::name().string();}
+    virtual void initFromListener(void);
+    virtual I serviceType(void) { return AipcConnection::ServiceType; }
+    virtual int send(const A& aobj)
+    {
+        static char fmt[] = "this connection does not send\n";
+        Warn(fmt);
+        return aobj ? 0 : 0;
+    }
+    virtual void reset(void);
+    MSBoolean isOpen(void) { return (-1 == fd()) ? MSFalse : MSTrue; }
+    A writeQueueStatus(void);
+    A readQueueStatus(void);
 
-  int openSync(int timeout);
+    // M:Syncronous Send and Read;
+    virtual A syncSendCover(A, A) { R aplus_nl; }
+    virtual A syncReadCover(A) { R aplus_nl; }
+    virtual A syncTimeout(A) { R aplus_nl; }
+
+    int openSync(int timeout);
 };
 
-
 #endif
-

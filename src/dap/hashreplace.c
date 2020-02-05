@@ -8,25 +8,24 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/hash.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void *
-hashreplace(struct hash * p, void *key, void *val)
+void* hashreplace(struct hash* p, void* key, void* val)
 {
-  if ((p != (struct hash *) (0))
-      && (key != (void *) (0))) {
-    struct node *hnp;
-    struct node *np;
+    if ((p != (struct hash*)(0))
+        && (key != (void*)(0))) {
+        struct node* hnp;
+        struct node* np;
 
-    hnp = p->tbl + ((*(p->hashfunc)) (key) % p->tblsz);
-    if ((np = (*(p->find)) (hnp, key)) != (struct node *) (0)) {
-      void *oldval = (*(p->value)) (np);
-      (*(p->replace)) (np, val);
-      return oldval;
+        hnp = p->tbl + ((*(p->hashfunc))(key) % p->tblsz);
+        if ((np = (*(p->find))(hnp, key)) != (struct node*)(0)) {
+            void* oldval = (*(p->value))(np);
+            (*(p->replace))(np, val);
+            return oldval;
+        }
+        (void)(*(p->insert))(hnp, key, val);
     }
-    (void) (*(p->insert)) (hnp, key, val);
-  }
-  return (void *) (0);
+    return (void*)(0);
 }

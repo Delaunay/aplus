@@ -8,11 +8,10 @@
 /* contributed by Daniel F. Fisher */
 
 /* external function definitions */
-void 
-bfree(char *p)
+void bfree(char* p)
 {
-  if (p != (char *) (0)) {
-    free(p);
-  }
-  return;
+    if (p != (char*)(0)) {
+        free(p);
+    }
+    return;
 }

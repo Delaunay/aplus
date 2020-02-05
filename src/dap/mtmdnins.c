@@ -8,16 +8,15 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/mtm.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void 
-mtmdnins(struct mtm * p, struct node * hp, void *dp)
+void mtmdnins(struct mtm* p, struct node* hp, void* dp)
 {
-  if (p != (struct mtm *) (0)) {
-    p->dp = dp;
-    nodeinsert(p->dnp, hp);
-  }
-  return;
+    if (p != (struct mtm*)(0)) {
+        p->dp = dp;
+        nodeinsert(p->dnp, hp);
+    }
+    return;
 }

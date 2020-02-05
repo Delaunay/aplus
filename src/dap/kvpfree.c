@@ -12,11 +12,10 @@
 #include <dap/kvp.h>
 
 /* external function definitions */
-void 
-kvpfree(struct kvp * p)
+void kvpfree(struct kvp* p)
 {
-  if (p != (struct kvp *) (0)) {
-    bfree((char *) p);
-  }
-  return;
+    if (p != (struct kvp*)(0)) {
+        bfree((char*)p);
+    }
+    return;
 }

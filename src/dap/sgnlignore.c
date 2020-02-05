@@ -13,27 +13,26 @@
 #include <dap/sgnl.h>
 
 /* external function definitions */
-void 
-sgnlignore(int n)
+void sgnlignore(int n)
 {
-  static char fnc[] = "sgnlignore";
+    static char fnc[] = "sgnlignore";
 
-  if ((n >= 1) && (n < NSIG)) {
-    struct sgnl *p = sgnls + n;
+    if ((n >= 1) && (n < NSIG)) {
+        struct sgnl* p = sgnls + n;
 
-    struct sigaction *ovp;
-    struct sigaction vec;
+        struct sigaction* ovp;
+        struct sigaction vec;
 
-    ovp = (p->set == 0) ? &(p->orig) : (struct sigaction *) (0);
-    vec.sa_handler = SIG_IGN;
-    sigemptyset(&vec.sa_mask);
-    vec.sa_flags = SA_RESTART;
-    if (sigaction(n, &vec, ovp) != 0) {
-      Abort("%t %s(): abort: sigaction(%d): %m\n", fnc, n);
+        ovp = (p->set == 0) ? &(p->orig) : (struct sigaction*)(0);
+        vec.sa_handler = SIG_IGN;
+        sigemptyset(&vec.sa_mask);
+        vec.sa_flags = SA_RESTART;
+        if (sigaction(n, &vec, ovp) != 0) {
+            Abort("%t %s(): abort: sigaction(%d): %m\n", fnc, n);
+        }
+
+        p->set = 1;
+        p->func = noop;
     }
-
-    p->set = 1;
-    p->func = noop;
-  }
-  return;
+    return;
 }

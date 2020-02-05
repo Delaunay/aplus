@@ -8,23 +8,22 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <errno.h>
 #include <dap/Warn.h>
 #include <dap/misc.h>
+#include <errno.h>
 
 /* external function definitions */
-void 
-doclose(int fd)
+void doclose(int fd)
 {
-  static char fnc[] = "doclose";
+    static char fnc[] = "doclose";
 
-  if (fd >= 0) {
-    while (close(fd) != 0) {
-      if (errno != EINTR) {
-	Warn("%t %s(): error: close(%d): %m\n", fnc, fd);
-	break;
-      }
+    if (fd >= 0) {
+        while (close(fd) != 0) {
+            if (errno != EINTR) {
+                Warn("%t %s(): error: close(%d): %m\n", fnc, fd);
+                break;
+            }
+        }
     }
-  }
-  return;
+    return;
 }

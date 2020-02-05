@@ -8,7 +8,8 @@
 /* contributed by Daniel F. Fisher */
 
 /* external function definitions */
-void slpqimmed(void (*func) (), void *arg) {
-  if (func != (void (*) ()) (0))
-    (*func) (arg);
+void slpqimmed(void (*func)(), void* arg)
+{
+    if (func != (void (*)())(0))
+        (*func)(arg);
 }

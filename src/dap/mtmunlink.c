@@ -11,9 +11,8 @@
 #include <dap/mtm.h>
 
 /* external function definitions */
-void 
-mtmunlink(struct mtm * p)
+void mtmunlink(struct mtm* p)
 {
-  mtmfree(p);
-  return;
+    mtmfree(p);
+    return;
 }

@@ -8,12 +8,12 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <sys/types.h>
 #include <dap/tod.h>
+#include <sys/types.h>
 
 /* external function definitions */
-time_t 
+time_t
 todsec(void)
 {
-  return (time_t) ((tod())->tv_sec);
+    return (time_t)((tod())->tv_sec);
 }

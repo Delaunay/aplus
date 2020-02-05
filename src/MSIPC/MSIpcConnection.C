@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -12,15 +12,15 @@
 
 #include <MSIPC/MSProtocolConnection.C>
 
-#if defined (MS_EDG_TEMPLATE_INSTANTIATION)
-#pragma instantiate MSProtocolConnection<XDR>
+#if defined(MS_EDG_TEMPLATE_INSTANTIATION)
+#pragma instantiate MSProtocolConnection < XDR>
 #endif
 
 #if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSProtocolConnection<XDR>)
+#pragma define(MSProtocolConnection <XDR>)
 #endif
 
-#if defined (MS_STD_TEMPLATE_INSTANTIATION)
+#if defined(MS_STD_TEMPLATE_INSTANTIATION)
 template class MSProtocolConnection<XDR>;
 #endif
 
@@ -28,20 +28,20 @@ template class MSProtocolConnection<XDR>;
 template MSProtocolConnection<XDR>;
 #endif
 
-#endif  //MSTK_MANUAL_INSTANTIATION
+#endif //MSTK_MANUAL_INSTANTIATION
 
-MSIpcConnection::MSIpcConnection(const char *name_, const char *host_, int port_) :
-MSProtocolConnection<XDR>(name_, host_, port_)
+MSIpcConnection::MSIpcConnection(const char* name_, const char* host_, int port_)
+    : MSProtocolConnection<XDR>(name_, host_, port_)
 {
 }
 
-MSIpcConnection::MSIpcConnection(const char *name_, const MSString &serviceName_) :
-MSProtocolConnection<XDR>(name_, serviceName_)
+MSIpcConnection::MSIpcConnection(const char* name_, const MSString& serviceName_)
+    : MSProtocolConnection<XDR>(name_, serviceName_)
 {
 }
 
-MSIpcConnection::MSIpcConnection(const char *name_, int fd_) :
-MSProtocolConnection<XDR>(name_, fd_)
+MSIpcConnection::MSIpcConnection(const char* name_, int fd_)
+    : MSProtocolConnection<XDR>(name_, fd_)
 {
 }
 
@@ -51,23 +51,22 @@ void MSIpcConnection::doRead(void)
 {
 }
 
-int MSIpcConnection::send(const XDR &)
+int MSIpcConnection::send(const XDR&)
 {
-  return 0;
+    return 0;
 }
 
-int MSIpcConnection::syncSend(const XDR &,double)
+int MSIpcConnection::syncSend(const XDR&, double)
 {
-  return 0;
+    return 0;
 }
 
-int MSIpcConnection::syncSend(const XDR &,int,int,MSBoolean)
+int MSIpcConnection::syncSend(const XDR&, int, int, MSBoolean)
 {
-  return 0;
+    return 0;
 }
 
-int MSIpcConnection::doSyncRead(XDR &)
+int MSIpcConnection::doSyncRead(XDR&)
 {
-  return 0;
+    return 0;
 }
-

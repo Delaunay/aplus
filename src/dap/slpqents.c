@@ -14,4 +14,4 @@
 #include <dap/slpq.h>
 
 /* external data definitions */
-struct node slpqents = {&slpqents, &slpqents, (void *) (0)};
+struct node slpqents = { &slpqents, &slpqents, (void*)(0) };

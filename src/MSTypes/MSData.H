@@ -3,12 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 #include <MSTypes/MSDefines.H>
 
@@ -16,25 +15,23 @@
 #include <MSTypes/MSMutex.H>
 #endif
 
-class MSTypesExport MSData
-{
+class MSTypesExport MSData {
 protected:
-#ifdef MS_MULTI_THREAD    
-  MSMutex   _mutex;      // ref count lock
+#ifdef MS_MULTI_THREAD
+    MSMutex _mutex; // ref count lock
 #endif
-  unsigned _size;
-  unsigned _refCount;
+    unsigned _size;
+    unsigned _refCount;
 
 public:
-  MSData (unsigned int =0);
-  ~MSData();
+    MSData(unsigned int = 0);
+    ~MSData();
 
-  INLINELINKAGE unsigned size() const;
-  INLINELINKAGE unsigned refCount() const;
+    INLINELINKAGE unsigned size() const;
+    INLINELINKAGE unsigned refCount() const;
 
-  static unsigned int computeSize (unsigned int);
+    static unsigned int computeSize(unsigned int);
 };
-
 
 //
 // MSDataAlignment<Type> structure is a special way of calculating
@@ -53,7 +50,7 @@ public:
 // MSData ends and where the array should start.  That's why we need
 // an auxiliary structure - MSDataAlignment<Type>.
 //
-// MSDataAlignment<Type> structure can be used to find out how MSData 
+// MSDataAlignment<Type> structure can be used to find out how MSData
 // should be aligned when it's followed by an array of elements of
 // type Type.  To get the *real* size of MSData (including possible
 // alignment), we can just use the offsetof() macro to find out where
@@ -61,16 +58,15 @@ public:
 // This can be done in subclasses of MSData (such as MSTypeData<Type>)
 // to calculate the total number of bytes to be allocated considering
 // alignment issues.
-//  
+//
 template <class Type>
-struct MSDataAlignment
-{
-  MSData _msData;
-  Type   _pElements[1];
+struct MSDataAlignment {
+    MSData _msData;
+    Type _pElements[1];
 };
 
 #ifndef MS_NO_INLINES
 #include <MSTypes/MSDataInlines.C>
-#endif  // MS_NO_INLINES
+#endif // MS_NO_INLINES
 
-#endif  // MSDataHEADER
+#endif // MSDataHEADER

@@ -20,10 +20,9 @@
  */
 
 /* external function definitions */
-int 
-ulbetween(long unsigned int test, long unsigned int low, long unsigned int high)
+int ulbetween(long unsigned int test, long unsigned int low, long unsigned int high)
 {
-  if ((test - low) <= (high - low))
-    return 1;
-  return 0;
+    if ((test - low) <= (high - low))
+        return 1;
+    return 0;
 }

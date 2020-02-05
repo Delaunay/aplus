@@ -1,17 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <MSGUI/MSParagraph.H>
+#include <MSGUI/MSPointerArray.H>
+#include <MSGUI/MSPrintManager.H>
+#include <MSGUI/MSTableColumn.H>
 #include <MSGUI/MSTrace.H>
 #include <MSGUI/MSTraceSet.H>
-#include <MSGUI/MSParagraph.H>
-#include <MSGUI/MSTableColumn.H>
-#include <MSGUI/MSPrintManager.H>
-#include <MSGUI/MSPointerArray.H>
 
 // Specializations for the MSGUI objects
 
@@ -19,21 +19,21 @@
 #include <MSGUI/MSPointerArray.C>
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
-#pragma instantiate MSPointerArray<MSTrace>
-#pragma instantiate MSPointerArray<MSTraceSet>
-#pragma instantiate MSPointerArray<MSParagraph>
-#pragma instantiate MSPointerArray<MSPrintItem>
-#pragma instantiate MSPointerArray<MSPrintManager>
-#pragma instantiate MSPointerArray<MSTableColumn>
+#pragma instantiate MSPointerArray < MSTrace>
+#pragma instantiate MSPointerArray < MSTraceSet>
+#pragma instantiate MSPointerArray < MSParagraph>
+#pragma instantiate MSPointerArray < MSPrintItem>
+#pragma instantiate MSPointerArray < MSPrintManager>
+#pragma instantiate MSPointerArray < MSTableColumn>
 #endif
 
 #if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define (MSPointerArray<MSTrace>)
-#pragma define (MSPointerArray<MSTraceSet>)
-#pragma define (MSPointerArray<MSParagraph>)
-#pragma define (MSPointerArray<MSPrintItem>)
-#pragma define (MSPointerArray<MSPrintManager>)
-#pragma define (MSPointerArray<MSTableColumn>)
+#pragma define(MSPointerArray <MSTrace>)
+#pragma define(MSPointerArray <MSTraceSet>)
+#pragma define(MSPointerArray <MSParagraph>)
+#pragma define(MSPointerArray <MSPrintItem>)
+#pragma define(MSPointerArray <MSPrintManager>)
+#pragma define(MSPointerArray <MSTableColumn>)
 #endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)

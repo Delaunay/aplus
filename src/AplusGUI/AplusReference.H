@@ -9,28 +9,27 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSGUI/MSWidgetCommon.H>
-#include <AplusGUI/Macros.H>
-#include <AplusGUI/AplusModel.H>
 #include <AplusGUI/AplusEvent.H>
+#include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSWidgetCommon.H>
 
-class AplusReference : public MSWidgetCommon
-{
+class AplusReference : public MSWidgetCommon {
 public:
-  AplusReference(MSWidget *);
-  ~AplusReference(void);
+    AplusReference(MSWidget*);
+    ~AplusReference(void);
 
-  virtual void addSenderNotify(MSEventSender *);
-  virtual void receiveEvent(MSEvent &);
+    virtual void addSenderNotify(MSEventSender*);
+    virtual void receiveEvent(MSEvent&);
 
-  virtual MSBoolean verifyData(V,A) { return MSTrue; }
-  virtual void update(V,int,int,int) {}
-  virtual void update(const MSIndexVector& v_) {  MSView::update(v_); }
-  virtual void update(V,A,A,I) {}
+    virtual MSBoolean verifyData(V, A) { return MSTrue; }
+    virtual void update(V, int, int, int) {}
+    virtual void update(const MSIndexVector& v_) { MSView::update(v_); }
+    virtual void update(V, A, A, I) {}
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
-  STANDARD_WIDGET_METHODS_H
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
+    STANDARD_WIDGET_METHODS_H
 };
 
 #endif // AplusReferenceHEADER

@@ -15,28 +15,26 @@
  * given list or argument.
  */
 
-
 /* external data declarations */
 extern int args_argpos;
 extern int args_index;
-extern char *args_value;
+extern char* args_value;
 
 /* external function declarations */
 #if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
-# ifdef __cplusplus
-    extern "C" {
-# endif
-      extern int argsfirst(int, char**);
-      extern int argsgetopt(int, char**,char *);
-      extern void argsnext(int, char**);
-# ifdef __cplusplus
-    }
-# endif
+#ifdef __cplusplus
+extern "C" {
+#endif
+extern int argsfirst(int, char**);
+extern int argsgetopt(int, char**, char*);
+extern void argsnext(int, char**);
+#ifdef __cplusplus
+}
+#endif
 #else
-  extern int argsfirst();
-  extern int argsgetopt();
-  extern void argsnext();
+extern int argsfirst();
+extern int argsgetopt();
+extern void argsnext();
 #endif
 
 #endif
-

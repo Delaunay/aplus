@@ -12,12 +12,11 @@
 #include <dap/hpp.h>
 
 /* external function definitions */
-void 
-hppfree(struct hpp * p)
+void hppfree(struct hpp* p)
 {
-  if (p != (struct hpp *) (0)) {
-    bfree(p->host);
-    bfree((char *) p);
-  }
-  return;
+    if (p != (struct hpp*)(0)) {
+        bfree(p->host);
+        bfree((char*)p);
+    }
+    return;
 }

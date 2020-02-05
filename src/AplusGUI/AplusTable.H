@@ -9,53 +9,52 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSGUI/MSTable.H>
-#include <AplusGUI/Macros.H>
-#include <AplusGUI/AplusModel.H>
 #include <AplusGUI/AplusCommon.H>
+#include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSTable.H>
 
 class AplusTableColumn;
 
-class AplusTable : public MSTable
-{
-  friend class AplusTableColumn;
-  
+class AplusTable : public MSTable {
+    friend class AplusTableColumn;
+
 public:
-  AplusTable(MSWidget *);
-  ~AplusTable(void);
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    AplusTable(MSWidget*);
+    ~AplusTable(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
-  void grandTotalTextA(::A grandTotalTextA_) {_grandTotalTextA=grandTotalTextA_;}
-  ::A grandTotalTextA(void) {return _grandTotalTextA;}
-  
+    void grandTotalTextA(::A grandTotalTextA_) { _grandTotalTextA = grandTotalTextA_; }
+    ::A grandTotalTextA(void) { return _grandTotalTextA; }
+
 protected:
-  MSBoolean verifyColumn(::A);
-  virtual MSBoolean verifyData(V,::A);
-  Font getVFont(V);
-  void variables(V *,int);
-  virtual void addSenderNotify(MSEventSender *);
-  virtual void receiveEvent(MSEvent &);
-  
-  virtual void updateData(void);
-  virtual void update(V,int,int,UpdateType);
-  virtual void update(V,::A,::A,I);
-  virtual void update(const MSIndexVector &v_) {MSTable::update(v_);}
-  virtual void updateTitle(void);
-  virtual void updateBackground(unsigned long);
-  virtual void updateForeground(unsigned long);
-  virtual void updateFont(Font);
-  virtual unsigned long cellForeground(unsigned, unsigned);
-  virtual unsigned long cellBackground(unsigned, unsigned);
-  virtual void createCycle(int, int);
-  virtual void shuffleColumns(MSIndexVector &);
+    MSBoolean verifyColumn(::A);
+    virtual MSBoolean verifyData(V, ::A);
+    Font getVFont(V);
+    void variables(V*, int);
+    virtual void addSenderNotify(MSEventSender*);
+    virtual void receiveEvent(MSEvent&);
 
-  MSUnsignedLongVector getCycleColors(int, int) const;
-  void referenceCB(void);
+    virtual void updateData(void);
+    virtual void update(V, int, int, UpdateType);
+    virtual void update(V, ::A, ::A, I);
+    virtual void update(const MSIndexVector& v_) { MSTable::update(v_); }
+    virtual void updateTitle(void);
+    virtual void updateBackground(unsigned long);
+    virtual void updateForeground(unsigned long);
+    virtual void updateFont(Font);
+    virtual unsigned long cellForeground(unsigned, unsigned);
+    virtual unsigned long cellBackground(unsigned, unsigned);
+    virtual void createCycle(int, int);
+    virtual void shuffleColumns(MSIndexVector&);
 
-  ::A _grandTotalTextA;
+    MSUnsignedLongVector getCycleColors(int, int) const;
+    void referenceCB(void);
 
-  STANDARD_WIDGET_METHODS_H
+    ::A _grandTotalTextA;
+
+    STANDARD_WIDGET_METHODS_H
 };
 
-#endif  //AplusTableHEADER
+#endif //AplusTableHEADER

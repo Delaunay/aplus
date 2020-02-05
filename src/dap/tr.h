@@ -9,7 +9,6 @@
 /*                                                                           */
 /*****************************************************************************/
 
-
 /* external macro declarations */
 #define TRCHAR(tr, c)		((int)((tr)[(unsigned)((c)&0xff)))
 
@@ -20,15 +19,14 @@ extern unsigned char tr_quadav[];
 
 /* external function declarations */
 #if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
-# ifdef __cplusplus
+#ifdef __cplusplus
 extern "C" {
-# endif
-  extern int trchar(unsigned char *, char); /* translate char using table */
-# ifdef __cplusplus
+#endif
+extern int trchar(unsigned char*, char); /* translate char using table */
+#ifdef __cplusplus
 }
-# endif
+#endif
 #else
-  extern int trchar();		            /* translate char using table */
+extern int trchar(); /* translate char using table */
 #endif
 #endif
-

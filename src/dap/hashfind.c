@@ -8,22 +8,21 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/hash.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void *
-hashfind(struct hash * p, void *key)
+void* hashfind(struct hash* p, void* key)
 {
-  if ((p != (struct hash *) (0))
-      && (key != (void *) (0))) {
-    struct node *hnp;
-    struct node *np;
+    if ((p != (struct hash*)(0))
+        && (key != (void*)(0))) {
+        struct node* hnp;
+        struct node* np;
 
-    hnp = p->tbl + ((*(p->hashfunc)) (key) % p->tblsz);
-    if ((np = (*(p->find)) (hnp, key)) != (struct node *) (0)) {
-      return (*(p->value)) (np);
+        hnp = p->tbl + ((*(p->hashfunc))(key) % p->tblsz);
+        if ((np = (*(p->find))(hnp, key)) != (struct node*)(0)) {
+            return (*(p->value))(np);
+        }
     }
-  }
-  return (void *) (0);
+    return (void*)(0);
 }

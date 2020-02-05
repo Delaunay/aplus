@@ -9,21 +9,20 @@
 
 /* header file inclusions */
 #include <dap/chan.h>
+#include <dap/misc.h>
 #include <dap/sgnl.h>
 #include <dap/slpq.h>
 #include <dap/timer.h>
-#include <dap/misc.h>
 
 /* external function definitions */
-void 
-daploop(void)
+void daploop(void)
 {
-  while (dapbreak == 0) {
-    dapselect();
-    (void) sgnlproc();
-    (void) chanproc();
-    (void) timerproc();
-    (void) slpqproc();
-  }
-  return;
+    while (dapbreak == 0) {
+        dapselect();
+        (void)sgnlproc();
+        (void)chanproc();
+        (void)timerproc();
+        (void)slpqproc();
+    }
+    return;
 }

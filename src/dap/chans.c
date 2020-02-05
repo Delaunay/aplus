@@ -8,8 +8,8 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/chan.h>
+#include <dap/node.h>
 
 /* external data definitions */
-struct node chans = {&chans, &chans, (void *) (0)};
+struct node chans = { &chans, &chans, (void*)(0) };

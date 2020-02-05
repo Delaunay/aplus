@@ -12,12 +12,11 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-void 
-buffclear(struct buff * p)
+void buffclear(struct buff* p)
 {
-  if (p != (struct buff *) (0)) {
-    bfree(p->min);
-    p->min = p->get = p->put = p->max = (char *) (0);
-  }
-  return;
+    if (p != (struct buff*)(0)) {
+        bfree(p->min);
+        p->min = p->get = p->put = p->max = (char*)(0);
+    }
+    return;
 }

@@ -15,18 +15,17 @@
 #include <dap/slpq.h>
 
 /* external function definitions */
-void 
-slpqgiveup(struct slpqent * ep)
+void slpqgiveup(struct slpqent* ep)
 {
-  if (ep != (struct slpqent *) (0)) {
-    struct slpq *p = ep->sp;
-    int sched = ep->sched;
+    if (ep != (struct slpqent*)(0)) {
+        struct slpq* p = ep->sp;
+        int sched = ep->sched;
 
-    noderemove(ep->np);
-    nodefree(ep->np);
-    bfree((char *) ep);
-    if (sched)
-      slpqwakeup(p, (void (*) ()) (0));
-  }
-  return;
+        noderemove(ep->np);
+        nodefree(ep->np);
+        bfree((char*)ep);
+        if (sched)
+            slpqwakeup(p, (void (*)())(0));
+    }
+    return;
 }

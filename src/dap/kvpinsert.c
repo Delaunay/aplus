@@ -8,17 +8,17 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/kvp.h>
+#include <dap/node.h>
 
 /* external function definitions */
-struct node *
-kvpinsert(struct node * hnp, void *key, void *val)
+struct node*
+kvpinsert(struct node* hnp, void* key, void* val)
 {
-  struct node *np = nodealloc();
+    struct node* np = nodealloc();
 
-  np->d = (void *) kvpalloc(key, val);
-  nodeinsert(np, hnp);
+    np->d = (void*)kvpalloc(key, val);
+    nodeinsert(np, hnp);
 
-  return np;
+    return np;
 }

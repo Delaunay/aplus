@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1998-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1998-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -12,12 +12,11 @@
 
 class MSWidget;
 
-class MSGUIExport MSKeyCallback
-{
+class MSGUIExport MSKeyCallback {
 public:
-  MSKeyCallback();
-  virtual ~MSKeyCallback();
-  virtual MSBoolean process(MSWidget*,const MSKeyPress&)=0 ;
+    MSKeyCallback();
+    virtual ~MSKeyCallback();
+    virtual MSBoolean process(MSWidget*, const MSKeyPress&) = 0;
 };
 
 #endif

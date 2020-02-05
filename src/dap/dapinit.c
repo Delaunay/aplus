@@ -8,21 +8,20 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/tod.h>
 #include <dap/fds.h>
 #include <dap/misc.h>
+#include <dap/tod.h>
 
 /* external function definitions */
-void 
-dapinit(void)
+void dapinit(void)
 {
-  if (dapInitialized)
+    if (dapInitialized)
+        return;
+    (void)tod();
+    (void)hostname();
+    fdsinit();
+    dapbreak = 0;
+    dapZeroTimeout = 0;
+    dapInitialized = 1;
     return;
-  (void) tod();
-  (void) hostname();
-  fdsinit();
-  dapbreak = 0;
-  dapZeroTimeout = 0;
-  dapInitialized = 1;
-  return;
 }

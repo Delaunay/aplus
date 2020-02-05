@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -24,7 +24,7 @@
 #ifndef MSTypes_MSFHEADER
 #define MSTypes_MSFHEADER
 
-const char MSMSF_US='\37';      // <US> unit separate-delimit data elements 
-const char MSMSF_SPACE=' ';     // space separator between components.
+const char MSMSF_US = '\37'; // <US> unit separate-delimit data elements
+const char MSMSF_SPACE = ' '; // space separator between components.
 
 #endif // MSTypes_MSFHEADER

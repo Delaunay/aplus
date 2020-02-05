@@ -13,28 +13,27 @@
 #include <dap/slpq.h>
 
 /* external function definitions */
-int 
-slpqproc(void)
+int slpqproc(void)
 {
-  struct node *np;
-  struct slpqent *ep;
-  void (*func) ();
-  void *arg;
-  int didwork = 0;
+    struct node* np;
+    struct slpqent* ep;
+    void (*func)();
+    void* arg;
+    int didwork = 0;
 
-  while ((np = slpqents.f) != &slpqents) {
-    noderemove(np);
-    ep = SLPQENTAT(np);
-    nodefree(np);
-    if (ep != (struct slpqent *) (0)) {
-      func = ep->func;
-      arg = ep->arg;
-      bfree((char *) ep);
-      if (func != (void (*) ()) (0))
-	(*func) (arg);
+    while ((np = slpqents.f) != &slpqents) {
+        noderemove(np);
+        ep = SLPQENTAT(np);
+        nodefree(np);
+        if (ep != (struct slpqent*)(0)) {
+            func = ep->func;
+            arg = ep->arg;
+            bfree((char*)ep);
+            if (func != (void (*)())(0))
+                (*func)(arg);
+        }
+        didwork = 1;
     }
-    didwork = 1;
-  }
 
-  return didwork;
+    return didwork;
 }

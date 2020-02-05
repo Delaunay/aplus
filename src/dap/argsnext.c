@@ -11,18 +11,17 @@
 #include <dap/args.h>
 
 /* external function definitions */
-void 
-argsnext(int argc, char **argv)
+void argsnext(int argc, char** argv)
 {
-  /* skip past null arguments */
-  while (args_index < argc) {
-    if (argv[++args_index] != (char *) (0)) {
-      break;
+    /* skip past null arguments */
+    while (args_index < argc) {
+        if (argv[++args_index] != (char*)(0)) {
+            break;
+        }
     }
-  }
 
-  /* zero position within argument */
-  args_argpos = 0;
+    /* zero position within argument */
+    args_argpos = 0;
 
-  return;
+    return;
 }

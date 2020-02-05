@@ -9,33 +9,32 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSPrintItem.H>
+#include <MSGUI/MSWidgetView.H>
 #include <MSTypes/MSTime.H>
 #include <a/k.h>
-#include <MSGUI/MSWidgetView.H>
-#include <MSGUI/MSPrintItem.H>
-#include <AplusGUI/Macros.H>
 
-class AplusRulePrintItem : public MSWidgetView, public MSRulePrintItem
-{
+class AplusRulePrintItem : public MSWidgetView, public MSRulePrintItem {
 public:
-  AplusRulePrintItem(MSWidget *);
-  AplusRulePrintItem(const AplusRulePrintItem&);
-  ~AplusRulePrintItem(void);
+    AplusRulePrintItem(MSWidget*);
+    AplusRulePrintItem(const AplusRulePrintItem&);
+    ~AplusRulePrintItem(void);
 
-  virtual void addSenderNotify(MSEventSender *);
-  virtual void receiveEvent(MSEvent &);
+    virtual void addSenderNotify(MSEventSender*);
+    virtual void receiveEvent(MSEvent&);
 
-  static MSBoolean verifyData(V,::A);
+    static MSBoolean verifyData(V, ::A);
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
-  inline int topPixel(void) const;
-  inline void topPixel(int);
-  inline int bottomPixel(void) const;
-  inline void bottomPixel(int);
+    inline int topPixel(void) const;
+    inline void topPixel(int);
+    inline int bottomPixel(void) const;
+    inline void bottomPixel(int);
 
-  STANDARD_WIDGET_METHODS_H
+    STANDARD_WIDGET_METHODS_H
 };
 
 inline int AplusRulePrintItem::topPixel(void) const { return MSPrintItem::topPixel(); }

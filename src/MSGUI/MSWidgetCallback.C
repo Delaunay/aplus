@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -70,8 +70,8 @@ MSSymbol MSWidgetCallback::apply("apply");
 MSSymbol MSWidgetCallback::iconized("iconized");
 MSSymbol MSWidgetCallback::deiconized("deiconized");
 MSSymbol MSWidgetCallback::incurrentworkspace("incurrentworkspace");
-MSSymbol MSWidgetCallback::outofcurrentworkspace("outofcurrentworkspace");  
-MSSymbol MSWidgetCallback::workspacepresencechange("workspacepresencechange");  
+MSSymbol MSWidgetCallback::outofcurrentworkspace("outofcurrentworkspace");
+MSSymbol MSWidgetCallback::workspacepresencechange("workspacepresencechange");
 MSSymbol MSWidgetCallback::buttonactivate("buttonactivate");
 MSSymbol MSWidgetCallback::menubutton("menubutton");
 MSSymbol MSWidgetCallback::columnmenubutton("columnmenubutton");

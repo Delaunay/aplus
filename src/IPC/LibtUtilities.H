@@ -9,8 +9,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-extern A tp_a_object(char *recbuf, A fields);
-extern C *libtMakeClasses(A clss);
+extern A tp_a_object(char* recbuf, A fields);
+extern C* libtMakeClasses(A clss);
 extern A libtMakeFields(A clss);
 
 #endif

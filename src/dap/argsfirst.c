@@ -17,22 +17,21 @@
 #include <dap/args.h>
 
 /* external function definitions */
-int 
-argsfirst(int argc, char **argv)
+int argsfirst(int argc, char** argv)
 {
-  /* initalize argument processing variables */
-  args_index = 0;
-  args_argpos = 0;
-  args_value = (char *) (0);
+    /* initalize argument processing variables */
+    args_index = 0;
+    args_argpos = 0;
+    args_value = (char*)(0);
 
-  /* check for empty list */
-  if ((argv == (char **) (0))
-      || (args_index >= argc)) {
-    /* empty argument list */
-    return -1;
-  }
-  /* process argv[0] */
-  args_value = argv[0];
-  argsnext(argc, argv);
-  return 0;
+    /* check for empty list */
+    if ((argv == (char**)(0))
+        || (args_index >= argc)) {
+        /* empty argument list */
+        return -1;
+    }
+    /* process argv[0] */
+    args_value = argv[0];
+    argsnext(argc, argv);
+    return 0;
 }

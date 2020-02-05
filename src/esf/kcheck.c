@@ -6,12 +6,10 @@
 /*                                                                           */
 /*****************************************************************************/
 #define KFAILURE -1
-#define KSUCCESS  0
+#define KSUCCESS 0
 
-
-int kerberosCheck(username,password)
-char *username; 
-char *password;
+int kerberosCheck(username, password) char* username;
+char* password;
 {
-  return KFAILURE;
+    return KFAILURE;
 }

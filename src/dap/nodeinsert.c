@@ -17,17 +17,16 @@
 #include <dap/node.h>
 
 /* external function definitions */
-void 
-nodeinsert(struct node * p, struct node * h)
+void nodeinsert(struct node* p, struct node* h)
 {
-  if ((p != (struct node *) (0))
-      && (h != (struct node *) (0))) {
-    struct node *t = p->b;	/* temporary node */
+    if ((p != (struct node*)(0))
+        && (h != (struct node*)(0))) {
+        struct node* t = p->b; /* temporary node */
 
-    p->b->f = h;
-    p->b = h->b;
-    h->b->f = p;
-    h->b = t;
-  }
-  return;
+        p->b->f = h;
+        p->b = h->b;
+        h->b->f = p;
+        h->b = t;
+    }
+    return;
 }

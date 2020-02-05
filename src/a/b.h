@@ -10,14 +10,14 @@
 /*****************************************************************************/
 
 /* header file inclusions */
-#include <sys/types.h>
 #include <a/fncdcls.h>
+#include <sys/types.h>
 
 /* external macro declarations */
 #if (defined(__sgi) && _MIPS_SZLONG == 64) || defined(__sparcv9)
-#define MD      63
+#define MD 63
 #else
-#define MD	31
+#define MD 31
 #endif
 
 /* external data declarations */

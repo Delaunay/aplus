@@ -44,66 +44,62 @@
  */
 
 /* header file inclusions */
+
 #include <sys/types.h>
 #include <sys/uio.h>
-#include <dap/notsunos4.h>
-#ifdef PRESUNOS4
-#ifndef _SOCKET_
-#define _SOCKET_
 #include <sys/socket.h>
-#endif
-#else
-#include <sys/socket.h>
-#endif
+
 #include <dap/balloc.h>
-#include <dap/tod.h>
 #include <dap/chan.h>
-#include <dap/timer.h>
-#include <dap/exbo.h>
 #include <dap/conn.h>
+#include <dap/exbo.h>
+#include <dap/notsunos4.h>
+#include <dap/timer.h>
+#include <dap/tod.h>
 
 /* external function definitions */
-struct conn *connalloc(char *name, int pri, int retry, int retry_time_first, int retry_time_last, int domain, int type, int protocol, void *r_nameinfo, int (*setupfunc) (), struct sockaddr * (*r_namefunc) (), int (*estbfunc) (), void *acb) {
-  struct conn *p = (struct conn *) balloc(sizeof(*p));
+struct conn* connalloc(char* name, int pri, int retry, int retry_time_first, int retry_time_last, int domain, int type, int protocol, void* r_nameinfo, int (*setupfunc)(), struct sockaddr* (*r_namefunc)(), int (*estbfunc)(), void* acb)
+{
+    struct conn* p = (struct conn*)balloc(sizeof(*p));
 
-  if (name == (char *) (0))
-    name = "<UNKNOWN>";
-  p->name = bstring(name);
-  p->pri = pri;
-  if (retry == CONN_RETRY_NO)
-    p->retry = CONN_RETRY_NO;
-  else
-    p->retry = CONN_RETRY_YES;
-  p->domain = domain;
-  p->type = type;
-  p->protocol = protocol;
-  p->r_nameinfo = r_nameinfo;
-  p->setupfunc = setupfunc;
-  p->r_namefunc = r_namefunc;
-  p->estbfunc = estbfunc;
-  p->acb = acb;
-  p->retry_time = exboalloc(retry_time_first, retry_time_last);
+    if (name == (char*)(0))
+        name = "<UNKNOWN>";
+    p->name = bstring(name);
+    p->pri = pri;
+    if (retry == CONN_RETRY_NO)
+        p->retry = CONN_RETRY_NO;
+    else
+        p->retry = CONN_RETRY_YES;
+    p->domain = domain;
+    p->type = type;
+    p->protocol = protocol;
+    p->r_nameinfo = r_nameinfo;
+    p->setupfunc = setupfunc;
+    p->r_namefunc = r_namefunc;
+    p->estbfunc = estbfunc;
+    p->acb = acb;
+    p->retry_time = exboalloc(retry_time_first, retry_time_last);
 
-  p->retry_tp = (struct timer *) (0);
-  p->fd = -1;
-  p->r_namelen = 0;
-  p->r_name = (struct sockaddr *) (0);
-  p->estbchan = (struct chan *) (0);
-  p->estbd = 0;
+    p->retry_tp = (struct timer*)(0);
+    p->fd = -1;
+    p->r_namelen = 0;
+    p->r_name = (struct sockaddr*)(0);
+    p->estbchan = (struct chan*)(0);
+    p->estbd = 0;
 
-  p->alloctod = todsec();
-  p->opentod = (time_t) (0);
-  p->conntod = (time_t) (0);
-  p->estbtod = (time_t) (0);
-  p->disctod = (time_t) (0);
-  p->closetod = (time_t) (0);
-  p->opendtime = (time_t) (0);
-  p->estbdtime = (time_t) (0);
-  p->opencount = (unsigned) (0);
-  p->conncount = (unsigned) (0);
-  p->estbcount = (unsigned) (0);
-  p->disccount = (unsigned) (0);
-  p->closecount = (unsigned) (0);
+    p->alloctod = todsec();
+    p->opentod = (time_t)(0);
+    p->conntod = (time_t)(0);
+    p->estbtod = (time_t)(0);
+    p->disctod = (time_t)(0);
+    p->closetod = (time_t)(0);
+    p->opendtime = (time_t)(0);
+    p->estbdtime = (time_t)(0);
+    p->opencount = (unsigned)(0);
+    p->conncount = (unsigned)(0);
+    p->estbcount = (unsigned)(0);
+    p->disccount = (unsigned)(0);
+    p->closecount = (unsigned)(0);
 
-  return p;
+    return p;
 }

@@ -9,24 +9,23 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSGUI/MSNotebook.H>
-#include <AplusGUI/Macros.H>
 #include <AplusGUI/AplusEvent.H>
 #include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSNotebook.H>
 
-class AplusNotebook : public MSNotebook
-{
+class AplusNotebook : public MSNotebook {
 public:
-  AplusNotebook(MSWidget *);
-  ~AplusNotebook(void);
-  virtual void addSenderNotify(MSEventSender *);
-  virtual void receiveEvent(MSEvent &);
-  virtual MSBoolean verifyData(V,A) { return MSTrue; }
+    AplusNotebook(MSWidget*);
+    ~AplusNotebook(void);
+    virtual void addSenderNotify(MSEventSender*);
+    virtual void receiveEvent(MSEvent&);
+    virtual MSBoolean verifyData(V, A) { return MSTrue; }
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
-  STANDARD_WIDGET_METHODS_H
+    STANDARD_WIDGET_METHODS_H
 };
 
 #endif //AplusNotebookHEADER

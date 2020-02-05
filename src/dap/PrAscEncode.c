@@ -10,21 +10,20 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-void 
-PrAscEncode(int c, struct buff * bp)
+void PrAscEncode(int c, struct buff* bp)
 {
-  c &= 0xff;
-  if (c & 0x80) {
-    buffputc(bp, '~');
-    c &= 0x7f;
-  }
-  if (c <= 0x20 || c == 0x7f) {
-    buffputc(bp, '^');
-    c ^= 0x40;
-  }
-  if (c == '~' || c == '^' || c == '\\') {
-    buffputc(bp, '\\');
-  }
-  buffputc(bp, c);
-  return;
+    c &= 0xff;
+    if (c & 0x80) {
+        buffputc(bp, '~');
+        c &= 0x7f;
+    }
+    if (c <= 0x20 || c == 0x7f) {
+        buffputc(bp, '^');
+        c ^= 0x40;
+    }
+    if (c == '~' || c == '^' || c == '\\') {
+        buffputc(bp, '\\');
+    }
+    buffputc(bp, c);
+    return;
 }

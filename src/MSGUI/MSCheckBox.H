@@ -3,55 +3,46 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 #include <MSGUI/MSActionBox.H>
 #include <MSGUI/MSCheckButton.H>
 
-class MSGUIExport MSCheckBox : public MSActionBox
-{
-friend class MSCheckButton;
-public:  
-  MSCheckBox(MSWidget *,const char *title_=0);
-  MSCheckBox(MSWidget *,const MSStringVector&);
-  ~MSCheckBox(void);
+class MSGUIExport MSCheckBox : public MSActionBox {
+    friend class MSCheckButton;
 
-  MSIntVector integerState(void) const;
-  void integerState(const MSIntVector &);
+public:
+    MSCheckBox(MSWidget*, const char* title_ = 0);
+    MSCheckBox(MSWidget*, const MSStringVector&);
+    ~MSCheckBox(void);
 
-  MSSymbolVector symbolicState(void) const;
-  void symbolicState(const MSSymbolVector &);
-   
-  virtual const MSSymbol& widgetType(void) const;
+    MSIntVector integerState(void) const;
+    void integerState(const MSIntVector&);
+
+    MSSymbolVector symbolicState(void) const;
+    void symbolicState(const MSSymbolVector&);
+
+    virtual const MSSymbol& widgetType(void) const;
 
 protected:
-  virtual void arm(MSCheckButton *);
-  virtual void disarm(MSCheckButton *);
+    virtual void arm(MSCheckButton*);
+    virtual void disarm(MSCheckButton*);
 
-  static const MSSymbol& symbol(void);
+    static const MSSymbol& symbol(void);
 };
 
 inline MSIntVector MSCheckBox::integerState(void) const
-{ return MSActionBox::integerState(); }
+{
+    return MSActionBox::integerState();
+}
 
 inline MSSymbolVector MSCheckBox::symbolicState(void) const
-{ return MSActionBox::symbolicState(); }
+{
+    return MSActionBox::symbolicState();
+}
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-

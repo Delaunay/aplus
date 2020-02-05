@@ -12,13 +12,13 @@
 #include <dap/kvp.h>
 
 /* external function definitions */
-struct kvp *
-kvpalloc(void *key, void *val)
+struct kvp*
+kvpalloc(void* key, void* val)
 {
-  struct kvp *p = (struct kvp *) balloc(sizeof(*p));
+    struct kvp* p = (struct kvp*)balloc(sizeof(*p));
 
-  p->key = key;
-  p->d = val;
+    p->key = key;
+    p->d = val;
 
-  return p;
+    return p;
 }

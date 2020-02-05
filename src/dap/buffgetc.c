@@ -11,12 +11,11 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-int 
-buffgetc(struct buff * p)
+int buffgetc(struct buff* p)
 {
-  if ((p != (struct buff *) (0))
-      && (p->get != p->put)) {
-    return 0xff & *(p->get++);
-  }
-  return -1;
+    if ((p != (struct buff*)(0))
+        && (p->get != p->put)) {
+        return 0xff & *(p->get++);
+    }
+    return -1;
 }

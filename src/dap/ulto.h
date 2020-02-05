@@ -9,28 +9,26 @@
 /*                                                                           */
 /*****************************************************************************/
 
-
 /* external macro declarations */
-#define ULTOHEX_SZ	9	/* longest hex string for unsigned long */
-#define ULTODEC_SZ	11	/* longest decimal string for unsigned long */
-#define ULTOOCT_SZ	12	/* longest octal string for unsigned long */
+#define ULTOHEX_SZ 9 /* longest hex string for unsigned long */
+#define ULTODEC_SZ 11 /* longest decimal string for unsigned long */
+#define ULTOOCT_SZ 12 /* longest octal string for unsigned long */
 
 /* external function declarations */
 #if defined(__STDC__) || defined(__cplusplus) || defined(_AIX)
-# ifdef __cplusplus
+#ifdef __cplusplus
 extern "C" {
-# endif
-  extern int ultodec(unsigned long,char *,int);
-  extern int ultohex(unsigned long,char *,int);
-  extern int ultooct(unsigned long,char *,int);
-# ifdef __cplusplus
+#endif
+extern int ultodec(unsigned long, char*, int);
+extern int ultohex(unsigned long, char*, int);
+extern int ultooct(unsigned long, char*, int);
+#ifdef __cplusplus
 }
-# endif
+#endif
 #else
-  extern int ultodec();
-  extern int ultohex();
-  extern int ultooct();
+extern int ultodec();
+extern int ultohex();
+extern int ultooct();
 #endif
 
 #endif
-

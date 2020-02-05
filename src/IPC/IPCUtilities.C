@@ -10,21 +10,20 @@
 #if !defined(__cfront)
 #include <stdarg.h>
 #endif
-#include <string.h>
-#include <memory.h>
 #include <math.h>
+#include <memory.h>
+#include <netinet/in.h>
+#include <string.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <netinet/in.h>
 
-#include <dap/Warn.h>
-#include <a/k.h>
 #include <a/fncdcls.h>
+#include <a/k.h>
+#include <dap/Warn.h>
 
 #include <MSIPC/MSTv.H>
 
 #include <arpa/inet.h>
-
 
 /* ipcWarnFlag controls the behavior of ipcWarn() calls.  Its values are:
     -1 = no ipcWarn or Warn messages
@@ -43,29 +42,32 @@ extern I ipcWarnFlag;
     level.  ipcWarnFlag must exceed warnLevel for the message to
     be generated.
 */
-void ipcWarn(int warnLevel_, const C *fmt_, ...)
+void ipcWarn(int warnLevel_, const C* fmt_, ...)
 {
-  va_list ap;
-  
-  va_start(ap,fmt_);
-  if(ipcWarnFlag>warnLevel_) vWarn((char *)fmt_, ap); // Note cast
-  va_end(ap);
+    va_list ap;
+
+    va_start(ap, fmt_);
+    if (ipcWarnFlag > warnLevel_)
+        vWarn((char*)fmt_, ap); // Note cast
+    va_end(ap);
 }
 
-I longAt(C *c){
-  int l;
+I longAt(C* c)
+{
+    int l;
 
-  ipcWarn(0,"%t longAt\n"); 
-  memmove(((C *)(&l)),c,sizeof(l));
-  return ntohl(l);
+    ipcWarn(0, "%t longAt\n");
+    memmove(((C*)(&l)), c, sizeof(l));
+    return ntohl(l);
 }
 
-I shortAt(C *c){
-  short s;
+I shortAt(C* c)
+{
+    short s;
 
-  ipcWarn(0,"%t shortAt\n"); 
-  memmove(((C *)(&s)),c,sizeof(s));
-  return ntohs(s);
+    ipcWarn(0, "%t shortAt\n");
+    memmove(((C*)(&s)), c, sizeof(s));
+    return ntohs(s);
 }
 
 /*
@@ -88,42 +90,44 @@ I shortAt(C *c){
  * time.
  *
  */
-struct timeval *atotv(A aobj, struct timeval *tvp)
+struct timeval* atotv(A aobj, struct timeval* tvp)
 {
-  struct timeval timeleft, now;
-  F fseconds;
+    struct timeval timeleft, now;
+    F fseconds;
 
-  ipcWarn(0,"%t atotv\n");
-  if (Ft==aobj->t && 1==aobj->n) {
-    fseconds = *(F *)(aobj->p);
-    gettimeofday(&now,NULL);
-    timeleft.tv_sec = (int)(floor(fseconds));
-    timeleft.tv_usec = (int)(1000000.0*(fseconds-floor(fseconds)));
-    tvsum(&now,&timeleft,tvp);
-    return tvp;
-  }
-  else if (It==aobj->t && 1<=aobj->n && 3>=aobj->n) {
-    if (3==aobj->n && 1==aobj->p[2]) {
-      if (0>aobj->p[1]) return 0;
-      tvp->tv_sec=aobj->p[0];
-      tvp->tv_usec=aobj->p[1];
-    } else {
-      gettimeofday(&now,NULL);
-      timeleft.tv_sec=aobj->p[0];
-      timeleft.tv_usec=(2<=aobj->n)?aobj->p[1]:0;
-      tvsum(&now,&timeleft,tvp);
-    }
-    return tvp;
-  } else return 0;
+    ipcWarn(0, "%t atotv\n");
+    if (Ft == aobj->t && 1 == aobj->n) {
+        fseconds = *(F*)(aobj->p);
+        gettimeofday(&now, NULL);
+        timeleft.tv_sec = (int)(floor(fseconds));
+        timeleft.tv_usec = (int)(1000000.0 * (fseconds - floor(fseconds)));
+        tvsum(&now, &timeleft, tvp);
+        return tvp;
+    } else if (It == aobj->t && 1 <= aobj->n && 3 >= aobj->n) {
+        if (3 == aobj->n && 1 == aobj->p[2]) {
+            if (0 > aobj->p[1])
+                return 0;
+            tvp->tv_sec = aobj->p[0];
+            tvp->tv_usec = aobj->p[1];
+        } else {
+            gettimeofday(&now, NULL);
+            timeleft.tv_sec = aobj->p[0];
+            timeleft.tv_usec = (2 <= aobj->n) ? aobj->p[1] : 0;
+            tvsum(&now, &timeleft, tvp);
+        }
+        return tvp;
+    } else
+        return 0;
 }
 
 A getAbsoluteTimeout(A aobj_)
 {
-  struct timeval gameover, *tvp;
-  ipcWarn(0,"%t getAbsoluteTimeout\n");
+    struct timeval gameover, *tvp;
+    ipcWarn(0, "%t getAbsoluteTimeout\n");
 
-  tvp = atotv(aobj_, &gameover);
-  if (NULL==tvp) return(A)0;
-  else return gvi(It,3,tvp->tv_sec,tvp->tv_usec,1);
+    tvp = atotv(aobj_, &gameover);
+    if (NULL == tvp)
+        return (A)0;
+    else
+        return gvi(It, 3, tvp->tv_sec, tvp->tv_usec, 1);
 }
-

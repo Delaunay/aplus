@@ -13,13 +13,12 @@
 #include <dap/timer.h>
 
 /* external function definitions */
-void 
-timerclr(struct timer * p)
+void timerclr(struct timer* p)
 {
-  if (p != (struct timer *) (0)) {
-    noderemove(p->np);
-    nodefree(p->np);
-    bfree((char *) p);
-  }
-  return;
+    if (p != (struct timer*)(0)) {
+        noderemove(p->np);
+        nodefree(p->np);
+        bfree((char*)p);
+    }
+    return;
 }

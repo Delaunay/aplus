@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -17,18 +17,16 @@
 
 #include <MSTypes/MSEnum.H>
 
-extern "C"
-{
-  typedef int MSCStringTestFn(int);
+extern "C" {
+typedef int MSCStringTestFn(int);
 }
 
 #if defined(MS_C_LINKAGE_INCOMPATIBILITY)
 typedef int (*MSCPPStringTestFn)(int);
 #endif
 
-class MSTypesExport MSStringTest
-{
-/*******************************************************************************
+class MSTypesExport MSStringTest {
+    /*******************************************************************************
   The MSStringTest class defines the basic protocol for test objects that can
   be passed to MSStrings to assist in performing various
   testing and searching functions.  It also provides concrete implementation
@@ -54,35 +52,34 @@ class MSTypesExport MSStringTest
     aString.stripLeading(isalnum); // Uses C library isalnum function.
 *******************************************************************************/
 public:
-/*------------------------------ Function Types --------------------------------
+    /*------------------------------ Function Types --------------------------------
   CFunction  -Pointer to the C function that accepts an integer argument
                 and returns MSBoolean.
 ------------------------------------------------------------------------------*/
-  typedef MSCStringTestFn CFunction;
+    typedef MSCStringTestFn CFunction;
 
-/*------------------------------- Constructor ---------------------------------
+    /*------------------------------- Constructor ---------------------------------
   An object of this class can be constructed with a pointer to the C
   function to be used to implement the test member function.
 ------------------------------------------------------------------------------*/
-  MSStringTest(CFunction *cFunc);
-  virtual ~MSStringTest(void);
-
+    MSStringTest(CFunction* cFunc);
+    virtual ~MSStringTest(void);
 
 #if defined(MS_C_LINKAGE_INCOMPATIBILITY)
-  typedef MSCPPStringTestFn CPPFunction;
-  MSStringTest(CPPFunction cFunc);
+    typedef MSCPPStringTestFn CPPFunction;
+    MSStringTest(CPPFunction cFunc);
 #endif
 
-/*--------------------------------- Testing ------------------------------------
+    /*--------------------------------- Testing ------------------------------------
   test-This function tests the argument integer(character) and returns
        MSMSTrue or MSMSFalse as returned by the C function provided at construction.
        Derived classes should override this function to implement their own
        testing function.
 ------------------------------------------------------------------------------*/
-  virtual MSBoolean test(int) const;
+    virtual MSBoolean test(int) const;
 
 protected:
-/*------------------------------ Implementation --------------------------------
+    /*------------------------------ Implementation --------------------------------
   FnType-Enumeration describing the various flavors of functions
            supported.
              user  - User-defined.
@@ -96,28 +93,45 @@ protected:
              user -Pointer to an arbitrary derived-class data(if FnType is
                      neither c nor cpp).
 ------------------------------------------------------------------------------*/
-  enum FnType {user,c,cpp,memFn,cMemFn};
-  FnType type;
+    enum FnType { user,
+        c,
+        cpp,
+        memFn,
+        cMemFn };
+    FnType type;
 #if defined(MS_C_LINKAGE_INCOMPATIBILITY)
-  union {CFunction *cFn; CPPFunction cppFn; void *user;} data;
+    union {
+        CFunction* cFn;
+        CPPFunction cppFn;
+        void* user;
+    } data;
 #else
-  union {CFunction *cFn;void *user;} data;
+    union {
+        CFunction* cFn;
+        void* user;
+    } data;
 #endif
 
-/*--------------------- Protected Constructor ----------------------------------
+    /*--------------------- Protected Constructor ----------------------------------
   This protected constructor can be used by derived classes to
   reuse the space for the C/C++ function pointer.
 ------------------------------------------------------------------------------*/
-  MSStringTest(FnType type,void *userData);
+    MSStringTest(FnType type, void* userData);
 
 }; // class MSStringTest
 
 #if defined(MS_C_LINKAGE_INCOMPATIBILITY)
-inline MSStringTest::MSStringTest(CPPFunction cppfunc):type(cpp)
-{ data.cppFn=cppfunc; }
+inline MSStringTest::MSStringTest(CPPFunction cppfunc)
+    : type(cpp)
+{
+    data.cppFn = cppfunc;
+}
 #endif
 
-inline MSStringTest::MSStringTest(FnType typ,void *p):type(typ)
-{ data.user=p; }
+inline MSStringTest::MSStringTest(FnType typ, void* p)
+    : type(typ)
+{
+    data.user = p;
+}
 
 #endif // MSStringTestHEADER

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -10,9 +10,8 @@
 
 MSIndexedEvent::~MSIndexedEvent(void) {}
 
-const MSSymbol& MSIndexedEvent::symbol(void) 
+const MSSymbol& MSIndexedEvent::symbol(void)
 {
-  static MSSymbol sym ("MSIndexedEvent");
-  return sym;
+    static MSSymbol sym("MSIndexedEvent");
+    return sym;
 }
-

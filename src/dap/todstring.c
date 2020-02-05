@@ -12,18 +12,17 @@
 #if !defined(sun)
 #include <time.h>
 #endif
-#include <sys/time.h>
 #include <dap/balloc.h>
 #include <dap/tod.h>
+#include <sys/time.h>
 
 /* external function definitions */
-char *
-todstring(time_t t)
+char* todstring(time_t t)
 {
-  struct tm *tm = gmtime(&t);
+    struct tm* tm = gmtime(&t);
 
-  return bgprintf(16, "%04d%02d%02d.%02d%02d%02d",
-		  tm->tm_year + 1900, tm->tm_mon + 1,
-		  tm->tm_mday, tm->tm_hour, tm->tm_min,
-		  tm->tm_sec);
+    return bgprintf(16, "%04d%02d%02d.%02d%02d%02d",
+        tm->tm_year + 1900, tm->tm_mon + 1,
+        tm->tm_mday, tm->tm_hour, tm->tm_min,
+        tm->tm_sec);
 }

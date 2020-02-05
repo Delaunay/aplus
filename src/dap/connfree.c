@@ -9,19 +9,18 @@
 
 /* header file inclusions */
 #include <dap/balloc.h>
-#include <dap/exbo.h>
 #include <dap/conn.h>
+#include <dap/exbo.h>
 
 /* external function definitions */
-void 
-connfree(struct conn * p)
+void connfree(struct conn* p)
 {
-  if (p != (struct conn *) (0)) {
-    p->retry = CONN_RETRY_NO;
-    connclose(p);
-    exbofree(p->retry_time);
-    bfree(p->name);
-    bfree((char *) p);
-  }
-  return;
+    if (p != (struct conn*)(0)) {
+        p->retry = CONN_RETRY_NO;
+        connclose(p);
+        exbofree(p->retry_time);
+        bfree(p->name);
+        bfree((char*)p);
+    }
+    return;
 }

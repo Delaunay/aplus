@@ -8,16 +8,13 @@
 
 void esfInstall()
 {
-  ssrInstall();
-  fiInstall();
-  fmtInstall();
-  infoInstall();
-  dotInstall();
-  tInstall();
-  packInstall();
-  profileInstall();
-  /* no dyld */
+    ssrInstall();
+    fiInstall();
+    fmtInstall();
+    infoInstall();
+    dotInstall();
+    tInstall();
+    packInstall();
+    profileInstall();
+    /* no dyld */
 }
-
-
-  

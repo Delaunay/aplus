@@ -14,59 +14,57 @@
 #else
 #include <iostream.h>
 #endif
-#include <MSGUI/MSGraph.H>
-#include <AplusGUI/Macros.H>
 #include <AplusGUI/AplusCommon.H>
-#include <AplusGUI/AplusModel.H>
+#include <AplusGUI/AplusEnumConverter.H>
 #include <AplusGUI/AplusEvent.H>
 #include <AplusGUI/AplusFormatter.H>
 #include <AplusGUI/AplusLabelOut.H>
-#include <AplusGUI/AplusEnumConverter.H>
+#include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSGraph.H>
 
-class EnumError
-{
+class EnumError {
 protected:
-  MSString       _lamp;
-  MSString       _attrmsg;
-  MSString       _symmsg;
-  
+    MSString _lamp;
+    MSString _attrmsg;
+    MSString _symmsg;
+
 public:
-  EnumError(void);
-  ~EnumError(void){}
-  
-  void        attrmsg(const char *msg_) { _attrmsg = msg_;}
-  const char *attrmsg(void)             { return _attrmsg.string(); }
-  void        symmsg (const char *msg_) { _symmsg = msg_;}
-  const char *symmsg (void) 		{ return _symmsg.string(); }
-  const char *lamp   (void)   		{ return _lamp.string(); }
-  
-  void showError(V v_,const char* str_)
-   {
-     cerr<<lamp()<<" ! ";
-     if (v_!=0) cerr<<(char*)v_->cx->s->n<<"."<<(char*)v_->s->n;
-     if (str_!=0) cerr<<attrmsg()<<str_<<endl;
-     else cerr<<symmsg()<<endl;
-   }
+    EnumError(void);
+    ~EnumError(void) {}
+
+    void attrmsg(const char* msg_) { _attrmsg = msg_; }
+    const char* attrmsg(void) { return _attrmsg.string(); }
+    void symmsg(const char* msg_) { _symmsg = msg_; }
+    const char* symmsg(void) { return _symmsg.string(); }
+    const char* lamp(void) { return _lamp.string(); }
+
+    void showError(V v_, const char* str_)
+    {
+        cerr << lamp() << " ! ";
+        if (v_ != 0)
+            cerr << (char*)v_->cx->s->n << "." << (char*)v_->s->n;
+        if (str_ != 0)
+            cerr << attrmsg() << str_ << endl;
+        else
+            cerr << symmsg() << endl;
+    }
 };
 
-
-
 class AplusTraceSet;
-class AplusGraph : public MSGraph
-{
-friend class AplusTraceSet;
+class AplusGraph : public MSGraph {
+    friend class AplusTraceSet;
 
 private:
+    static EnumError _enumError;
+    static MSHashTable _enumHashTable;
+    static MSHashTable _stringEnumHashTable;
+    static MSHashTable _gridEnumHashTable;
+    static MSHashTable _legendEnumHashTable;
+    static MSBoolean _initialized; // for enumTable
+    static AplusFormatter _outFormat;
 
-  static EnumError 	_enumError;
-  static MSHashTable 	_enumHashTable;
-  static MSHashTable	_stringEnumHashTable;
-  static MSHashTable	_gridEnumHashTable;
-  static MSHashTable	_legendEnumHashTable;
-  static MSBoolean   	_initialized;   // for enumTable
-  static AplusFormatter _outFormat;
-
-/********************************************************************************
+    /********************************************************************************
 
   typedef enum {_GraphMode=204,_GraphStyle=205,_Axis=206,_YAxis=207,_Rule=208,
 		_Grid=209,_LineStyle=210,_TickStyle=211,_LegendPosition=212,
@@ -161,222 +159,254 @@ private:
 
 ******************************************************************************/
 
-  AOutFunction          _x_subLabelFunc[2];
-  AOutFunction          _x_labelFunc[2];
-  AOutFunction          _y_labelFunc[2];
+    AOutFunction _x_subLabelFunc[2];
+    AOutFunction _x_labelFunc[2];
+    AOutFunction _y_labelFunc[2];
 
-  AOutFunction          _x_subLabelFormatFunc[2];
-  AOutFunction          _x_labelFormatFunc[2];
-  AOutFunction          _y_labelFormatFunc[2];
+    AOutFunction _x_subLabelFormatFunc[2];
+    AOutFunction _x_labelFormatFunc[2];
+    AOutFunction _y_labelFormatFunc[2];
 
-  int                   _y_labelPrecision[2];
-  int                   _x_labelPrecision[2];
-  int                   _x_subLabelPrecision[2];
+    int _y_labelPrecision[2];
+    int _x_labelPrecision[2];
+    int _x_subLabelPrecision[2];
 
-  int                   _y_labelFormat[2];
-  int                   _x_labelFormat[2];
-  int                   _x_subLabelFormat[2];
+    int _y_labelFormat[2];
+    int _x_labelFormat[2];
+    int _x_subLabelFormat[2];
 
-  MSString              _axisAMode;
-  MSString              _axisARule;
-  MSString              _gridAStyle;
-  MSString              _zeroAStyle;
+    MSString _axisAMode;
+    MSString _axisARule;
+    MSString _gridAStyle;
+    MSString _zeroAStyle;
 
 public:
-  class LegendAlignConverter : public AplusHashEnumConverter
-  {
-  protected:
-    virtual const AplusHashTable& enumTable(void) const;
-    virtual const AplusHashTable& stringTable(void) const;
-    virtual const char *type(void) const;
-  public:
-    inline LegendAlignConverter(void);
-    inline ~LegendAlignConverter(void);
-  };
+    class LegendAlignConverter : public AplusHashEnumConverter {
+    protected:
+        virtual const AplusHashTable& enumTable(void) const;
+        virtual const AplusHashTable& stringTable(void) const;
+        virtual const char* type(void) const;
 
-  typedef enum {_GraphMode=204,_GraphStyle=205,_Axis=206,_YAxis=207,_Rule=208,
-		_Grid=209,_LineStyle=210,_TickStyle=211,_LegendPosition=212, _LegendPlacement=213,
-		_LegendStyle=214,_DisplayStyle=215} GraphEnum;
+    public:
+        inline LegendAlignConverter(void);
+        inline ~LegendAlignConverter(void);
+    };
 
-  typedef enum {Solid=600,Dash0=601,Dash1=602,Dash2=603,Dash3=604,Dash4=605,
-		DotDash0=606,DotDash1=607,DotDash2=608,DotDash3=609,DotDash4=610,
-		Dot0=611,Dot1=612,Dot2=613,Dot3=614,Dot4=615,Dot5=616} LineStyle;
+    typedef enum { _GraphMode = 204,
+        _GraphStyle = 205,
+        _Axis = 206,
+        _YAxis = 207,
+        _Rule = 208,
+        _Grid = 209,
+        _LineStyle = 210,
+        _TickStyle = 211,
+        _LegendPosition = 212,
+        _LegendPlacement = 213,
+        _LegendStyle = 214,
+        _DisplayStyle = 215 } GraphEnum;
 
-  typedef enum {NoFormat=1,Func=79,YFunc=80,YYFunc=81,XFunc=82,XXFunc=83,
-		XSubFunc=84,XXSubFunc=85} FuncFormat;
+    typedef enum { Solid = 600,
+        Dash0 = 601,
+        Dash1 = 602,
+        Dash2 = 603,
+        Dash3 = 604,
+        Dash4 = 605,
+        DotDash0 = 606,
+        DotDash1 = 607,
+        DotDash2 = 608,
+        DotDash3 = 609,
+        DotDash4 = 610,
+        Dot0 = 611,
+        Dot1 = 612,
+        Dot2 = 613,
+        Dot3 = 614,
+        Dot4 = 615,
+        Dot5 = 616 } LineStyle;
 
-  AplusGraph(MSWidget *);
-  ~AplusGraph(void);
-  
-  void initEnumHashTable(void);       
-  void initStringEnumHashTable(void); 
-  void initGridEnumHashTable(void);   
-  void initLegendEnumHashTable(void); 
+    typedef enum { NoFormat = 1,
+        Func = 79,
+        YFunc = 80,
+        YYFunc = 81,
+        XFunc = 82,
+        XXFunc = 83,
+        XSubFunc = 84,
+        XXSubFunc = 85 } FuncFormat;
 
-  void longPressTime(long val_) { MSGraph::longPressTime(val_); }
-  long longPressTime(void) { return MSGraph::longPressTime(); }
+    AplusGraph(MSWidget*);
+    ~AplusGraph(void);
 
-  static AplusFormatter *outFmt(void) { return &_outFormat; }
+    void initEnumHashTable(void);
+    void initStringEnumHashTable(void);
+    void initGridEnumHashTable(void);
+    void initLegendEnumHashTable(void);
 
-  MSHashTable *enumHashTable(void)         { return &_enumHashTable; }      
-  MSHashTable *stringEnumHashTable(void)   { return &_stringEnumHashTable; }
-  MSHashTable *gridEnumHashTable(void)	   { return &_gridEnumHashTable; }  
-  MSHashTable *legendEnumHashTable(void)   { return &_legendEnumHashTable ; }
-  EnumError   *enumError(void)             { return &_enumError; }
+    void longPressTime(long val_) { MSGraph::longPressTime(val_); }
+    long longPressTime(void) { return MSGraph::longPressTime(); }
 
-  ::A enumSymbols(const char *);
+    static AplusFormatter* outFmt(void) { return &_outFormat; }
 
-  void x_subLabelFormatFunc(AFunc,AClientData *,int axis_=0);
-  void x_labelFormatFunc(AFunc,AClientData *,int axis_=0);
-  void y_labelFormatFunc(AFunc,AClientData *,int axis_=0);
-  AOutFunction *y_labelFormatFunc(int axis_=0) { return &_y_labelFormatFunc[axis_]; }
-  AOutFunction *x_subLabelFormatFunc(int axis_=0) { return &_x_subLabelFormatFunc[axis_]; }
-  AOutFunction *x_labelFormatFunc(int axis_=0) { return &_x_labelFormatFunc[axis_]; }
+    MSHashTable* enumHashTable(void) { return &_enumHashTable; }
+    MSHashTable* stringEnumHashTable(void) { return &_stringEnumHashTable; }
+    MSHashTable* gridEnumHashTable(void) { return &_gridEnumHashTable; }
+    MSHashTable* legendEnumHashTable(void) { return &_legendEnumHashTable; }
+    EnumError* enumError(void) { return &_enumError; }
 
-  int y_labelPrecision(int axis_ = 0) { return _y_labelPrecision[axis_]; }
-  int x_labelPrecision(int axis_ = 0) { return _x_labelPrecision[axis_]; }
-  int x_subLabelPrecision(int axis_ = 0) { return _x_subLabelPrecision[axis_]; }
+    ::A enumSymbols(const char*);
 
-  // LabelFuncs are not fully implemented
-  
-  void x_subLabelFunc(AFunc func_,AClientData *,int axis_=0);
-  void x_labelFunc(AFunc func_,AClientData *,int axis_=0);
-  void y_labelFunc(AFunc func_,AClientData *,int axis_=0);
+    void x_subLabelFormatFunc(AFunc, AClientData*, int axis_ = 0);
+    void x_labelFormatFunc(AFunc, AClientData*, int axis_ = 0);
+    void y_labelFormatFunc(AFunc, AClientData*, int axis_ = 0);
+    AOutFunction* y_labelFormatFunc(int axis_ = 0) { return &_y_labelFormatFunc[axis_]; }
+    AOutFunction* x_subLabelFormatFunc(int axis_ = 0) { return &_x_subLabelFormatFunc[axis_]; }
+    AOutFunction* x_labelFormatFunc(int axis_ = 0) { return &_x_labelFormatFunc[axis_]; }
 
-  AOutFunction *x_subLabelFunc(int axis_=0) { return &_x_subLabelFunc[axis_]; }
-  AOutFunction *x_labelFunc(int axis_=0) { return &_x_labelFunc[axis_]; }
-  AOutFunction *y_labelFunc(int axis_=0) { return &_y_labelFunc[axis_]; }
+    int y_labelPrecision(int axis_ = 0) { return _y_labelPrecision[axis_]; }
+    int x_labelPrecision(int axis_ = 0) { return _x_labelPrecision[axis_]; }
+    int x_subLabelPrecision(int axis_ = 0) { return _x_subLabelPrecision[axis_]; }
 
-  int traceCount(void)   { return traceList().count();}
+    // LabelFuncs are not fully implemented
 
-  int  y_labelFormat(int axis_)             { return _y_labelFormat[axis_];    }
-  void y_labelFormat(int fmt_,int axis_)    { _y_labelFormat[axis_]=fmt_;      }
-  int  x_labelFormat(int axis_=0)           { return _x_labelFormat[axis_];    }
-  void x_labelFormat(int fmt_,int axis_)    { _x_labelFormat[axis_]=fmt_;      }  
-  int  x_subLabelFormat(int axis_=0)        { return _x_subLabelFormat[axis_]; }
-  void x_subLabelFormat(int fmt_,int axis_) { _x_subLabelFormat[axis_]=fmt_;   }
+    void x_subLabelFunc(AFunc func_, AClientData*, int axis_ = 0);
+    void x_labelFunc(AFunc func_, AClientData*, int axis_ = 0);
+    void y_labelFunc(AFunc func_, AClientData*, int axis_ = 0);
 
-  void y_labelFormat(::A, int, int precision_ = -1);
-  void x_labelFormat(::A, int, int precision_ = -1);
-  void x_subLabelFormat(::A, int, int precision_ = -1);
+    AOutFunction* x_subLabelFunc(int axis_ = 0) { return &_x_subLabelFunc[axis_]; }
+    AOutFunction* x_labelFunc(int axis_ = 0) { return &_x_labelFunc[axis_]; }
+    AOutFunction* y_labelFunc(int axis_ = 0) { return &_y_labelFunc[axis_]; }
 
-  ::A generateSym(char *, int);
-  ::A generateSym(MSHashTable *, int);
-  ::A generateGraphModeSym(unsigned long);
-  ::A generateGraphUIModeSym(int);
-  ::A generateAxisModeSym(AxisMode);
-  ::A generateGridSym(unsigned long);
-  ::A generateLegendStyleSym(unsigned long);
-  ::A generateTickStyleSym(unsigned long);
+    int traceCount(void) { return traceList().count(); }
 
-  ::A generateFuncSym(void);
-  ::A y_labelFormatSym(int axis_=0); 
-  ::A x_labelFormatSym(int axis_=0); 
-  ::A x_subLabelFormatSym(int axis_=0);
-  
-  ::A xExtents(int);
-  ::A yExtents(int);
-  ::A xLabelHeight(int);
-  ::A yLabelHeight(int);
-  ::A xLabelWidth(::A,int);
-  ::A yLabelWidth(::A,int);
-  ::A labelWidth(::A,XFontStruct *);
+    int y_labelFormat(int axis_) { return _y_labelFormat[axis_]; }
+    void y_labelFormat(int fmt_, int axis_) { _y_labelFormat[axis_] = fmt_; }
+    int x_labelFormat(int axis_ = 0) { return _x_labelFormat[axis_]; }
+    void x_labelFormat(int fmt_, int axis_) { _x_labelFormat[axis_] = fmt_; }
+    int x_subLabelFormat(int axis_ = 0) { return _x_subLabelFormat[axis_]; }
+    void x_subLabelFormat(int fmt_, int axis_) { _x_subLabelFormat[axis_] = fmt_; }
 
-  void pixelToValue(int,int,double *,double *,int,int);
-  ::A coordinate(int); // Call xCursorValue and yCursorValue
-  // if 0 then call x(bottom) and y(left)
-  // if 1 then call x(top) and y(right)
+    void y_labelFormat(::A, int, int precision_ = -1);
+    void x_labelFormat(::A, int, int precision_ = -1);
+    void x_subLabelFormat(::A, int, int precision_ = -1);
 
-  void graphAMode(::A); // Need to look up symbol in hashtable and call graphUIMode()
-  ::A graphAMode(void); //  See graphModeSym in XGraph.H
-  
-  void graphAUIMode(::A); // Need to look up symbol in hashtable and call graphUIMode()
-  ::A graphAUIMode(void); //  See graphModeSym in XGraph.H
-  
-  void axisAMode(::A); // Need to look up symbol in hashtable and call axisMode()
-  ::A axisAMode(void); //  See axisSym in XGraph.H
+    ::A generateSym(char*, int);
+    ::A generateSym(MSHashTable*, int);
+    ::A generateGraphModeSym(unsigned long);
+    ::A generateGraphUIModeSym(int);
+    ::A generateAxisModeSym(AxisMode);
+    ::A generateGridSym(unsigned long);
+    ::A generateLegendStyleSym(unsigned long);
+    ::A generateTickStyleSym(unsigned long);
 
-  void yAMode(::A,MSAlignment); // Need to look up symbol in hashtable and call yMode()
-  ::A yAMode(MSAlignment);      //  See axisSym in XGraph.H
+    ::A generateFuncSym(void);
+    ::A y_labelFormatSym(int axis_ = 0);
+    ::A x_labelFormatSym(int axis_ = 0);
+    ::A x_subLabelFormatSym(int axis_ = 0);
 
-  void axisARule(::A); // Need to look up symbol in hashtable and call axisRule()
-  ::A axisARule(void); //  See axisSym in XGraph.H
+    ::A xExtents(int);
+    ::A yExtents(int);
+    ::A xLabelHeight(int);
+    ::A yLabelHeight(int);
+    ::A xLabelWidth(::A, int);
+    ::A yLabelWidth(::A, int);
+    ::A labelWidth(::A, XFontStruct*);
 
-  void gridA(::A); // Need to look up symbol in hashtable and call grid()
-  ::A gridA(void); //  See axisSym in XGraph.H
+    void pixelToValue(int, int, double*, double*, int, int);
+    ::A coordinate(int); // Call xCursorValue and yCursorValue
+    // if 0 then call x(bottom) and y(left)
+    // if 1 then call x(top) and y(right)
 
-  void gridAStyle(::A); // Has to look up enumtable 
-  ::A gridAStyle(void); // call gridStyle and gridWeight
+    void graphAMode(::A); // Need to look up symbol in hashtable and call graphUIMode()
+    ::A graphAMode(void); //  See graphModeSym in XGraph.H
 
-  void zeroA(::A); // Need to look up symbol in hashtable and call zero()
-  ::A zeroA(void); //  See axisSym in XGraph.H
+    void graphAUIMode(::A); // Need to look up symbol in hashtable and call graphUIMode()
+    ::A graphAUIMode(void); //  See graphModeSym in XGraph.H
 
-  void zeroAStyle(::A); // Has to look up enumtable 
-  ::A zeroAStyle(void); // call zeroStyle and zeroWeight
+    void axisAMode(::A); // Need to look up symbol in hashtable and call axisMode()
+    ::A axisAMode(void); //  See axisSym in XGraph.H
 
-  void legendAStyle(::A);  // call legendStyle
-  ::A legendAStyle(void);
+    void yAMode(::A, MSAlignment); // Need to look up symbol in hashtable and call yMode()
+    ::A yAMode(MSAlignment); //  See axisSym in XGraph.H
 
-  void yTitleAStyle(::A, MSAlignment);
-  ::A yTitleAStyle(MSAlignment);
+    void axisARule(::A); // Need to look up symbol in hashtable and call axisRule()
+    ::A axisARule(void); //  See axisSym in XGraph.H
 
-  void subTitleA(::A);  // Convert A to MSStringVector then call subTitle
-  ::A subTitleA(void);
-  
-  void footnoteA(::A);  // Convert A to MSStringVector then call footnote
-  ::A footnoteA(void);
- 
-  void tickStyleA(::A, MSAlignment);  // Covert A and call tickStyle
-  ::A tickStyleA(MSAlignment);
+    void gridA(::A); // Need to look up symbol in hashtable and call grid()
+    ::A gridA(void); //  See axisSym in XGraph.H
 
-  void sessionPeriod(double x_) { MSGraph::sessionPeriod(x_); }
-  void sessionOffset(double x_) { MSGraph::sessionOffset(x_); }
-  void tpoPriceInc(double x_)   { MSGraph::tpoPriceInc(x_);   }
-  void tpoPeriod(double x_)     { MSGraph::tpoPeriod(x_);     }
-  void tpoOpen(double x_)       { MSGraph::tpoOpen(x_);       }
-  void tpoClose(double x_)      { MSGraph::tpoClose(x_);      }
+    void gridAStyle(::A); // Has to look up enumtable
+    ::A gridAStyle(void); // call gridStyle and gridWeight
 
-  double sessionPeriod(void) { return MSGraph::sessionPeriod(); }
-  double sessionOffset(void) { return MSGraph::sessionOffset(); }
-  double tpoPriceInc(void)   { return MSGraph::tpoPriceInc();   }
-  double tpoPeriod(void)     { return MSGraph::tpoPeriod();     }
-  double tpoOpen(void)       { return MSGraph::tpoOpen();       }
-  double tpoClose(void)      { return MSGraph::tpoClose();      }
-  
-  void graphDepth(int)       {}            //MSGraph::graphDepth(val_); }  These are NOPs according to grl
-  int graphDepth(void)       { return 0; } // return graphDepth(); }
-  virtual MSBoolean verifyData(V,::A);
+    void zeroA(::A); // Need to look up symbol in hashtable and call zero()
+    ::A zeroA(void); //  See axisSym in XGraph.H
 
-  MSBoolean styleConvert(LineStyle, unsigned long &, unsigned long &);
+    void zeroAStyle(::A); // Has to look up enumtable
+    ::A zeroAStyle(void); // call zeroStyle and zeroWeight
 
-  virtual void printDebugInfo(const char *);
+    void legendAStyle(::A); // call legendStyle
+    ::A legendAStyle(void);
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    void yTitleAStyle(::A, MSAlignment);
+    ::A yTitleAStyle(MSAlignment);
+
+    void subTitleA(::A); // Convert A to MSStringVector then call subTitle
+    ::A subTitleA(void);
+
+    void footnoteA(::A); // Convert A to MSStringVector then call footnote
+    ::A footnoteA(void);
+
+    void tickStyleA(::A, MSAlignment); // Covert A and call tickStyle
+    ::A tickStyleA(MSAlignment);
+
+    void sessionPeriod(double x_) { MSGraph::sessionPeriod(x_); }
+    void sessionOffset(double x_) { MSGraph::sessionOffset(x_); }
+    void tpoPriceInc(double x_) { MSGraph::tpoPriceInc(x_); }
+    void tpoPeriod(double x_) { MSGraph::tpoPeriod(x_); }
+    void tpoOpen(double x_) { MSGraph::tpoOpen(x_); }
+    void tpoClose(double x_) { MSGraph::tpoClose(x_); }
+
+    double sessionPeriod(void) { return MSGraph::sessionPeriod(); }
+    double sessionOffset(void) { return MSGraph::sessionOffset(); }
+    double tpoPriceInc(void) { return MSGraph::tpoPriceInc(); }
+    double tpoPeriod(void) { return MSGraph::tpoPeriod(); }
+    double tpoOpen(void) { return MSGraph::tpoOpen(); }
+    double tpoClose(void) { return MSGraph::tpoClose(); }
+
+    void graphDepth(int) {} //MSGraph::graphDepth(val_); }  These are NOPs according to grl
+    int graphDepth(void) { return 0; } // return graphDepth(); }
+    virtual MSBoolean verifyData(V, ::A);
+
+    MSBoolean styleConvert(LineStyle, unsigned long&, unsigned long&);
+
+    virtual void printDebugInfo(const char*);
+
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
 protected:
-  virtual void addSenderNotify(MSEventSender *m_);
-  virtual void receiveEvent(MSEvent &);
-  MSBoolean verifyTraceSet(::A);
-  virtual void update(V,::A,::A,I);
-  virtual void update(V,int,int,UpdateType) {}
-  virtual void update(const MSIndexVector &v_) { MSGraph::update(v_); }
-  virtual void update(MSTraceSet *ts_,const MSIndexVector &i_) { MSGraph::update((MSTraceSet *)ts_, i_); }
-  virtual void insertChild(MSWidget *);
-  virtual void removeChild(MSWidget *);
-  virtual void updateData(void);
-  
-  // Methods for Traceset to call (Forward messages upward)
-  void updateLegendStatus(MSBoolean x_) { MSGraph::updateLegendStatus(x_); }
-  virtual void redrawImmediately(MSBoolean update_=MSFalse, MSBoolean append_=MSFalse) { MSGraph::redrawImmediately(update_, append_); }
-  void drawLegends(void) { MSGraph::drawLegends(); }
-  void highlightPoint(AplusTraceSet *t_) { MSGraph::highlightPoint((MSTraceSet *)t_); }
-  MSPointerArray<MSTrace>& traceList(void) {return MSGraph::traceList(); }
-  
-  STANDARD_WIDGET_METHODS_H
+    virtual void addSenderNotify(MSEventSender* m_);
+    virtual void receiveEvent(MSEvent&);
+    MSBoolean verifyTraceSet(::A);
+    virtual void update(V, ::A, ::A, I);
+    virtual void update(V, int, int, UpdateType) {}
+    virtual void update(const MSIndexVector& v_) { MSGraph::update(v_); }
+    virtual void update(MSTraceSet* ts_, const MSIndexVector& i_) { MSGraph::update((MSTraceSet*)ts_, i_); }
+    virtual void insertChild(MSWidget*);
+    virtual void removeChild(MSWidget*);
+    virtual void updateData(void);
+
+    // Methods for Traceset to call (Forward messages upward)
+    void updateLegendStatus(MSBoolean x_) { MSGraph::updateLegendStatus(x_); }
+    virtual void redrawImmediately(MSBoolean update_ = MSFalse, MSBoolean append_ = MSFalse) { MSGraph::redrawImmediately(update_, append_); }
+    void drawLegends(void) { MSGraph::drawLegends(); }
+    void highlightPoint(AplusTraceSet* t_) { MSGraph::highlightPoint((MSTraceSet*)t_); }
+    MSPointerArray<MSTrace>& traceList(void) { return MSGraph::traceList(); }
+
+    STANDARD_WIDGET_METHODS_H
 };
 
-inline AplusGraph::LegendAlignConverter::LegendAlignConverter(void) : AplusHashEnumConverter() {}
+inline AplusGraph::LegendAlignConverter::LegendAlignConverter(void)
+    : AplusHashEnumConverter()
+{
+}
 inline AplusGraph::LegendAlignConverter::~LegendAlignConverter(void) {}
 
-#endif  //AplusGraphHEADER
+#endif //AplusGraphHEADER

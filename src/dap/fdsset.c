@@ -11,12 +11,11 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-void 
-fdsset(fd_set * p, int fd)
+void fdsset(fd_set* p, int fd)
 {
-  if ((p != (fd_set *) (0))
-      && (fd >= 0) && (fd < fds_size)) {
-    FD_SET(fd, p);
-  }
-  return;
+    if ((p != (fd_set*)(0))
+        && (fd >= 0) && (fd < fds_size)) {
+        FD_SET(fd, p);
+    }
+    return;
 }

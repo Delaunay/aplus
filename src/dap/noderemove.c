@@ -13,14 +13,13 @@
 #include <dap/node.h>
 
 /* external function definitions */
-void 
-noderemove(struct node * p)
+void noderemove(struct node* p)
 {
-  if (p != (struct node *) (0)) {
-    p->b->f = p->f;
-    p->f->b = p->b;
-    p->b = p;
-    p->f = p;
-  }
-  return;
+    if (p != (struct node*)(0)) {
+        p->b->f = p->f;
+        p->f->b = p->b;
+        p->b = p;
+        p->f = p;
+    }
+    return;
 }

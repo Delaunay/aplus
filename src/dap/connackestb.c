@@ -8,18 +8,17 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/tod.h>
 #include <dap/conn.h>
+#include <dap/tod.h>
 
 /* external function definitions */
-void 
-connackestb(struct conn * p)
+void connackestb(struct conn* p)
 {
-  if ((p != (struct conn *) (0))
-      && (p->estbd == 0)) {
-    p->estbtod = todsec();
-    (p->estbcount)++;
-    p->estbd = 1;
-  }
-  return;
+    if ((p != (struct conn*)(0))
+        && (p->estbd == 0)) {
+        p->estbtod = todsec();
+        (p->estbcount)++;
+        p->estbd = 1;
+    }
+    return;
 }

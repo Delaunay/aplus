@@ -14,33 +14,30 @@
 #else
 #include <iostream.h>
 #endif
-#include <MSIPC/MSChannel.H>
 #include <MSGUI/MSApplication.H>
+#include <MSIPC/MSChannel.H>
 #include <MSIPC/MSTimer.H>
 #include <a/f.h>
 
-class AplusApplication : public MSApplication
-{
+class AplusApplication : public MSApplication {
 public:
-  AplusApplication(void);
-  AplusApplication(int argc_,char **argv_);
-  ~AplusApplication(void);
-  
+    AplusApplication(void);
+    AplusApplication(int argc_, char** argv_);
+    ~AplusApplication(void);
+
 private:
-  
 protected:
 };
 
-class AplusMainLoop : public MSApplicationMainLoop
-{
+class AplusMainLoop : public MSApplicationMainLoop {
 public:
-  AplusMainLoop(MSApplication *pApplication_);
-  ~AplusMainLoop(void);
-  
+    AplusMainLoop(MSApplication* pApplication_);
+    ~AplusMainLoop(void);
+
 protected:
-  virtual void innerLoopFlush(MSBoolean poll_);
-  virtual MSBoolean processTimers(void);
-  virtual void selectAndProcess(void);
+    virtual void innerLoopFlush(MSBoolean poll_);
+    virtual MSBoolean processTimers(void);
+    virtual void selectAndProcess(void);
 };
- 
+
 #endif

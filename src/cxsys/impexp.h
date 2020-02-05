@@ -12,14 +12,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern char *ExportAObject(A, char *, I, I *);
-extern I ExportAObjectSizePass(A, const char *,const I, I*, I*);
-extern I ExportAObjectFillPass(A, const char *,const I, I, char *);
-extern A AExportAObject(A, char *, I, I *);
-extern A ImportAObject(char *, I, char *);
+extern char* ExportAObject(A, char*, I, I*);
+extern I ExportAObjectSizePass(A, const char*, const I, I*, I*);
+extern I ExportAObjectFillPass(A, const char*, const I, I, char*);
+extern A AExportAObject(A, char*, I, I*);
+extern A ImportAObject(char*, I, char*);
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-

@@ -11,12 +11,11 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-void 
-fdsclr(fd_set * p, int fd)
+void fdsclr(fd_set* p, int fd)
 {
-  if ((p != (fd_set *) (0))
-      && (fd >= 0) && (fd < fds_size)) {
-    FD_CLR(fd, p);
-  }
-  return;
+    if ((p != (fd_set*)(0))
+        && (fd >= 0) && (fd < fds_size)) {
+        FD_CLR(fd, p);
+    }
+    return;
 }

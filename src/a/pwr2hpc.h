@@ -9,30 +9,46 @@
 /*                                                                           */
 /*****************************************************************************/
 
-
 /* header file inclusions */
 extern long q;
 
 #ifndef _AIX
-typedef   struct  _quad { long val[2]; } quad;
+typedef struct _quad {
+    long val[2];
+} quad;
 #endif
-
 
 /* external macro declarations */
 #ifdef _AIXNO
 #include <float.h>
 #include <fpxcp.h>
 extern int fpe_bits;
-#define RESETXCP {fpe_bits=0;fp_clr_flag(FP_ALL_XCP);}
-#define TESTXCP(x) (((x)&0x20000000)|(0x00011000==((x)&0x0001f000)))
-#define CHECKXCP {BD f;int g;f.d=__readflm();g=f.i[1];if(fpe_bits||TESTXCP(g))q=9;}
+#define RESETXCP                 \
+    {                            \
+        fpe_bits = 0;            \
+        fp_clr_flag(FP_ALL_XCP); \
+    }
+#define TESTXCP(x) (((x)&0x20000000) | (0x00011000 == ((x)&0x0001f000)))
+#define CHECKXCP                    \
+    {                               \
+        BD f;                       \
+        int g;                      \
+        f.d = __readflm();          \
+        g = f.i[1];                 \
+        if (fpe_bits || TESTXCP(g)) \
+            q = 9;                  \
+    }
 #else
-#define RESETXCP    
-#define CHECKXCP   
+#define RESETXCP
+#define CHECKXCP
 #endif
 
 /* external struct, union, typedef and enum declarations */
-typedef union {int i[2]; short s[4]; double d;} BD;
+typedef union {
+    int i[2];
+    short s[4];
+    double d;
+} BD;
 
 /* external function declarations */
 /* integer logical dyadic scalar cores */
@@ -218,13 +234,11 @@ extern void hpc_mNotFI();
 extern void hpc_mPitFF();
 
 /* tmv cores */
-extern char *hpc_mv_i();
-extern char *hpc_mv_f();
-extern char *hpc_mv_c();
-extern char *hpc_rp_i();
-extern char *hpc_rp_f();
-extern char *hpc_rp_c();
-
+extern char* hpc_mv_i();
+extern char* hpc_mv_f();
+extern char* hpc_mv_c();
+extern char* hpc_rp_i();
+extern char* hpc_rp_f();
+extern char* hpc_rp_c();
 
 #endif /* included_hpc_hpc_h */
-

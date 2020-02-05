@@ -3,26 +3,24 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 #include <MSGUI/MSMenuItem.H>
 
-class MSGUIExport MSSeparatorMenuItem : public MSMenuItem 
-{
+class MSGUIExport MSSeparatorMenuItem : public MSMenuItem {
 protected:
-  void computeSize(void);
-  void init(void);
+    void computeSize(void);
+    void init(void);
 
-  virtual void drawSymbol(void);
+    virtual void drawSymbol(void);
 
 public:
-  MSSeparatorMenuItem(MSMenu *);
-  ~MSSeparatorMenuItem(void);
+    MSSeparatorMenuItem(MSMenu*);
+    ~MSSeparatorMenuItem(void);
 };
 
 #endif

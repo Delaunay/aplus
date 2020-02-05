@@ -9,7 +9,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-extern int bufftobuff(MSBuffer *sp,MSBuffer *dp,int n);
-extern MSBuffer *createBufferFromAobj(const A &aobj);
+extern int bufftobuff(MSBuffer* sp, MSBuffer* dp, int n);
+extern MSBuffer* createBufferFromAobj(const A& aobj);
 
 #endif

@@ -1,25 +1,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 // This file provides common instantiations for MSTreeListView template.
 
-#include <MSTypes/MSString.H>
 #include <MSGUI/MSPixmap.H>
+#include <MSTypes/MSString.H>
 
 // force local classes defined MSTreeListView.C to be compiled.
 #if defined(MS_FORCE_INTERNAL_TEMPLATE_INSTANTIATION)
-#include <MSGUI/MSTreeListView.H>
 #include <MSGUI/MSTreeListView.C>
+#include <MSGUI/MSTreeListView.H>
 #endif
 
 #ifndef MSTreeListViewHEADER
-inline MSString const &key(const MSPixmap &pixmap_)
+inline MSString const& key(const MSPixmap& pixmap_)
 {
-  return pixmap_.name();
+    return pixmap_.name();
 }
 #endif
 
@@ -28,24 +28,23 @@ inline MSString const &key(const MSPixmap &pixmap_)
 #include <MSTypes/MSIHashKeySet.C>
 
 #if defined(MS_EDG_TEMPLATE_INSTANTIATION)
-#pragma instantiate MSIHashKeySet<MSPixmap,MSString>
-#pragma instantiate MSGenericVector<MSPixmap>
+#pragma instantiate MSIHashKeySet < MSPixmap, MSString>
+#pragma instantiate MSGenericVector < MSPixmap>
 #endif
 
 #if defined(MS_STD_TEMPLATE_INSTANTIATION)
-template class MSIHashKeySet<MSPixmap,MSString>;
+template class MSIHashKeySet<MSPixmap, MSString>;
 template class MSGenericVector<MSPixmap>;
 #endif
 
 #if defined(MS_VC_TEMPLATE_INSTANTIATION)
-template MSIHashKeySet<MSPixmap,MSString>;
+template MSIHashKeySet<MSPixmap, MSString>;
 template MSGenericVector<MSPixmap>;
 #endif
 
 #if defined(MS_XLC_TEMPLATE_INSTANTIATION)
-#pragma define(MSGenericVector<MSPixmap>)
-#pragma define(MSIHashKeySet<MSPixmap,MSString>)
+#pragma define(MSGenericVector <MSPixmap>)
+#pragma define(MSIHashKeySet <MSPixmap, MSString>)
 #endif
-
 
 #endif //MSTK_MANUAL_INSTANTIATION

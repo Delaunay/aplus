@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -15,14 +15,13 @@
 
 #ifndef MSScalarModelHEADER
 #include <MSTypes/MSScalarModel.H>
-#endif 
+#endif
 
 #include <MSTypes/MSError.H>
 
-extern "C"
-{
-#include <limits.h>
+extern "C" {
 #include <ctype.h>
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 }
@@ -42,9 +41,8 @@ class istream;
 class MSSymbol;
 class MSFormat;
 
-class MSTypesExport MSString : public MSScalarModel 
-{
-/*******************************************************************************
+class MSTypesExport MSString : public MSScalarModel {
+    /*******************************************************************************
 * Objects of the MSString class are arrays of characters.                      *
 *                                                                              *
 * MSStrings provide the following function beyond that available from the      *
@@ -92,7 +90,7 @@ class MSTypesExport MSString : public MSScalarModel
 *      or second byte of a DBCS character.                                     *
 *******************************************************************************/
 public:
-/*------------------------- Constructors/Destructor ----------------------------
+    /*------------------------- Constructors/Destructor ----------------------------
 | You can construct instances of this class in the following ways:             |
 |    - Construct a null string.                                                |
 |    - Construct a string with the ASCII representation of a given numeric     |
@@ -105,54 +103,53 @@ public:
 |      be provided, in which case the MSString contents are initialized to a   |
 |      given pad character.  The default is a blank.                           |
 ------------------------------------------------------------------------------*/
-  class MSTypesExport CharPick
-  {
-  private:
-  friend class MSString;
+    class MSTypesExport CharPick {
+    private:
+        friend class MSString;
 
-    MSString *_pString;
-    unsigned  _index;
+        MSString* _pString;
+        unsigned _index;
 
-  public:
-    CharPick(MSString *pString,unsigned index);
-    CharPick(const CharPick& index);
+    public:
+        CharPick(MSString* pString, unsigned index);
+        CharPick(const CharPick& index);
 
-    CharPick& operator=(char aChar);
-    operator char() const;
+        CharPick& operator=(char aChar);
+        operator char() const;
 
-    MSString *string(void) const;
-    char value(void) const;
-    unsigned index(void) const;
-  };
+        MSString* string(void) const;
+        char value(void) const;
+        unsigned index(void) const;
+    };
 
-  MSString();
-  MSString(const MSString& aString);
+    MSString();
+    MSString(const MSString& aString);
 
-  MSString(int);
-  MSString(unsigned);
-  MSString(long);
-  MSString(unsigned long);
-  MSString(short);
-  MSString(unsigned short);
-  MSString(double);
+    MSString(int);
+    MSString(unsigned);
+    MSString(long);
+    MSString(unsigned long);
+    MSString(short);
+    MSString(unsigned short);
+    MSString(double);
 
-  MSString(char);
-  MSString(unsigned char);
-  MSString(signed char);
+    MSString(char);
+    MSString(unsigned char);
+    MSString(signed char);
 
-  MSString(const char *);
-  MSString(const unsigned char *);
-  MSString(const signed char *);
+    MSString(const char*);
+    MSString(const unsigned char*);
+    MSString(const signed char*);
 
-  MSString(const void *pBuffer1,unsigned lenBuffer1,char padCharacter=' ');
-  MSString(const void *pBuffer1,unsigned lenBuffer1,
-          const void *pBuffer2,unsigned lenBuffer2,char padCharacter=' ');
-  MSString(const void *pBuffer1,unsigned lenBuffer1,
-          const void *pBuffer2,unsigned lenBuffer2,
-          const void *pBuffer3,unsigned lenBuffer3,char padCharacter=' ');
+    MSString(const void* pBuffer1, unsigned lenBuffer1, char padCharacter = ' ');
+    MSString(const void* pBuffer1, unsigned lenBuffer1,
+        const void* pBuffer2, unsigned lenBuffer2, char padCharacter = ' ');
+    MSString(const void* pBuffer1, unsigned lenBuffer1,
+        const void* pBuffer2, unsigned lenBuffer2,
+        const void* pBuffer3, unsigned lenBuffer3, char padCharacter = ' ');
 
-  ~MSString();
-/*-------------------------------- Stream I/O ----------------------------------
+    ~MSString();
+    /*-------------------------------- Stream I/O ----------------------------------
   The following functions provide for reading and writing MSStrings from and
   to standard C++ streams:
     operator << - Puts an MSString's contents to an output stream.
@@ -164,11 +161,11 @@ public:
                   contains the characters up to the next occurrence of the
                   delimiter.  The delimiter character is skipped.
 ------------------------------------------------------------------------------*/
-  friend MSTypesExport ostream &operator<<(ostream &aStream,const MSString &aString);
-  friend MSTypesExport istream &operator>>(istream &aStream,MSString &aString);
-  static MSString lineFrom(istream &aStream,char delim='\n');
+    friend MSTypesExport ostream& operator<<(ostream& aStream, const MSString& aString);
+    friend MSTypesExport istream& operator>>(istream& aStream, MSString& aString);
+    static MSString lineFrom(istream& aStream, char delim = '\n');
 
-/*--------------------------------- Testing ------------------------------------
+    /*--------------------------------- Testing ------------------------------------
 | The following functions test the characters that comprise the string:         |
 |   isAlphanumeric    - MSTrue if and only if all characters are in             |
 |                       {'A'-'Z','a'-'z','0'-'9'}.                              |
@@ -207,41 +204,41 @@ public:
 |   includes          - MSTrue if the receiver contains the argument search     |
 |                       string.                                                 |
 ------------------------------------------------------------------------------*/
-  MSBoolean isAlphanumeric() const;
-  MSBoolean isAlphabetic() const;
-  MSBoolean isASCII() const;
-  MSBoolean isControl() const;
-  MSBoolean isDigits() const;
-  MSBoolean isGraphics() const;
-  MSBoolean isHexDigits() const;
-  MSBoolean isBinaryDigits() const;
-  MSBoolean isLowerCase() const;
-  MSBoolean isPrintable() const;
-  MSBoolean isPunctuation() const;
-  MSBoolean isUpperCase() const;
-  MSBoolean isWhiteSpace() const;
+    MSBoolean isAlphanumeric() const;
+    MSBoolean isAlphabetic() const;
+    MSBoolean isASCII() const;
+    MSBoolean isControl() const;
+    MSBoolean isDigits() const;
+    MSBoolean isGraphics() const;
+    MSBoolean isHexDigits() const;
+    MSBoolean isBinaryDigits() const;
+    MSBoolean isLowerCase() const;
+    MSBoolean isPrintable() const;
+    MSBoolean isPunctuation() const;
+    MSBoolean isUpperCase() const;
+    MSBoolean isWhiteSpace() const;
 
-  MSBoolean isMBCS() const;  
-  MSBoolean isDBCS() const;
-  MSBoolean isSBCS() const;
-  MSBoolean isValidMBCS() const;  
-  MSBoolean isValidDBCS() const;
-  MSBoolean includesMBCS() const;  
-  MSBoolean includesDBCS() const;
-  MSBoolean includesSBCS() const;
-  
-  MSBoolean isLike(const MSString &aPattern,char zeroOrMore='*',char anyChar='?') const;
-  MSBoolean isLike(const char *pPattern,char zeroOrMore='*',char anyChar='?') const;
-  
-  MSBoolean isAbbreviationFor(const MSString &fullString,unsigned minAbbrevLength=0) const;
-  MSBoolean isAbbreviationFor(const char *pFullString,unsigned minAbbrevLength=0) const;
-  
-  MSBoolean includes(const MSString &aString) const;
-  MSBoolean includes(const char *pString) const;
-  MSBoolean includes(char aChar) const;
-  MSBoolean includes(const MSStringTest &aTest) const;
+    MSBoolean isMBCS() const;
+    MSBoolean isDBCS() const;
+    MSBoolean isSBCS() const;
+    MSBoolean isValidMBCS() const;
+    MSBoolean isValidDBCS() const;
+    MSBoolean includesMBCS() const;
+    MSBoolean includesDBCS() const;
+    MSBoolean includesSBCS() const;
 
-/*------------------------------- Comparison -----------------------------------
+    MSBoolean isLike(const MSString& aPattern, char zeroOrMore = '*', char anyChar = '?') const;
+    MSBoolean isLike(const char* pPattern, char zeroOrMore = '*', char anyChar = '?') const;
+
+    MSBoolean isAbbreviationFor(const MSString& fullString, unsigned minAbbrevLength = 0) const;
+    MSBoolean isAbbreviationFor(const char* pFullString, unsigned minAbbrevLength = 0) const;
+
+    MSBoolean includes(const MSString& aString) const;
+    MSBoolean includes(const char* pString) const;
+    MSBoolean includes(char aChar) const;
+    MSBoolean includes(const MSStringTest& aTest) const;
+
+    /*------------------------------- Comparison -----------------------------------
 | All MSBoolean operators are defined for strings.  The following functions    |
 | are overloaded so that MSStrings can be compared to objects of type char*,   |
 | as well as to other MSStrings.                                               |  
@@ -254,37 +251,37 @@ public:
 |   operator <= - Equivalent to '(string1 < string2) || (string1== string2)'.  |
 |   operator >= - Equivalent to '!(string1 < string2)'.                        |
 ------------------------------------------------------------------------------*/
-  MSBoolean operator!() const;
+    MSBoolean operator!() const;
 
-  long compare(const MSString&) const;
-  
-  inline friend MSTypesExport unsigned long hash(const MSString&,unsigned long size_);
-  
-  friend MSTypesExport MSBoolean operator==(const MSString &string1,const MSString &string2);
-  friend MSTypesExport MSBoolean operator==(const MSString &string1,const char *pString2);
-  friend MSTypesExport MSBoolean operator==(const char *pString1,const MSString &string2);
-  
-  friend MSTypesExport MSBoolean operator!=(const MSString &string1,const MSString &string2);
-  friend MSTypesExport MSBoolean operator!=(const MSString &string1,const char *pString2);
-  friend MSTypesExport MSBoolean operator!=(const char *pString1,const MSString &string2);
-  
-  friend MSTypesExport MSBoolean operator<(const MSString &string1,const MSString &string2);
-  friend MSTypesExport MSBoolean operator<(const MSString &string1,const char *pString2);
-  friend MSTypesExport MSBoolean operator<(const char *pString1,const MSString &string2);
-  
-  friend MSTypesExport MSBoolean operator<=(const MSString &string1,const MSString &string2);
-  friend MSTypesExport MSBoolean operator<=(const MSString &string1,const char *pString2);
-  friend MSTypesExport MSBoolean operator<=(const char *pString1,const MSString &string2);
-  
-  friend MSTypesExport MSBoolean operator>(const MSString &string1,const MSString &string2);
-  friend MSTypesExport MSBoolean operator>(const MSString &string1,const char *pString2);
-  friend MSTypesExport MSBoolean operator>(const char *pString1,const MSString &string2);
-  
-  friend MSTypesExport MSBoolean operator>=(const MSString &string1,const MSString &string2);
-  friend MSTypesExport MSBoolean operator>=(const MSString &string1,const char *pString2);
-  friend MSTypesExport MSBoolean operator>=(const char *pString1,const MSString &string2);
+    long compare(const MSString&) const;
 
-/*------------------------------- Conversion -----------------------------------
+    inline friend MSTypesExport unsigned long hash(const MSString&, unsigned long size_);
+
+    friend MSTypesExport MSBoolean operator==(const MSString& string1, const MSString& string2);
+    friend MSTypesExport MSBoolean operator==(const MSString& string1, const char* pString2);
+    friend MSTypesExport MSBoolean operator==(const char* pString1, const MSString& string2);
+
+    friend MSTypesExport MSBoolean operator!=(const MSString& string1, const MSString& string2);
+    friend MSTypesExport MSBoolean operator!=(const MSString& string1, const char* pString2);
+    friend MSTypesExport MSBoolean operator!=(const char* pString1, const MSString& string2);
+
+    friend MSTypesExport MSBoolean operator<(const MSString& string1, const MSString& string2);
+    friend MSTypesExport MSBoolean operator<(const MSString& string1, const char* pString2);
+    friend MSTypesExport MSBoolean operator<(const char* pString1, const MSString& string2);
+
+    friend MSTypesExport MSBoolean operator<=(const MSString& string1, const MSString& string2);
+    friend MSTypesExport MSBoolean operator<=(const MSString& string1, const char* pString2);
+    friend MSTypesExport MSBoolean operator<=(const char* pString1, const MSString& string2);
+
+    friend MSTypesExport MSBoolean operator>(const MSString& string1, const MSString& string2);
+    friend MSTypesExport MSBoolean operator>(const MSString& string1, const char* pString2);
+    friend MSTypesExport MSBoolean operator>(const char* pString1, const MSString& string2);
+
+    friend MSTypesExport MSBoolean operator>=(const MSString& string1, const MSString& string2);
+    friend MSTypesExport MSBoolean operator>=(const MSString& string1, const char* pString2);
+    friend MSTypesExport MSBoolean operator>=(const char* pString1, const MSString& string2);
+
+    /*------------------------------- Conversion -----------------------------------
 | The following functions permit the conversion of a string to various other   |
 | data types.  The types supported are the same set as are supported by the    |
 | MSString constructors:                                                       |
@@ -344,52 +341,52 @@ public:
 |   aString.c2b();                                 // Changes aString.         |
 |   String binaryDigits= MSString::c2b( aString ); // Leaves aString alone.    |
 ------------------------------------------------------------------------------*/
-  operator const char*() const;
-  operator const unsigned char*() const;
-  
-  virtual MSString asString(void) const;
-  virtual MSString asDebugInfo(void) const;
-  virtual MSString asMSF(void) const;
-  long asInt(void) const; 
-  unsigned long asUnsigned(void) const;
-  MSBoolean asBoolean(void) const;
-  double asDouble(void) const;
+    operator const char*() const;
+    operator const unsigned char*() const;
 
-  MSString &decodeMSF(void);
-  MSString &encodeMSF(void);
+    virtual MSString asString(void) const;
+    virtual MSString asDebugInfo(void) const;
+    virtual MSString asMSF(void) const;
+    long asInt(void) const;
+    unsigned long asUnsigned(void) const;
+    MSBoolean asBoolean(void) const;
+    double asDouble(void) const;
 
-  MSString &b2c();
-  MSString &b2d();
-  MSString &b2x();
-  MSString &c2b();
-  MSString &c2d();
-  MSString &c2x();
-  MSString &d2b();
-  MSString &d2c();
-  MSString &d2x();
-  MSString &x2b();
-  MSString &x2c();
-  MSString &x2d();
-  
-  static MSString b2c(const MSString &aString);
-  static MSString b2d(const MSString &aString);
-  static MSString b2x(const MSString &aString);
-  static MSString c2b(const MSString &aString);
-  static MSString c2d(const MSString &aString);
-  static MSString c2x(const MSString &aString);
-  static MSString d2b(const MSString &aString);
-  static MSString d2c(const MSString &aString);
-  static MSString d2x(const MSString &aString);
-  static MSString x2b(const MSString &aString);
-  static MSString x2c(const MSString &aString);
-  static MSString x2d(const MSString &aString);
+    MSString& decodeMSF(void);
+    MSString& encodeMSF(void);
 
-  const char *format(MSString*) const;
-  const char *format(MSString&) const;
-  const char *format(MSString*,const MSFormat&) const;
-  const char *format(MSString&,const MSFormat&) const;
+    MSString& b2c();
+    MSString& b2d();
+    MSString& b2x();
+    MSString& c2b();
+    MSString& c2d();
+    MSString& c2x();
+    MSString& d2b();
+    MSString& d2c();
+    MSString& d2x();
+    MSString& x2b();
+    MSString& x2c();
+    MSString& x2d();
 
-/*------------------------- Manipulation Operators -----------------------------
+    static MSString b2c(const MSString& aString);
+    static MSString b2d(const MSString& aString);
+    static MSString b2x(const MSString& aString);
+    static MSString c2b(const MSString& aString);
+    static MSString c2d(const MSString& aString);
+    static MSString c2x(const MSString& aString);
+    static MSString d2b(const MSString& aString);
+    static MSString d2c(const MSString& aString);
+    static MSString d2x(const MSString& aString);
+    static MSString x2b(const MSString& aString);
+    static MSString x2c(const MSString& aString);
+    static MSString x2d(const MSString& aString);
+
+    const char* format(MSString*) const;
+    const char* format(MSString&) const;
+    const char* format(MSString*, const MSFormat&) const;
+    const char* format(MSString&, const MSFormat&) const;
+
+    /*------------------------- Manipulation Operators -----------------------------
 | The following functions allow the string's contents to be manipulated.       |
 | All are overloaded so that standard C "strings" can be used efficiently,     |
 | without constructing an equivalent String first.                             |
@@ -406,41 +403,41 @@ public:
 |   operator ^  - Performs bitwise XOR.                                        |
 |   operator ^= - Performs bitwise XOR and replaces the receiver.              |
 ------------------------------------------------------------------------------*/
-  MSString &operator=(const MSString &aString);
-  MSString &operator=(const char *pString);
-  MSString operator~() const;
-  MSString operator+(const MSString &aString) const;
-  MSString operator+(const char *pString) const;
-  MSString operator+(char aChar) const;
-  MSString &operator+=(const MSString &aString);
-  MSString &operator+=(const char *pString);
-  MSString &operator+=(char aChar);
-  MSString &operator<<=(const MSString &aString);
-  MSString &operator<<=(const char *pString);
-  MSString &operator<<=(char aChar);
-  MSString &operator<<(const MSString &aString);
-  MSString &operator<<(const char *pString);
-  MSString &operator<<(char aChar);
-  MSString operator&(const MSString &aString) const;
-  MSString operator&(const char *pString) const;
-  MSString &operator&=(const MSString &aString);
-  MSString &operator&=(const char *pString);
-  MSString operator|(const MSString &aString) const;
-  MSString operator|(const char *pString) const;
-  MSString &operator|=(const MSString &aString);
-  MSString &operator|=(const char *pString);
-  MSString operator^(const MSString &aString) const;
-  MSString operator^(const char *pString) const;
-  MSString &operator^=(const MSString &aString);
-  MSString &operator^=(const char *pString);
+    MSString& operator=(const MSString& aString);
+    MSString& operator=(const char* pString);
+    MSString operator~() const;
+    MSString operator+(const MSString& aString) const;
+    MSString operator+(const char* pString) const;
+    MSString operator+(char aChar) const;
+    MSString& operator+=(const MSString& aString);
+    MSString& operator+=(const char* pString);
+    MSString& operator+=(char aChar);
+    MSString& operator<<=(const MSString& aString);
+    MSString& operator<<=(const char* pString);
+    MSString& operator<<=(char aChar);
+    MSString& operator<<(const MSString& aString);
+    MSString& operator<<(const char* pString);
+    MSString& operator<<(char aChar);
+    MSString operator&(const MSString& aString) const;
+    MSString operator&(const char* pString) const;
+    MSString& operator&=(const MSString& aString);
+    MSString& operator&=(const char* pString);
+    MSString operator|(const MSString& aString) const;
+    MSString operator|(const char* pString) const;
+    MSString& operator|=(const MSString& aString);
+    MSString& operator|=(const char* pString);
+    MSString operator^(const MSString& aString) const;
+    MSString operator^(const char* pString) const;
+    MSString& operator^=(const MSString& aString);
+    MSString& operator^=(const char* pString);
 
-  friend MSTypesExport MSString operator+(char aChar,const MSString &aString);
-  friend MSTypesExport MSString operator+(const char *pString,const MSString &aString);
-  friend MSTypesExport MSString operator&(const char *pString,const MSString &aString);
-  friend MSTypesExport MSString operator|(const char *pString,const MSString &aString);
-  friend MSTypesExport MSString operator^(const char *pString,const MSString &aString);
+    friend MSTypesExport MSString operator+(char aChar, const MSString& aString);
+    friend MSTypesExport MSString operator+(const char* pString, const MSString& aString);
+    friend MSTypesExport MSString operator&(const char* pString, const MSString& aString);
+    friend MSTypesExport MSString operator|(const char* pString, const MSString& aString);
+    friend MSTypesExport MSString operator^(const char* pString, const MSString& aString);
 
-/*------------------------------- Accessors ------------------------------------
+    /*------------------------------- Accessors ------------------------------------
 | The following functions provide access to general information about the      |
 | string:                                                                      |
 |   size        - Returns the length of the string, not counting the           |
@@ -458,39 +455,39 @@ public:
 |   symbol      - Returns the string's symbol type - static method.            |
 |   stringType  - Returns the string's symbol type - static method.            |
 ------------------------------------------------------------------------------*/
-  const char *string() const;
-  unsigned size() const;
-  unsigned length() const;
-  
-  MSString subString(unsigned startPos) const;
-  MSString subString(unsigned startPos,unsigned length,char padCharacter=' ') const;
+    const char* string() const;
+    unsigned size() const;
+    unsigned length() const;
 
-  MSString operator()(unsigned startPos,unsigned length) const;
-  MSString operator()(unsigned startPos,unsigned length,char padCharacter) const;
+    MSString subString(unsigned startPos) const;
+    MSString subString(unsigned startPos, unsigned length, char padCharacter = ' ') const;
 
-  CharPick operator[](unsigned index);
-  const char &operator[](unsigned index) const;
+    MSString operator()(unsigned startPos, unsigned length) const;
+    MSString operator()(unsigned startPos, unsigned length, char padCharacter) const;
 
-  CharPick operator[](int index);
-  const char &operator[](int index) const;
+    CharPick operator[](unsigned index);
+    const char& operator[](unsigned index) const;
 
-  char operator()(unsigned index);
-  char operator()(unsigned index) const;
-  
-  MSStringEnum::CharType charType(unsigned index) const;
+    CharPick operator[](int index);
+    const char& operator[](int index) const;
 
-  char first(void) const;
-  char last(void) const;
-  virtual MSString className(void) const;
-  static const MSSymbol& symbol(void);  
-  static const MSSymbol& stringType(void);
-  virtual const MSSymbol& type(void) const;
-  virtual MSModel *clone(void) const;
-  virtual MSModel *create(void) const;
-  virtual void assign(const MSModel&);
-  virtual long compare(const MSModel&) const;
+    char operator()(unsigned index);
+    char operator()(unsigned index) const;
 
-/*------------------------------- Searching ------------------------------------
+    MSStringEnum::CharType charType(unsigned index) const;
+
+    char first(void) const;
+    char last(void) const;
+    virtual MSString className(void) const;
+    static const MSSymbol& symbol(void);
+    static const MSSymbol& stringType(void);
+    virtual const MSSymbol& type(void) const;
+    virtual MSModel* clone(void) const;
+    virtual MSModel* create(void) const;
+    virtual void assign(const MSModel&);
+    virtual long compare(const MSModel&) const;
+
+    /*------------------------------- Searching ------------------------------------
 | The following functions permit searching the string in various ways:         |
 |   indexOfAnyBut - Returns the index of the first character of the receiver   |
 |                   that is not in the argument set of characters; length() is |
@@ -528,42 +525,42 @@ public:
 |   lastIndexOfAnyOf  - Returns the index of the last character in the         |
 |                       argument.                                              |
 ------------------------------------------------------------------------------*/
-  unsigned indexOf(const MSString &aString,unsigned startPos=0) const;
-  unsigned indexOf(const char *pString,unsigned startPos=0) const;
-  unsigned indexOf(char aCharacter,unsigned startPos=0) const;
-  unsigned indexOf(const MSStringTest &aTest,unsigned startPos=0) const;
-  
-  unsigned indexOfAnyBut(const MSString &validChars,unsigned startPos=0) const;
-  unsigned indexOfAnyBut(const char *pValidChars,unsigned startPos=0) const;
-  unsigned indexOfAnyBut(char validChar,unsigned startPos=0) const;
-  unsigned indexOfAnyBut(const MSStringTest &aTest,unsigned startPos=0) const;
-  
-  unsigned indexOfAnyOf(const MSString &searchChars,unsigned startPos=0) const;
-  unsigned indexOfAnyOf(const char *pSearchChars,unsigned startPos=0) const;
-  unsigned indexOfAnyOf(char searchChar,unsigned startPos=0) const;
-  unsigned indexOfAnyOf(const MSStringTest &aTest,unsigned startPos=0) const;
-  
-  unsigned lastIndexOf(const MSString &aString,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOf(const char *pString,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOf(char aCharacter,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOf(const MSStringTest &aTest,unsigned startPos=UINT_MAX-1) const;
-  
-  unsigned lastIndexOfAnyBut(const MSString &validChars,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOfAnyBut(const char *pValidChars,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOfAnyBut(char validChar,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOfAnyBut(const MSStringTest &aTest,unsigned startPos=UINT_MAX-1) const;
-  
-  unsigned lastIndexOfAnyOf(const MSString &searchChars,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOfAnyOf(const char *pSearchChars,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOfAnyOf(char searchChar,unsigned startPos=UINT_MAX-1) const;
-  unsigned lastIndexOfAnyOf(const MSStringTest &aTest,unsigned startPos=UINT_MAX-1) const;
-  
-  unsigned occurrencesOf(const MSString &aString,unsigned startPos=0) const;
-  unsigned occurrencesOf(const char *pString,unsigned startPos=0) const;
-  unsigned occurrencesOf(char aCharacter,unsigned startPos=0) const;
-  unsigned occurrencesOf(const MSStringTest &aTest,unsigned startPos=0) const;
+    unsigned indexOf(const MSString& aString, unsigned startPos = 0) const;
+    unsigned indexOf(const char* pString, unsigned startPos = 0) const;
+    unsigned indexOf(char aCharacter, unsigned startPos = 0) const;
+    unsigned indexOf(const MSStringTest& aTest, unsigned startPos = 0) const;
 
-/*-------------------------------- Editing -------------------------------------
+    unsigned indexOfAnyBut(const MSString& validChars, unsigned startPos = 0) const;
+    unsigned indexOfAnyBut(const char* pValidChars, unsigned startPos = 0) const;
+    unsigned indexOfAnyBut(char validChar, unsigned startPos = 0) const;
+    unsigned indexOfAnyBut(const MSStringTest& aTest, unsigned startPos = 0) const;
+
+    unsigned indexOfAnyOf(const MSString& searchChars, unsigned startPos = 0) const;
+    unsigned indexOfAnyOf(const char* pSearchChars, unsigned startPos = 0) const;
+    unsigned indexOfAnyOf(char searchChar, unsigned startPos = 0) const;
+    unsigned indexOfAnyOf(const MSStringTest& aTest, unsigned startPos = 0) const;
+
+    unsigned lastIndexOf(const MSString& aString, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOf(const char* pString, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOf(char aCharacter, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOf(const MSStringTest& aTest, unsigned startPos = UINT_MAX - 1) const;
+
+    unsigned lastIndexOfAnyBut(const MSString& validChars, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOfAnyBut(const char* pValidChars, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOfAnyBut(char validChar, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOfAnyBut(const MSStringTest& aTest, unsigned startPos = UINT_MAX - 1) const;
+
+    unsigned lastIndexOfAnyOf(const MSString& searchChars, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOfAnyOf(const char* pSearchChars, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOfAnyOf(char searchChar, unsigned startPos = UINT_MAX - 1) const;
+    unsigned lastIndexOfAnyOf(const MSStringTest& aTest, unsigned startPos = UINT_MAX - 1) const;
+
+    unsigned occurrencesOf(const MSString& aString, unsigned startPos = 0) const;
+    unsigned occurrencesOf(const char* pString, unsigned startPos = 0) const;
+    unsigned occurrencesOf(char aCharacter, unsigned startPos = 0) const;
+    unsigned occurrencesOf(const MSStringTest& aTest, unsigned startPos = 0) const;
+
+    /*-------------------------------- Editing -------------------------------------
 | The following functions are used to edit the string.  All return a           |
 | reference to the modified receiver.  Many that are length related, such as   |
 | center and leftJustify, accept a pad character that defaults to a blank.     |
@@ -618,142 +615,142 @@ public:
 |   upperCase           - Translates all lower case letters in the receiver    |
 |                         to upper case.                                       |
 ------------------------------------------------------------------------------*/
-  MSString &center(unsigned length,char padCharacter=' ');
-  
-  MSString &change(const MSString &inputString,const MSString &outputString,
-		   unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  MSString &change(const MSString &inputString,const char *pOutputString,
-		   unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  MSString &change(const char *pInputString,const MSString &outputString,
-		   unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  MSString &change(const char *pInputString,const char *pOutputString,
-		   unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  
-  MSString &copy(unsigned numCopies);
-  
-  MSString &insert(const MSString &aString,unsigned index=0,char padCharacter=' ');
-  MSString &insert(const char *pString,unsigned index=0,char padCharacter=' ');
-  
-  MSString &leftJustify(unsigned length,char padCharacter=' ');
-  
-  MSString &lowerCase();
-  MSString &upperCase();
-  
-  MSString &overlayWith(const MSString &aString,unsigned index=0,char padCharacter=' ');
-  MSString &overlayWith(const char *pString,unsigned index=0,char padCharacter=' ');
-  
-  MSString &remove(unsigned startPos);
-  MSString &remove(unsigned startPos,unsigned numChars);
-  
-  MSString &reverse();
-  
-  MSString &rightJustify(unsigned length,char padCharacter=' ');
-  
-  MSString &strip();
-  MSString &strip(char aCharacter);
-  MSString &strip(const MSString &aString);
-  MSString &strip(const char *pString);
-  MSString &strip(const MSStringTest &aTest);
-  
-  MSString &stripLeading();
-  MSString &stripLeading(char aCharacter);
-  MSString &stripLeading(const MSString &aString);
-  MSString &stripLeading(const char *pString);
-  MSString &stripLeading(const MSStringTest &aTest);
-  
-  MSString &stripTrailing();
-  MSString &stripTrailing(char aCharacter);
-  MSString &stripTrailing(const MSString &aString);
-  MSString &stripTrailing(const char *pString);
-  MSString &stripTrailing(const MSStringTest &aTest);
-  
-  MSString &translate(const MSString &inputChars,const MSString &outputChars,char padCharacter=' ');
-  MSString &translate(const MSString &inputChars,const char *pOutputChars,char padCharacter=' ');
-  MSString &translate(const char *pInputChars,const MSString &outputChars,char padCharacter=' ');
-  MSString &translate(const char *pInputChars,const char *pOutputChars,char padCharacter=' ');
-  
-  static MSString center(const MSString &aString,unsigned length,char padCharacter=' ');
-  
-  static MSString change(const MSString &aString,const MSString &inputString,
-			 const MSString &outputString,unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  static MSString change(const MSString &aString,const MSString &inputString,
-			 const char *pOutputString,unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  static MSString change(const MSString &aString,const char *pInputString,
-			 const MSString &outputString,unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  static MSString change(const MSString &aString,const char *pInputString,
-			 const char *pOutputString,unsigned startPos=0,unsigned numChanges=UINT_MAX);
-  
-  static MSString copy(const MSString &aString,unsigned numCopies);
-  
-  static MSString insert(const MSString &aString,const MSString &anInsert,unsigned index=0,char padCharacter=' ');
-  static MSString insert(const MSString &aString,const char *pInsert,unsigned index=0,char padCharacter=' ');
-  
-  static MSString leftJustify(const MSString &aString,unsigned length,char padCharacter=' ');
-  
-  static MSString lowerCase(const MSString &aString);
-  
-  static MSString overlayWith(const MSString &aString,const MSString &anOverlay,unsigned index=0,char padCharacter=' ');
-  static MSString overlayWith(const MSString &aString,const char *pOverlay,unsigned index=0,char padCharacter=' ');
-  
-  static MSString remove(const MSString &aString,unsigned startPos);
-  static MSString remove(const MSString &aString,unsigned startPos,unsigned numChars);
-  
-  static MSString reverse(const MSString &aString);
-  
-  static MSString rightJustify(const MSString &aString,unsigned length,char padCharacter=' ');
-  
-  static MSString stripBlanks(const MSString &aString);
-  static MSString strip(const MSString &aString,char aChar);
-  static MSString strip(const MSString &aString,const MSString &aStringOfChars);
-  static MSString strip(const MSString &aString,const char *pStringOfChars);
-  static MSString strip(const MSString &aString,const MSStringTest &aTest);
-  
-  static MSString stripLeadingBlanks(const MSString &aString);
-  static MSString stripLeading(const MSString &aString,char aChar);
-  static MSString stripLeading(const MSString &aString,const MSString &aStringOfChars);
-  static MSString stripLeading(const MSString &aString,const char *pStringOfChars);
-  static MSString stripLeading(const MSString &aString,const MSStringTest &aTest);
-  
-  static MSString stripTrailingBlanks(const MSString &aString);
-  static MSString stripTrailing(const MSString &aString,char aChar);
-  static MSString stripTrailing(const MSString &aString,const MSString &aStringOfChars);
-  static MSString stripTrailing(const MSString &aString,const char *pStringOfChars);
-  static MSString stripTrailing(const MSString &aString,const MSStringTest &aTest);
-  
-  static MSString translate(const MSString &aString,const MSString &inputChars,
-			   const MSString &outputChars,char padCharacter=' ');
-  static MSString translate(const MSString &aString,const MSString &inputChars,
-			   const char *pOutputChars,char padCharacter=' ');
-  static MSString translate(const MSString &aString,const char *pInputChars,
-			   const MSString &outputChars,char padCharacter=' ');
-  static MSString translate(const MSString &aString,const char *pInputChars,
-			   const char *pOutputChars,char padCharacter=' ');
-  static MSString upperCase(const MSString &aString);
+    MSString& center(unsigned length, char padCharacter = ' ');
 
-  virtual MSError::ErrorStatus set(const char *pString);
-  virtual MSError::ErrorStatus setFromMSF(const char *pString);
-  virtual MSError::ErrorStatus set(unsigned index,char aChar);
-  virtual MSError::ErrorStatus set(const MSString *pString);
-  virtual MSError::ErrorStatus set(const MSString &aString);
-  MSBoolean isSet() const;
+    MSString& change(const MSString& inputString, const MSString& outputString,
+        unsigned startPos = 0, unsigned numChanges = UINT_MAX);
+    MSString& change(const MSString& inputString, const char* pOutputString,
+        unsigned startPos = 0, unsigned numChanges = UINT_MAX);
+    MSString& change(const char* pInputString, const MSString& outputString,
+        unsigned startPos = 0, unsigned numChanges = UINT_MAX);
+    MSString& change(const char* pInputString, const char* pOutputString,
+        unsigned startPos = 0, unsigned numChanges = UINT_MAX);
 
-  MSString& truncate(unsigned len=0);
-  MSString& exchange(unsigned index1,unsigned index2);
+    MSString& copy(unsigned numCopies);
 
-  MSString& removeAll();
-  MSString& lower();
-  MSString& upper();
-  MSString& rotate(int count);
-  MSString& take(int count);
-  MSString& drop(int count);
+    MSString& insert(const MSString& aString, unsigned index = 0, char padCharacter = ' ');
+    MSString& insert(const char* pString, unsigned index = 0, char padCharacter = ' ');
 
-  friend MSTypesExport MSString lower(const MSString& aString);
-  friend MSTypesExport MSString upper(const MSString& aString);
-  friend MSTypesExport MSString rotate(const MSString& aString,int count);
-  friend MSTypesExport MSString take(const MSString& aString,int count);
-  friend MSTypesExport MSString drop(const MSString& aString,int count);
+    MSString& leftJustify(unsigned length, char padCharacter = ' ');
 
-/*----------------------------- Word Functions ---------------------------------
+    MSString& lowerCase();
+    MSString& upperCase();
+
+    MSString& overlayWith(const MSString& aString, unsigned index = 0, char padCharacter = ' ');
+    MSString& overlayWith(const char* pString, unsigned index = 0, char padCharacter = ' ');
+
+    MSString& remove(unsigned startPos);
+    MSString& remove(unsigned startPos, unsigned numChars);
+
+    MSString& reverse();
+
+    MSString& rightJustify(unsigned length, char padCharacter = ' ');
+
+    MSString& strip();
+    MSString& strip(char aCharacter);
+    MSString& strip(const MSString& aString);
+    MSString& strip(const char* pString);
+    MSString& strip(const MSStringTest& aTest);
+
+    MSString& stripLeading();
+    MSString& stripLeading(char aCharacter);
+    MSString& stripLeading(const MSString& aString);
+    MSString& stripLeading(const char* pString);
+    MSString& stripLeading(const MSStringTest& aTest);
+
+    MSString& stripTrailing();
+    MSString& stripTrailing(char aCharacter);
+    MSString& stripTrailing(const MSString& aString);
+    MSString& stripTrailing(const char* pString);
+    MSString& stripTrailing(const MSStringTest& aTest);
+
+    MSString& translate(const MSString& inputChars, const MSString& outputChars, char padCharacter = ' ');
+    MSString& translate(const MSString& inputChars, const char* pOutputChars, char padCharacter = ' ');
+    MSString& translate(const char* pInputChars, const MSString& outputChars, char padCharacter = ' ');
+    MSString& translate(const char* pInputChars, const char* pOutputChars, char padCharacter = ' ');
+
+    static MSString center(const MSString& aString, unsigned length, char padCharacter = ' ');
+
+    static MSString change(const MSString& aString, const MSString& inputString,
+        const MSString& outputString, unsigned startPos = 0, unsigned numChanges = UINT_MAX);
+    static MSString change(const MSString& aString, const MSString& inputString,
+        const char* pOutputString, unsigned startPos = 0, unsigned numChanges = UINT_MAX);
+    static MSString change(const MSString& aString, const char* pInputString,
+        const MSString& outputString, unsigned startPos = 0, unsigned numChanges = UINT_MAX);
+    static MSString change(const MSString& aString, const char* pInputString,
+        const char* pOutputString, unsigned startPos = 0, unsigned numChanges = UINT_MAX);
+
+    static MSString copy(const MSString& aString, unsigned numCopies);
+
+    static MSString insert(const MSString& aString, const MSString& anInsert, unsigned index = 0, char padCharacter = ' ');
+    static MSString insert(const MSString& aString, const char* pInsert, unsigned index = 0, char padCharacter = ' ');
+
+    static MSString leftJustify(const MSString& aString, unsigned length, char padCharacter = ' ');
+
+    static MSString lowerCase(const MSString& aString);
+
+    static MSString overlayWith(const MSString& aString, const MSString& anOverlay, unsigned index = 0, char padCharacter = ' ');
+    static MSString overlayWith(const MSString& aString, const char* pOverlay, unsigned index = 0, char padCharacter = ' ');
+
+    static MSString remove(const MSString& aString, unsigned startPos);
+    static MSString remove(const MSString& aString, unsigned startPos, unsigned numChars);
+
+    static MSString reverse(const MSString& aString);
+
+    static MSString rightJustify(const MSString& aString, unsigned length, char padCharacter = ' ');
+
+    static MSString stripBlanks(const MSString& aString);
+    static MSString strip(const MSString& aString, char aChar);
+    static MSString strip(const MSString& aString, const MSString& aStringOfChars);
+    static MSString strip(const MSString& aString, const char* pStringOfChars);
+    static MSString strip(const MSString& aString, const MSStringTest& aTest);
+
+    static MSString stripLeadingBlanks(const MSString& aString);
+    static MSString stripLeading(const MSString& aString, char aChar);
+    static MSString stripLeading(const MSString& aString, const MSString& aStringOfChars);
+    static MSString stripLeading(const MSString& aString, const char* pStringOfChars);
+    static MSString stripLeading(const MSString& aString, const MSStringTest& aTest);
+
+    static MSString stripTrailingBlanks(const MSString& aString);
+    static MSString stripTrailing(const MSString& aString, char aChar);
+    static MSString stripTrailing(const MSString& aString, const MSString& aStringOfChars);
+    static MSString stripTrailing(const MSString& aString, const char* pStringOfChars);
+    static MSString stripTrailing(const MSString& aString, const MSStringTest& aTest);
+
+    static MSString translate(const MSString& aString, const MSString& inputChars,
+        const MSString& outputChars, char padCharacter = ' ');
+    static MSString translate(const MSString& aString, const MSString& inputChars,
+        const char* pOutputChars, char padCharacter = ' ');
+    static MSString translate(const MSString& aString, const char* pInputChars,
+        const MSString& outputChars, char padCharacter = ' ');
+    static MSString translate(const MSString& aString, const char* pInputChars,
+        const char* pOutputChars, char padCharacter = ' ');
+    static MSString upperCase(const MSString& aString);
+
+    virtual MSError::ErrorStatus set(const char* pString);
+    virtual MSError::ErrorStatus setFromMSF(const char* pString);
+    virtual MSError::ErrorStatus set(unsigned index, char aChar);
+    virtual MSError::ErrorStatus set(const MSString* pString);
+    virtual MSError::ErrorStatus set(const MSString& aString);
+    MSBoolean isSet() const;
+
+    MSString& truncate(unsigned len = 0);
+    MSString& exchange(unsigned index1, unsigned index2);
+
+    MSString& removeAll();
+    MSString& lower();
+    MSString& upper();
+    MSString& rotate(int count);
+    MSString& take(int count);
+    MSString& drop(int count);
+
+    friend MSTypesExport MSString lower(const MSString& aString);
+    friend MSTypesExport MSString upper(const MSString& aString);
+    friend MSTypesExport MSString rotate(const MSString& aString, int count);
+    friend MSTypesExport MSString take(const MSString& aString, int count);
+    friend MSTypesExport MSString drop(const MSString& aString, int count);
+
+    /*----------------------------- Word Functions ---------------------------------
 | The following functions operate on the string as a collection of words       |
 | separated by whitespace characters:                                          |
 |                                                                              |
@@ -793,25 +790,25 @@ public:
 |                       words; the word separators are copied to the result    |
 |                       intact.                                                |
 ------------------------------------------------------------------------------*/
-  MSString &removeWords(unsigned firstWord);
-  MSString &removeWords(unsigned firstWord,unsigned numWords);
-  MSString &space(unsigned numSpaces=1,char spaceChar=' ');
-  MSString word(unsigned wordNumber) const;
-  MSString words(unsigned firstWord) const;
-  MSString words(unsigned firstWord,unsigned numWords) const;
-  
-  unsigned indexOfPhrase(const MSString &wordString,unsigned startWord=0) const;
-  unsigned indexOfWord(unsigned wordNumber) const;
-  unsigned lengthOfWord(unsigned wordNumber) const;
-  unsigned numWords() const;
-  unsigned wordIndexOfPhrase(const MSString &aPhrase,unsigned startWord=0) const;
-  
-  static MSString space(const MSString &aString,unsigned numSpaces=1,char spaceChar=' ');
-  static MSString removeWords(const MSString &aString,unsigned startWord);
-  static MSString removeWords(const MSString &aString,unsigned startWord,unsigned numWords);
+    MSString& removeWords(unsigned firstWord);
+    MSString& removeWords(unsigned firstWord, unsigned numWords);
+    MSString& space(unsigned numSpaces = 1, char spaceChar = ' ');
+    MSString word(unsigned wordNumber) const;
+    MSString words(unsigned firstWord) const;
+    MSString words(unsigned firstWord, unsigned numWords) const;
+
+    unsigned indexOfPhrase(const MSString& wordString, unsigned startWord = 0) const;
+    unsigned indexOfWord(unsigned wordNumber) const;
+    unsigned lengthOfWord(unsigned wordNumber) const;
+    unsigned numWords() const;
+    unsigned wordIndexOfPhrase(const MSString& aPhrase, unsigned startWord = 0) const;
+
+    static MSString space(const MSString& aString, unsigned numSpaces = 1, char spaceChar = ' ');
+    static MSString removeWords(const MSString& aString, unsigned startWord);
+    static MSString removeWords(const MSString& aString, unsigned startWord, unsigned numWords);
 
 protected:
-/*------------------------------ Related Types ---------------------------------
+    /*------------------------------ Related Types ---------------------------------
   The following enumeration types are defined to pass "modes" to various
   implementation functions:
     BitOperator - Enumeration that specifies the bit operator to apply to the
@@ -826,19 +823,22 @@ protected:
                                 matching word.  For example, the first word
                                 is 1, the second word is 2, and so forth.
 ------------------------------------------------------------------------------*/
-  enum BitOperator {And,Or,ExclusiveOr};
-  enum IndexType {CharIndex,WordIndex};
+    enum BitOperator { And,
+        Or,
+        ExclusiveOr };
+    enum IndexType { CharIndex,
+        WordIndex };
 
-/*--------------------------- Static Data Members ------------------------------
+    /*--------------------------- Static Data Members ------------------------------
   The following are static data members:
     null          - A string that contains no element.
     maxLong       - The maximum value of a long, which is "2147483647" on
                     OS/2 with 32-bit unsigned long integers.
 ------------------------------------------------------------------------------*/
-  static const char *null;
-  static const char *maxLong;
+    static const char* null;
+    static const char* maxLong;
 
-/*------------------------------ Implementation --------------------------------
+    /*------------------------------ Implementation --------------------------------
   The following functions are used to implement this class:
     data          - Returns the address of the contents of the MSString.
     setBuffer     - Sets the private data member to point to a new MSStringBuffer
@@ -865,57 +865,56 @@ protected:
     applyBitOp  - Implements bitwise operators &, |, and ^.
     findPhrase  - Locates a given string of words for indexOfWord functions.
 ------------------------------------------------------------------------------*/
-  char *data() const;
-  MSStringBuffer *buffer() const;
-  
-  static unsigned lengthOf(const char *p);
-  static MSStringBuffer *defaultBuffer();
-  
-  MSString &setBuffer(MSStringBuffer *ibuff);
-  
-  MSString &initBuffer(const void *p1,unsigned len1,
-		       const void *p2=0,unsigned len2=0,
-		       const void *p3=0,unsigned len3=0,char padChar=0);
-  MSString &initBuffer(long n);
-  MSString &initBuffer(unsigned long n);
-  MSString &initBuffer(double d);
-  MSString &initBuffer(void *p_);
-  
-  MSString &applyBitOp(const char *pArg,unsigned argLen,BitOperator op);
-  
-  MSString &change(const char *pPattern, unsigned patternLen,
-		   const char *pReplacement,unsigned replacementLen,unsigned startPos,unsigned numChanges);
-  
-  MSString &insert(const char *pInsert,unsigned insertLen,unsigned startPos,char padCharacter);
-  MSString &overlayWith(const char *pOverlay,unsigned overlayLen,unsigned index,char padCharacter);
-  MSString &strip(const char *p,unsigned len,MSStringEnum::StripMode mode);
-  MSString &strip(const MSStringTest &aTest,MSStringEnum::StripMode mode);
-  MSString &translate(const char *pInputChars,unsigned inputLen,
-		      const char *pOutputChars,unsigned outputLen,char padCharacter);
-  
-  unsigned indexOfWord(unsigned wordNumber,unsigned startPos,unsigned numWords) const;
-  unsigned occurrencesOf(const char *pSearchString,unsigned searchLen,unsigned startPos) const;
-  unsigned findPhrase(const MSString &aPhrase,unsigned startWord,IndexType charOrWord) const;
-  
-  MSBoolean isLike(const char *pPattern,unsigned patternLen,char zeroOrMore,char anyChar) const;
-  MSBoolean isAbbrevFor(const char *pFullString,unsigned fullLen,unsigned minLen) const;
+    char* data() const;
+    MSStringBuffer* buffer() const;
+
+    static unsigned lengthOf(const char* p);
+    static MSStringBuffer* defaultBuffer();
+
+    MSString& setBuffer(MSStringBuffer* ibuff);
+
+    MSString& initBuffer(const void* p1, unsigned len1,
+        const void* p2 = 0, unsigned len2 = 0,
+        const void* p3 = 0, unsigned len3 = 0, char padChar = 0);
+    MSString& initBuffer(long n);
+    MSString& initBuffer(unsigned long n);
+    MSString& initBuffer(double d);
+    MSString& initBuffer(void* p_);
+
+    MSString& applyBitOp(const char* pArg, unsigned argLen, BitOperator op);
+
+    MSString& change(const char* pPattern, unsigned patternLen,
+        const char* pReplacement, unsigned replacementLen, unsigned startPos, unsigned numChanges);
+
+    MSString& insert(const char* pInsert, unsigned insertLen, unsigned startPos, char padCharacter);
+    MSString& overlayWith(const char* pOverlay, unsigned overlayLen, unsigned index, char padCharacter);
+    MSString& strip(const char* p, unsigned len, MSStringEnum::StripMode mode);
+    MSString& strip(const MSStringTest& aTest, MSStringEnum::StripMode mode);
+    MSString& translate(const char* pInputChars, unsigned inputLen,
+        const char* pOutputChars, unsigned outputLen, char padCharacter);
+
+    unsigned indexOfWord(unsigned wordNumber, unsigned startPos, unsigned numWords) const;
+    unsigned occurrencesOf(const char* pSearchString, unsigned searchLen, unsigned startPos) const;
+    unsigned findPhrase(const MSString& aPhrase, unsigned startWord, IndexType charOrWord) const;
+
+    MSBoolean isLike(const char* pPattern, unsigned patternLen, char zeroOrMore, char anyChar) const;
+    MSBoolean isAbbrevFor(const char* pFullString, unsigned fullLen, unsigned minLen) const;
 
 private: /*------------------------ PRIVATE ----------------------------------*/
-friend class MSStringBuffer;
-friend class CharPick;
+    friend class MSStringBuffer;
+    friend class CharPick;
 
-  MSString(MSStringBuffer *pBuffer);
-  MSString &prepareToChange();
-  void binaryMath(unsigned char newDigit);
-  void decimalMath(unsigned char newDigit);
-  
-  MSStringBuffer  *_pBuffer;
+    MSString(MSStringBuffer* pBuffer);
+    MSString& prepareToChange();
+    void binaryMath(unsigned char newDigit);
+    void decimalMath(unsigned char newDigit);
+
+    MSStringBuffer* _pBuffer;
 };
-
 
 #ifndef MSStringTestHEADER
 #include <MSTypes/MSStringTest.H>
-#endif 
+#endif
 
 #ifndef MS_NO_INLINES
 #ifndef MSStringINLINES
@@ -924,27 +923,23 @@ friend class CharPick;
 #endif
 
 /*------------------------ Comparison Function ------------------------*/
-inline long compare(const MSString &aString_,const MSString &bString_)
-{ return aString_.compare(bString_); }
-
-/*--------------------------- Hash Function ---------------------------*/
-inline unsigned long hash(const MSString& aString_,unsigned long size_)
+inline long compare(const MSString& aString_, const MSString& bString_)
 {
-  char *pString=aString_.data();
-  unsigned long h=0,c;
-  while ((c=(unsigned long)*pString++)!=0) h+=(h<<5)+c;
-  return h%size_;
+    return aString_.compare(bString_);
 }
 
-#if defined (MS_SPECIALIZE_ELEMENT_FOR_OPS_TYPE)
+/*--------------------------- Hash Function ---------------------------*/
+inline unsigned long hash(const MSString& aString_, unsigned long size_)
+{
+    char* pString = aString_.data();
+    unsigned long h = 0, c;
+    while ((c = (unsigned long)*pString++) != 0)
+        h += (h << 5) + c;
+    return h % size_;
+}
+
+#if defined(MS_SPECIALIZE_ELEMENT_FOR_OPS_TYPE)
 #include <MSTypes/MSStandardOps.H>
 DECLARE_ELEMENT_FOR_OPS_TYPE(MSString)
 #endif
 #endif
-
-
-
-
-
-
-

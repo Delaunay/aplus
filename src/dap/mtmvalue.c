@@ -13,12 +13,11 @@
  */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/mtm.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void *
-mtmvalue(struct node * np)
+void* mtmvalue(struct node* np)
 {
-  return MTMAT(np)->d;
+    return MTMAT(np)->d;
 }

@@ -11,9 +11,8 @@
 #include <dap/exbo.h>
 
 /* external function definitions */
-int 
-exboreset(struct exbo * p)
+int exboreset(struct exbo* p)
 {
-  p->current = p->first;
-  return (p->negative ? -1 * (int) (p->current) : (int) (p->current));
+    p->current = p->first;
+    return (p->negative ? -1 * (int)(p->current) : (int)(p->current));
 }

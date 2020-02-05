@@ -17,18 +17,17 @@
 #include <dap/misc.h>
 
 /* external function definitions */
-char *
-hostname(void)
+char* hostname(void)
 {
-  static char fnc[] = "hostname";
-  static char p[MAXHOSTNAMELEN + 1];
+    static char fnc[] = "hostname";
+    static char p[MAXHOSTNAMELEN + 1];
 
-  if (gethostname(p, sizeof(p) - 1) != 0) {
-    Warn("%t %s(): error: gethostname(): %m\n", fnc);
-  } else {
-    p[sizeof(p) - 1] = '\0';
-    bcopy(p, hostname_l, sizeof(p));
-  }
+    if (gethostname(p, sizeof(p) - 1) != 0) {
+        Warn("%t %s(): error: gethostname(): %m\n", fnc);
+    } else {
+        p[sizeof(p) - 1] = '\0';
+        bcopy(p, hostname_l, sizeof(p));
+    }
 
-  return hostname_l;
+    return hostname_l;
 }

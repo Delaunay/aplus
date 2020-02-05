@@ -12,11 +12,10 @@
 #include <dap/exbo.h>
 
 /* external function definitions */
-void 
-exbofree(struct exbo * p)
+void exbofree(struct exbo* p)
 {
-  if (p != (struct exbo *) (0)) {
-    bfree((char *) p);
-  }
-  return;
+    if (p != (struct exbo*)(0)) {
+        bfree((char*)p);
+    }
+    return;
 }

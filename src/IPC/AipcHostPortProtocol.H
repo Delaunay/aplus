@@ -9,40 +9,40 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <a/k.h>
-#include <a/fncdcls.h>
 #include <MSIPC/MSHostPort.H>
+#include <a/fncdcls.h>
+#include <a/k.h>
 
-class AipcHostPortProtocol
-{
- private:
-  MSHostPort _hostport;
-  MSString _service;
-  MSString _protocol;
-  
- public:
-  
-  // Constructors
+class AipcHostPortProtocol {
+private:
+    MSHostPort _hostport;
+    MSString _service;
+    MSString _protocol;
 
-  AipcHostPortProtocol(C *host_,I port_,C *protocol_=(C*)0)
-    : _hostport(host_,port_) {_protocol=protocol_;_service=0;}
+public:
+    // Constructors
 
-  AipcHostPortProtocol(C *service_);
+    AipcHostPortProtocol(C* host_, I port_, C* protocol_ = (C*)0)
+        : _hostport(host_, port_)
+    {
+        _protocol = protocol_;
+        _service = 0;
+    }
 
-  // Accessors and Mutators
-  const C *protocol(void) {return _protocol.string();}
-  void protocol(C *new_) { _protocol=new_; }
-  const C *service(void) {return _service.string();}
-  void service(C *new_) { _service=new_; }
-  const C *host(void) {return _hostport.host().string();}
-  int port(void) {return _hostport.port();}
-  void setHostPort(C *host_,I port_){_hostport.set(host_,port_);}
+    AipcHostPortProtocol(C* service_);
 
-  // Other methods
+    // Accessors and Mutators
+    const C* protocol(void) { return _protocol.string(); }
+    void protocol(C* new_) { _protocol = new_; }
+    const C* service(void) { return _service.string(); }
+    void service(C* new_) { _service = new_; }
+    const C* host(void) { return _hostport.host().string(); }
+    int port(void) { return _hostport.port(); }
+    void setHostPort(C* host_, I port_) { _hostport.set(host_, port_); }
 
-  MSBoolean lookupService(void);
+    // Other methods
 
+    MSBoolean lookupService(void);
 };
-
 
 #endif

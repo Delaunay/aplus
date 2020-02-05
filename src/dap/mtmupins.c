@@ -8,16 +8,15 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/mtm.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void 
-mtmupins(struct mtm * p, struct node * hp, void *up)
+void mtmupins(struct mtm* p, struct node* hp, void* up)
 {
-  if (p != (struct mtm *) (0)) {
-    p->up = up;
-    nodeinsert(p->unp, hp);
-  }
-  return;
+    if (p != (struct mtm*)(0)) {
+        p->up = up;
+        nodeinsert(p->unp, hp);
+    }
+    return;
 }

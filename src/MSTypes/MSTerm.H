@@ -3,12 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 #include <MSTypes/MSError.H>
 #include <MSTypes/MSScalarModel.H>
@@ -190,101 +189,105 @@
 |										   |
 |---------------------------------------------------------------------------------*/
 
-class MSDate;	
+class MSDate;
 class MSFormat;
 
 // The "smart" date + term operator is in MSDate, becuase MSDate
 // has all the tables of calendar data.
-class MSTypesExport MSTerm: public MSScalarModel
-{
+class MSTypesExport MSTerm : public MSScalarModel {
 public:
+    enum MSTermFormat {
+        // YearMonthDayPad pads y,m,d if needed so they line
+        // up, YearMonthDayNoPad uses no extra padding
+        YearsMonthsDays = 500, // Format as "11y 3d"
+        YearsMonthsDaysPad = 501, // Format as "11y  0m  0w  3d"
+        YearsMonthsDaysNoPad = 502, // Format as "11y 0m 0w 3d"
+        // for backward compatibility
+        YearMonthDay = YearsMonthsDays, // Format as "11y 3d"
+        YearMonthDayPad = YearsMonthsDaysPad, // Format as "11y  0m  0w  3d"
+        YearMonthDayNoPad = YearsMonthsDaysNoPad // Format as "11y 0m 0w 3d"
+    };
 
-  enum MSTermFormat 
-  {	
-    // YearMonthDayPad pads y,m,d if needed so they line
-    // up, YearMonthDayNoPad uses no extra padding
-    YearsMonthsDays=500,                    // Format as "11y 3d"
-    YearsMonthsDaysPad=501,                 // Format as "11y  0m  0w  3d"
-    YearsMonthsDaysNoPad=502,               // Format as "11y 0m 0w 3d"
-    // for backward compatibility
-    YearMonthDay=YearsMonthsDays,           // Format as "11y 3d"
-    YearMonthDayPad=YearsMonthsDaysPad,     // Format as "11y  0m  0w  3d"
-    YearMonthDayNoPad=YearsMonthsDaysNoPad  // Format as "11y 0m 0w 3d"
-  };
-  
-  MSTerm(void);
-  MSTerm(const MSTerm&);
-  MSTerm(int y,int m=0,int d=0);
-  MSTerm(const char *s)	{set(s); }
-  // Term between two dates.  Use only for display,otherwise use
-  // number of days.  Order of dates not important.  See Warning above.
-  MSTerm(const MSDate&,const MSDate&);
-  
-  virtual MSString asString(void) const;
-  virtual MSString asDebugInfo(void) const;
-  virtual MSString asMSF(void) const;
-  virtual MSString className(void) const;
-  virtual const MSSymbol& type(void) const;
-  virtual MSModel *clone(void) const;
-  virtual MSModel *create(void) const;
-  virtual void assign(const MSModel&);
-  virtual long compare(const MSModel&) const;
-  virtual MSError::ErrorStatus set(const char *);
-  virtual MSError::ErrorStatus setFromMSF(const char *);
-  static const MSSymbol& symbol(void);
+    MSTerm(void);
+    MSTerm(const MSTerm&);
+    MSTerm(int y, int m = 0, int d = 0);
+    MSTerm(const char* s) { set(s); }
+    // Term between two dates.  Use only for display,otherwise use
+    // number of days.  Order of dates not important.  See Warning above.
+    MSTerm(const MSDate&, const MSDate&);
 
-  MSTerm& operator=(const MSTerm&);
+    virtual MSString asString(void) const;
+    virtual MSString asDebugInfo(void) const;
+    virtual MSString asMSF(void) const;
+    virtual MSString className(void) const;
+    virtual const MSSymbol& type(void) const;
+    virtual MSModel* clone(void) const;
+    virtual MSModel* create(void) const;
+    virtual void assign(const MSModel&);
+    virtual long compare(const MSModel&) const;
+    virtual MSError::ErrorStatus set(const char*);
+    virtual MSError::ErrorStatus setFromMSF(const char*);
+    static const MSSymbol& symbol(void);
 
-  MSError::ErrorStatus set(const MSString *);
-  MSError::ErrorStatus set(const MSString &);
-  MSError::ErrorStatus set(int y,int m,int d);
-  const char *format(MSString *) const;
-  const char *format(MSString &) const;
-  const char *format(MSString *,MSTermFormat) const;
-  const char *format(MSString &,MSTermFormat) const;
-  const char *format(MSString*,const MSFormat&) const;
-  const char *format(MSString&,const MSFormat&) const;
+    MSTerm& operator=(const MSTerm&);
 
-  long compare(const MSTerm *) const;
-  long compare(const MSTerm &) const;
-  
-  int years(void)       const { return _years; }
-  int months(void)      const { return _months; }
-  int days(void)        const { return _days; }
-  MSBoolean isSet(void) const { return _isSet; }
-  void unset(void);
-  
-  MSTerm operator+(const MSTerm&) const;
-  MSTerm& operator+=(const MSTerm&);
-  
-  MSBoolean operator==(const MSTerm&) const;
-  MSBoolean operator!=(const MSTerm&) const;
-  MSBoolean operator<(const MSTerm&) const;
-  MSBoolean operator<=(const MSTerm&) const;
-  MSBoolean operator>(const MSTerm&) const;
-  MSBoolean operator>=(const MSTerm&) const;
-  
-  friend MSTypesExport ostream& operator<<(ostream&,const MSTerm&);
-  
+    MSError::ErrorStatus set(const MSString*);
+    MSError::ErrorStatus set(const MSString&);
+    MSError::ErrorStatus set(int y, int m, int d);
+    const char* format(MSString*) const;
+    const char* format(MSString&) const;
+    const char* format(MSString*, MSTermFormat) const;
+    const char* format(MSString&, MSTermFormat) const;
+    const char* format(MSString*, const MSFormat&) const;
+    const char* format(MSString&, const MSFormat&) const;
+
+    long compare(const MSTerm*) const;
+    long compare(const MSTerm&) const;
+
+    int years(void) const { return _years; }
+    int months(void) const { return _months; }
+    int days(void) const { return _days; }
+    MSBoolean isSet(void) const { return _isSet; }
+    void unset(void);
+
+    MSTerm operator+(const MSTerm&) const;
+    MSTerm& operator+=(const MSTerm&);
+
+    MSBoolean operator==(const MSTerm&) const;
+    MSBoolean operator!=(const MSTerm&) const;
+    MSBoolean operator<(const MSTerm&) const;
+    MSBoolean operator<=(const MSTerm&) const;
+    MSBoolean operator>(const MSTerm&) const;
+    MSBoolean operator>=(const MSTerm&) const;
+
+    friend MSTypesExport ostream& operator<<(ostream&, const MSTerm&);
+
 private:
-  int             _years;
-  int             _months;
-  int             _days;
-  MSBoolean       _isSet;
+    int _years;
+    int _months;
+    int _days;
+    MSBoolean _isSet;
 
-  double normalizedYears(void) const;
-  
-  MSTerm(const MSTerm&,const MSTerm&); // use to add two terms
+    double normalizedYears(void) const;
 
-  // The following is used for parsing input.
-  enum Token {BAD,YEARS,MONTHS,WEEKS,DAYS,END};
+    MSTerm(const MSTerm&, const MSTerm&); // use to add two terms
 
-  unsigned totalDays(void);
-  static void getToken(const char*,int*,Token*,int*);
+    // The following is used for parsing input.
+    enum Token { BAD,
+        YEARS,
+        MONTHS,
+        WEEKS,
+        DAYS,
+        END };
+
+    unsigned totalDays(void);
+    static void getToken(const char*, int*, Token*, int*);
 };
 
-inline long compare(const MSTerm& aTerm_,const MSTerm& bTerm_)
-{ return aTerm_.compare(bTerm_); }
+inline long compare(const MSTerm& aTerm_, const MSTerm& bTerm_)
+{
+    return aTerm_.compare(bTerm_);
+}
 
 #ifndef MS_NO_INLINES
 #ifndef MSTermINLINES

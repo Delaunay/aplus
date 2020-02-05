@@ -9,17 +9,16 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <MSTypes/MSHashTable.H>
 #include <MSTypes/MSTime.H>
 #include <a/k.h>
-#include <MSTypes/MSHashTable.H>
 
-class AplusHashTable : public MSHashTable
-{
+class AplusHashTable : public MSHashTable {
 public:
-  AplusHashTable(unsigned =0);
-  virtual ~AplusHashTable(void);
+    AplusHashTable(unsigned = 0);
+    virtual ~AplusHashTable(void);
 
-  A listAllEntries(void) const;
+    A listAllEntries(void) const;
 };
 
 #endif //AplusHashTableHEADER

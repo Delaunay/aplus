@@ -9,36 +9,36 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSTypes/MSCallback.H>
 #include "AplusCommon.H"
+#include <MSTypes/MSCallback.H>
 typedef void (*PFV)(void*);
 
-class AplusCallback : public MSCallback
-{
+class AplusCallback : public MSCallback {
 public:
+    AplusCallback(AClientData*);
+    ~AplusCallback(void);
 
-  AplusCallback(AClientData *);
-  ~AplusCallback(void);
-
-  AClientData *ac() { return _ac; }
-  virtual void process(void);
+    AClientData* ac() { return _ac; }
+    virtual void process(void);
 
 protected:
-  AClientData *_ac;
-
+    AClientData* _ac;
 };
 
-class AplusStdinCallback : public MSCallback
-{
+class AplusStdinCallback : public MSCallback {
 public:
-  AplusStdinCallback(PFV func_) { _func = func_;}
-  ~AplusStdinCallback(void) {}
+    AplusStdinCallback(PFV func_) { _func = func_; }
+    ~AplusStdinCallback(void) {}
 
 protected:
-  virtual void process(void) {if (_func!=(PFV)0) (*_func)(0);}
+    virtual void process(void)
+    {
+        if (_func != (PFV)0)
+            (*_func)(0);
+    }
 
 private:
-  PFV _func;
+    PFV _func;
 };
 
 #endif

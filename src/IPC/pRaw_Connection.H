@@ -13,32 +13,38 @@
 
 #define ACFLAG_BURST 0x010000
 
-class pRaw_Connection : public pA_Connection
-{
- protected:
-  virtual A readBurst(void);
-  virtual A readOne(void);
- public:
-  
-  // Constructors
-  pRaw_Connection(C *name_,C *host_,I port_,A cbfunc_)
-    :pA_Connection(name_,host_,port_,cbfunc_){}
-  pRaw_Connection(C *serviceName_,A cbfunc_)
-    :pA_Connection(serviceName_,cbfunc_){}
-  pRaw_Connection(AipcHostPortProtocol &ahpp_,A cbfunc_)
-    :pA_Connection(ahpp_,cbfunc_){}
-  pRaw_Connection(C *name_,int fd_,A cbfunc_,
-		  AipcAttributes &attrs_,pA_Attributes &pA_attrs_)
-    : pA_Connection(name_,fd_,cbfunc_,attrs_,pA_attrs_) {}
+class pRaw_Connection : public pA_Connection {
+protected:
+    virtual A readBurst(void);
+    virtual A readOne(void);
 
+public:
+    // Constructors
+    pRaw_Connection(C* name_, C* host_, I port_, A cbfunc_)
+        : pA_Connection(name_, host_, port_, cbfunc_)
+    {
+    }
+    pRaw_Connection(C* serviceName_, A cbfunc_)
+        : pA_Connection(serviceName_, cbfunc_)
+    {
+    }
+    pRaw_Connection(AipcHostPortProtocol& ahpp_, A cbfunc_)
+        : pA_Connection(ahpp_, cbfunc_)
+    {
+    }
+    pRaw_Connection(C* name_, int fd_, A cbfunc_,
+        AipcAttributes& attrs_, pA_Attributes& pA_attrs_)
+        : pA_Connection(name_, fd_, cbfunc_, attrs_, pA_attrs_)
+    {
+    }
 
-  // Flags
+    // Flags
 
-  // M:Attribute interface
+    // M:Attribute interface
 
-  // Other Methods
-  virtual int send(const A &msg_);
-  virtual const C *protocol(void){ return "raw";}
+    // Other Methods
+    virtual int send(const A& msg_);
+    virtual const C* protocol(void) { return "raw"; }
 };
 
 #endif

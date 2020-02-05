@@ -14,8 +14,8 @@
  */
 
 /* header file inclusions */
-#include <sys/types.h>
 #include <sys/time.h>
+#include <sys/types.h>
 
 /* external data definitions */
 struct timeval dap_tod_last;

@@ -8,8 +8,7 @@
 /* contributed by Daniel F. Fisher */
 
 /* external function definitions */
-int 
-dapversion(void)
+int dapversion(void)
 {
-  return 5;
+    return 5;
 }

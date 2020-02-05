@@ -12,11 +12,10 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-void 
-fdszero(fd_set * p)
+void fdszero(fd_set* p)
 {
-  if (p != (fd_set *) (0)) {
-    bzero((char *) p, fds_sizeof);
-  }
-  return;
+    if (p != (fd_set*)(0)) {
+        bzero((char*)p, fds_sizeof);
+    }
+    return;
 }

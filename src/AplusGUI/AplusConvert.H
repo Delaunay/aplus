@@ -9,54 +9,51 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <MSIPC/MSA.H>
 #include <MSTypes/MSFloat.H>
+#include <MSTypes/MSFloatMatrix.H>
+#include <MSTypes/MSFloatVector.H>
+#include <MSTypes/MSIntMatrix.H>
+#include <MSTypes/MSIntVector.H>
 #include <MSTypes/MSString.H>
 #include <MSTypes/MSStringVector.H>
-#include <MSTypes/MSFloatVector.H>
-#include <MSTypes/MSIntVector.H>
-#include <MSTypes/MSFloatMatrix.H>
-#include <MSTypes/MSIntMatrix.H>
 #include <MSTypes/MSUnsignedLongVector.H>
 #include <MSTypes/MSUnsignedVector.H>
 #include <a/fncdcls.h>
-#include <MSIPC/MSA.H>
 
-
-class AplusConvert
-{
+class AplusConvert {
 private:
-  static MSA _convert;
-  
+    static MSA _convert;
+
 public:
+    AplusConvert(void) {}
+    ~AplusConvert(void) {}
 
-  AplusConvert(void) {}
-  ~AplusConvert(void) {}
-  
-  static MSFloat        asMSFloat(A);
-  static MSString       asMSString(A);
+    static MSFloat asMSFloat(A);
+    static MSString asMSString(A);
 
-  // Vector Conversions
+    // Vector Conversions
 
-  static MSStringVector 	     asMSStringVector(A);
-  static MSFloatVector  	     asMSFloatVector(A);
-  static MSIntVector    	     asMSIntVector(A);
-  static MSUnsignedLongVector        asMSUnsignedLongVector(A);
-  static MSIndexVector               asMSIndexVector(A);
-  static MSUnsignedVector            asMSUnsignedVector(A);
+    static MSStringVector asMSStringVector(A);
+    static MSFloatVector asMSFloatVector(A);
+    static MSIntVector asMSIntVector(A);
+    static MSUnsignedLongVector asMSUnsignedLongVector(A);
+    static MSIndexVector asMSIndexVector(A);
+    static MSUnsignedVector asMSUnsignedVector(A);
 
-  // Matrix Conversions
+    // Matrix Conversions
 
-  static MSFloatMatrix  asMSFloatMatrix(A);
-  static MSIntMatrix    asMSIntMatrix(A);
+    static MSFloatMatrix asMSFloatMatrix(A);
+    static MSIntMatrix asMSIntMatrix(A);
 
-  // A Conversions
+    // A Conversions
 
-  static A asA(const MSString &);
-  static A asA(const MSFloat &);
-  static A asA(const MSStringVector &);
-  static A asA(const MSFloatVector &);
-  static A asA(const MSUnsignedVector &);
-  static A asA(const MSIndexVector &);
+    static A asA(const MSString&);
+    static A asA(const MSFloat&);
+    static A asA(const MSStringVector&);
+    static A asA(const MSFloatVector&);
+    static A asA(const MSUnsignedVector&);
+    static A asA(const MSIndexVector&);
 };
 
-#endif  //AplusConvertHEADER
+#endif //AplusConvertHEADER

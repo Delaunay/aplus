@@ -11,14 +11,13 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-void 
-buffputc(struct buff * p, char c)
+void buffputc(struct buff* p, char c)
 {
-  if (p != (struct buff *) (0)) {
-    if (p->max - p->put < 1) {
-      buffroom(p, 1);
+    if (p != (struct buff*)(0)) {
+        if (p->max - p->put < 1) {
+            buffroom(p, 1);
+        }
+        *(p->put++) = c;
     }
-    *(p->put++) = c;
-  }
-  return;
+    return;
 }

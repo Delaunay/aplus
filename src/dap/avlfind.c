@@ -16,23 +16,22 @@
 #include <dap/avl.h>
 
 /* external function definitions */
-void *
-avlfind(struct avl * p, void *key)
+void* avlfind(struct avl* p, void* key)
 {
-  if ((p != (struct avl *) (0))
-      && (key != (void *) (0))) {
-    struct avln *ap = p->root;
-    int r;
+    if ((p != (struct avl*)(0))
+        && (key != (void*)(0))) {
+        struct avln* ap = p->root;
+        int r;
 
-    while (ap != (struct avln *) (0)) {
-      r = (*(p->compare)) (key, (*(p->key)) (ap->d));
-      if (r < 0)
-	ap = ap->l;
-      else if (r > 0)
-	ap = ap->r;
-      else
-	return (*(p->value)) (ap->d);
+        while (ap != (struct avln*)(0)) {
+            r = (*(p->compare))(key, (*(p->key))(ap->d));
+            if (r < 0)
+                ap = ap->l;
+            else if (r > 0)
+                ap = ap->r;
+            else
+                return (*(p->value))(ap->d);
+        }
     }
-  }
-  return (void *) (0);
+    return (void*)(0);
 }

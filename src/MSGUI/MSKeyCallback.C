@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1998-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1998-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -8,7 +8,8 @@
 
 #include <MSGUI/MSKeyCallback.H>
 
-MSKeyCallback::MSKeyCallback(){}
+MSKeyCallback::MSKeyCallback() {}
 
 MSKeyCallback::~MSKeyCallback(void)
-{}
+{
+}

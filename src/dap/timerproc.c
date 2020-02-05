@@ -8,36 +8,35 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/tv.h>
-#include <dap/tod.h>
 #include <dap/node.h>
 #include <dap/timer.h>
+#include <dap/tod.h>
+#include <dap/tv.h>
 
 /* external function definitions */
-int 
-timerproc(void)
+int timerproc(void)
 {
-  struct node *hp = &timers;
-  struct timeval *now = tod();
-  struct node *np;
-  int didwork = 0;
+    struct node* hp = &timers;
+    struct timeval* now = tod();
+    struct node* np;
+    int didwork = 0;
 
-  while ((np = hp->f) != hp) {
-    struct timer *tp = TIMERAT(np);
-    struct timeval *tvp = &(tp->expire);
+    while ((np = hp->f) != hp) {
+        struct timer* tp = TIMERAT(np);
+        struct timeval* tvp = &(tp->expire);
 
-    if (tvcmp(now, tvp) >= 0) {
-      void (*func) () = tp->func;
-      void *arg = tp->arg;
+        if (tvcmp(now, tvp) >= 0) {
+            void (*func)() = tp->func;
+            void* arg = tp->arg;
 
-      timerclr(tp);
-      if (func != (void (*) ()) (0))
-	(*func) (arg);
-    } else {
-      break;
+            timerclr(tp);
+            if (func != (void (*)())(0))
+                (*func)(arg);
+        } else {
+            break;
+        }
+        didwork = 1;
     }
-    didwork = 1;
-  }
 
-  return didwork;
+    return didwork;
 }

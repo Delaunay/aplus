@@ -11,11 +11,11 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-struct buff *
-buffref(struct buff * p)
+struct buff*
+buffref(struct buff* p)
 {
-  if (p != (struct buff *) (0)) {
-    (p->ref)++;
-  }
-  return p;
+    if (p != (struct buff*)(0)) {
+        (p->ref)++;
+    }
+    return p;
 }

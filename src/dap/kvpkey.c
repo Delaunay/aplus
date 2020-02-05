@@ -8,12 +8,11 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/node.h>
 #include <dap/kvp.h>
+#include <dap/node.h>
 
 /* external function definitions */
-void *
-kvpkey(struct node * np)
+void* kvpkey(struct node* np)
 {
-  return KVPAT(np)->key;
+    return KVPAT(np)->key;
 }

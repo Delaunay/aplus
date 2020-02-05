@@ -9,8 +9,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <AplusGUI/AplusDisplayServer.H>
 #include <MSGUI/MSColorManager.H>
 #include <a/fncdcls.h>
-#include <AplusGUI/AplusDisplayServer.H>
 
 #endif // AGIFHEADER

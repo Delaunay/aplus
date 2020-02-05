@@ -9,49 +9,48 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSGUI/MSArrayView.H>
-#include <AplusGUI/Macros.H>
-#include <AplusGUI/AplusModel.H>
 #include <AplusGUI/AplusCommon.H>
+#include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSArrayView.H>
 
-class  AplusArray : public MSArrayView
-{
+class AplusArray : public MSArrayView {
 public:
-  AplusArray(MSWidget *);
-  ~AplusArray(void);
-  virtual MSBoolean verifyData(V,A);
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    AplusArray(MSWidget*);
+    ~AplusArray(void);
+    virtual MSBoolean verifyData(V, A);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
 protected:
-  virtual MSBoolean validate(const char *,unsigned,unsigned);
-  virtual void addSenderNotify(MSEventSender *m_);
-  virtual void receiveEvent(MSEvent &);
-  virtual A defaultInFunc(V v_,const char *string);
-  virtual unsigned numRows(void) const;
-  virtual unsigned numColumns(void) const;
+    virtual MSBoolean validate(const char*, unsigned, unsigned);
+    virtual void addSenderNotify(MSEventSender* m_);
+    virtual void receiveEvent(MSEvent&);
+    virtual A defaultInFunc(V v_, const char* string);
+    virtual unsigned numRows(void) const;
+    virtual unsigned numColumns(void) const;
 
-  virtual void update(V,int,int,UpdateType);
-  virtual void update(V,A,A,I);
-  virtual void update(const MSIndexVector &v_) { MSArrayView::update(v_); }
-  virtual void updateForeground(unsigned long);
-  virtual void updateFont(Font);
-  virtual MSBoolean isCellProtected(unsigned, unsigned);
-  virtual unsigned long cellForeground(unsigned, unsigned);
-  virtual unsigned long cellBackground(unsigned, unsigned);
-  virtual Font cellFont(unsigned,unsigned);
-  virtual MSClipMode columnClipMode(unsigned) const;
-  virtual void createCycle(int, int);
-  MSUnsignedLongVector getCycleColors(int, int);
-  
-  virtual const char *formatOutput(MSString&,unsigned,unsigned);
-  virtual MSBoolean validate(V,const char *,unsigned,unsigned);
+    virtual void update(V, int, int, UpdateType);
+    virtual void update(V, A, A, I);
+    virtual void update(const MSIndexVector& v_) { MSArrayView::update(v_); }
+    virtual void updateForeground(unsigned long);
+    virtual void updateFont(Font);
+    virtual MSBoolean isCellProtected(unsigned, unsigned);
+    virtual unsigned long cellForeground(unsigned, unsigned);
+    virtual unsigned long cellBackground(unsigned, unsigned);
+    virtual Font cellFont(unsigned, unsigned);
+    virtual MSClipMode columnClipMode(unsigned) const;
+    virtual void createCycle(int, int);
+    MSUnsignedLongVector getCycleColors(int, int);
 
-  virtual void defaultButton3Behavior(const XEvent *);  
+    virtual const char* formatOutput(MSString&, unsigned, unsigned);
+    virtual MSBoolean validate(V, const char*, unsigned, unsigned);
 
-  void referenceCB(void);
+    virtual void defaultButton3Behavior(const XEvent*);
 
-  STANDARD_WIDGET_METHODS_H
+    void referenceCB(void);
+
+    STANDARD_WIDGET_METHODS_H
 };
 
-#endif  //AplusArrayHEADER
+#endif //AplusArrayHEADER

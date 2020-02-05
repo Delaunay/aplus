@@ -1,27 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSTypes/MSScalarModel.H>
 #include <MSTypes/MSNullEvent.H>
+#include <MSTypes/MSScalarModel.H>
 
-MSScalarModel::~MSScalarModel(void) {} 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+MSScalarModel::~MSScalarModel(void) {}

@@ -8,16 +8,15 @@
 /* contributed by Daniel F. Fisher */
 
 /* header file inclusions */
-#include <dap/fds.h>
 #include <dap/chan.h>
+#include <dap/fds.h>
 
 /* external function definitions */
-int 
-chanisdsbl(struct chan * p)
+int chanisdsbl(struct chan* p)
 {
-  if ((p != (struct chan *) (0))
-      && (fdsisset(p->fds, p->fd))) {
-    return 0;
-  }
-  return 1;
+    if ((p != (struct chan*)(0))
+        && (fdsisset(p->fds, p->fd))) {
+        return 0;
+    }
+    return 1;
 }

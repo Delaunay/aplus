@@ -11,9 +11,8 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-void 
-buffputdouble(struct buff * p, double d)
+void buffputdouble(struct buff* p, double d)
 {
-  buffstuff(p, (char *) (&d), sizeof(d));
-  return;
+    buffstuff(p, (char*)(&d), sizeof(d));
+    return;
 }

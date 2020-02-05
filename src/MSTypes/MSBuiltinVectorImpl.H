@@ -3,12 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 #include <MSTypes/MSVectorImpl.H>
 
@@ -26,56 +25,54 @@ class istrstream;
 class ostrstream;
 #endif
 
-class MSTypesExport MSBuiltinVectorImplOps
-{    
+class MSTypesExport MSBuiltinVectorImplOps {
 public:
-  MSBuiltinVectorImplOps();
-  virtual ~MSBuiltinVectorImplOps();
+    MSBuiltinVectorImplOps();
+    virtual ~MSBuiltinVectorImplOps();
 
-  virtual void   setToNumber (void *, unsigned int, double) const =0;
-  virtual double getAsNumber (const void *, unsigned int) const =0;
+    virtual void setToNumber(void*, unsigned int, double) const = 0;
+    virtual double getAsNumber(const void*, unsigned int) const = 0;
 
 #if HAVE_SSTREAM
-  virtual void readFromStream (void *, unsigned int, istringstream &) const =0;
-  virtual void writeToStream  (const void *, unsigned int, ostringstream &) const =0;
+    virtual void readFromStream(void*, unsigned int, istringstream&) const = 0;
+    virtual void writeToStream(const void*, unsigned int, ostringstream&) const = 0;
 
-  virtual void whitespace (istringstream &) const =0;
+    virtual void whitespace(istringstream&) const = 0;
 #else
-  virtual void readFromStream (void *, unsigned int, istrstream &) const =0;
-  virtual void writeToStream  (const void *, unsigned int, ostrstream &) const =0;
+    virtual void readFromStream(void*, unsigned int, istrstream&) const = 0;
+    virtual void writeToStream(const void*, unsigned int, ostrstream&) const = 0;
 
-  virtual void whitespace (istrstream &) const =0;
+    virtual void whitespace(istrstream&) const = 0;
 #endif
-  virtual unsigned int stringLen (const char *) const =0;
+    virtual unsigned int stringLen(const char*) const = 0;
 };
 
-class MSTypesExport MSBuiltinVectorImpl : public MSVectorImpl
-{
+class MSTypesExport MSBuiltinVectorImpl : public MSVectorImpl {
 protected:
-  MSBuiltinVectorImplOps *_pBuiltInOps;
+    MSBuiltinVectorImplOps* _pBuiltInOps;
 
 public:
-  MSBuiltinVectorImpl (MSVectorImplOps *, MSBuiltinVectorImplOps *, unsigned int =0);
-  MSBuiltinVectorImpl (MSVectorImplOps *, MSBuiltinVectorImplOps *, unsigned int, void *);
-  MSBuiltinVectorImpl (const MSBuiltinVectorImpl &);
-  MSBuiltinVectorImpl (MSVectorImplOps *, MSBuiltinVectorImplOps *, void *, unsigned int);
-  
-  virtual ~MSBuiltinVectorImpl();
+    MSBuiltinVectorImpl(MSVectorImplOps*, MSBuiltinVectorImplOps*, unsigned int = 0);
+    MSBuiltinVectorImpl(MSVectorImplOps*, MSBuiltinVectorImplOps*, unsigned int, void*);
+    MSBuiltinVectorImpl(const MSBuiltinVectorImpl&);
+    MSBuiltinVectorImpl(MSVectorImplOps*, MSBuiltinVectorImplOps*, void*, unsigned int);
 
-  virtual MSVectorImpl *create (unsigned int =0, unsigned int =0) const;
-  virtual MSVectorImpl *clone  () const;
+    virtual ~MSBuiltinVectorImpl();
 
-  virtual MSString asMSF();
+    virtual MSVectorImpl* create(unsigned int = 0, unsigned int = 0) const;
+    virtual MSVectorImpl* clone() const;
 
-  virtual MSError::ErrorStatus setFromString (const char *, const char =' ');
-  virtual MSError::ErrorStatus setFromMSF    (const char *);
+    virtual MSString asMSF();
 
-  virtual MSIndexVector gradeUp  () const;
-  virtual MSIndexVector gradeDown() const;
-  double median() const;
-  double variance(double, MSEstimateType =MSUnbiased) const;
+    virtual MSError::ErrorStatus setFromString(const char*, const char = ' ');
+    virtual MSError::ErrorStatus setFromMSF(const char*);
 
-  MSBuiltinVectorImpl *movingAverage (unsigned int);
+    virtual MSIndexVector gradeUp() const;
+    virtual MSIndexVector gradeDown() const;
+    double median() const;
+    double variance(double, MSEstimateType = MSUnbiased) const;
+
+    MSBuiltinVectorImpl* movingAverage(unsigned int);
 };
 
-#endif  // MSBuiltinVectorImplHEADER
+#endif // MSBuiltinVectorImplHEADER

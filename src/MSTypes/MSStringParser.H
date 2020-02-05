@@ -3,12 +3,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 #ifndef MSStringHEADER
 #include <MSTypes/MSString.H>
@@ -16,9 +15,8 @@
 
 class MSStringParserData;
 
-class MSTypesExport MSStringParser
-{
-/*******************************************************************************
+class MSTypesExport MSStringParser {
+    /*******************************************************************************
 * Objects of this class enable you to "parse" the contents of MSStrings and    *
 * place portions of the string into other strings.  You can control the        *
 * parsing of the string by specifying patterns that must be matched and        *
@@ -77,9 +75,9 @@ class MSTypesExport MSStringParser
 * position.                                                                    *
 *******************************************************************************/
 public:
-  ~MSStringParser(void);
+    ~MSStringParser(void);
 
-/*------------------------- Special Parsing Operands ---------------------------
+    /*------------------------- Special Parsing Operands ---------------------------
 | These types permit special-purpose parsing techniques:                       |
 |   Command-  Enumeration defining special-purpose parsing tokens.             |
 |               reset- Resets the parser position to 0.                        |
@@ -88,18 +86,19 @@ public:
 |   Skip   -  Object used to skip a given number of words(tokens) in the       |
 |             input text without assigning those words to output strings.      |
 ------------------------------------------------------------------------------*/
-enum Command {reset,skip};
+    enum Command { reset,
+        skip };
 
-class MSTypesExport Skip
-{
-public:
-  Skip(unsigned numWords=1);
-  unsigned numWords(void) const;
-private:
-  unsigned _numSkip;
-};
+    class MSTypesExport Skip {
+    public:
+        Skip(unsigned numWords = 1);
+        unsigned numWords(void) const;
 
-/*-------------------------- Parsing Initialization ----------------------------
+    private:
+        unsigned _numSkip;
+    };
+
+    /*-------------------------- Parsing Initialization ----------------------------
 | These operators let you construct parser objects from strings.  In effect,   |
 | they implicitly construct an MSStringParser object for you when you apply    |
 | the ">>" or "<<" operators to a string.  An expression of the form:          |
@@ -114,19 +113,19 @@ private:
 | These functions are declared as friends simply so that their declaration     |
 | appears within this class declaration.                                       |
 ------------------------------------------------------------------------------*/
-  friend MSTypesExport MSStringParser operator>>(const MSString&,MSString& aToken_);
-  friend MSTypesExport MSStringParser operator>>(const MSString&,const MSString& aPattern_);
-  friend MSTypesExport MSStringParser operator>>(const MSString&,const char *pPattern_);
-  friend MSTypesExport MSStringParser operator>>(const MSString&,char aCharPattern_);
-  friend MSTypesExport MSStringParser operator>>(const MSString&,unsigned position_);
-  friend MSTypesExport MSStringParser operator>>(const MSString&,int position_);
-  friend MSTypesExport MSStringParser operator<<(const MSString&,unsigned position_);
-						  
-  friend MSTypesExport MSStringParser operator>>(const MSString&,const MSStringTest&);
-  friend MSTypesExport MSStringParser operator>>(const MSString&,MSStringParser::Command);
-  friend MSTypesExport MSStringParser operator>>(const MSString&,const MSStringParser::Skip&);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, MSString& aToken_);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, const MSString& aPattern_);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, const char* pPattern_);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, char aCharPattern_);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, unsigned position_);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, int position_);
+    friend MSTypesExport MSStringParser operator<<(const MSString&, unsigned position_);
 
-/*-------------------------------- Tokenizing ----------------------------------
+    friend MSTypesExport MSStringParser operator>>(const MSString&, const MSStringTest&);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, MSStringParser::Command);
+    friend MSTypesExport MSStringParser operator>>(const MSString&, const MSStringParser::Skip&);
+
+    /*-------------------------------- Tokenizing ----------------------------------
 | This function parses the next "token" from the parser object and places      |
 | it into the MSString operand.  By necessity,this operatorplaces the rest     |
 | of the parser text into the string.  When the parser encounters a subsequent |
@@ -138,9 +137,9 @@ private:
 |                  >>token2;  // token2=="token2" and                          |
 |                             // token1=="token1".                             |
 ------------------------------------------------------------------------------*/
-  MSStringParser& operator>>(MSString& aToken_);
+    MSStringParser& operator>>(MSString& aToken_);
 
-/*----------------------------- Pattern Matching -------------------------------
+    /*----------------------------- Pattern Matching -------------------------------
 | These operators advance to the next occurrence of the argument pattern       |
 | in the parser text.  Upon return,the parser will be positioned at the        |
 | next character beyond the text that matched the pattern.  If the pattern     |
@@ -149,12 +148,12 @@ private:
 | Note that when using and MSString as a pattern you should cast it to a const |
 | MSString reference.                                                          |
 ------------------------------------------------------------------------------*/
-  MSStringParser& operator>>(const MSString& aPattern_);
-  MSStringParser& operator>>(const char *pPattern_);
-  MSStringParser& operator>>(char aCharPattern_);
-  MSStringParser& operator>>(const MSStringTest&);
+    MSStringParser& operator>>(const MSString& aPattern_);
+    MSStringParser& operator>>(const char* pPattern_);
+    MSStringParser& operator>>(char aCharPattern_);
+    MSStringParser& operator>>(const MSStringTest&);
 
-/*----------------------- Relative Column Positioning --------------------------
+    /*----------------------- Relative Column Positioning --------------------------
 | These operators move the parser text position relative to its current        |
 | position.  A negative argument moves backward,a positive argument forward.   |
 | The adjustment is made starting at the point at which the prior parsing      |
@@ -165,23 +164,23 @@ private:
 |    token2=="23"                                                              |
 |    token3=="4".                                                              |
 ------------------------------------------------------------------------------*/
-  MSStringParser& operator>>(int delta_);
-  MSStringParser& operator>>(unsigned delta_);
+    MSStringParser& operator>>(int delta_);
+    MSStringParser& operator>>(unsigned delta_);
 
-/*----------------------- Absolute Column Positioning --------------------------
+    /*----------------------- Absolute Column Positioning --------------------------
 | These operators reset the parser text position to an absolute column         |
 | number.                                                                      |
 ------------------------------------------------------------------------------*/
-  MSStringParser& operator<<(unsigned position_);
+    MSStringParser& operator<<(unsigned position_);
 
-/*----------------------------- Special Parsing --------------------------------
+    /*----------------------------- Special Parsing --------------------------------
 | These operators handle the special commands and skip objects                 |
 ------------------------------------------------------------------------------*/
-  MSStringParser& operator>>(Command);
-  MSStringParser& operator>>(const Skip&);
+    MSStringParser& operator>>(Command);
+    MSStringParser& operator>>(const Skip&);
 
 protected:
-/*------------------------- Constructors/Destructor ----------------------------
+    /*------------------------- Constructors/Destructor ----------------------------
 | You can construct a parser object by providing:                              |
 |   o a string that defines the text to be parsed                              |
 |   o from an existing parser object(copy constructor)                         |
@@ -193,17 +192,12 @@ protected:
 | references to operands,it is unwise to permit the objects to persist beyond  |
 | the scope of those operands.                                                 |
 ------------------------------------------------------------------------------*/
-  MSStringParser(const MSString&);
-  MSStringParser(const MSStringParser&);
+    MSStringParser(const MSString&);
+    MSStringParser(const MSStringParser&);
 
-/*--------------------------------- PRIVATE ----------------------------------*/
+    /*--------------------------------- PRIVATE ----------------------------------*/
 private:
-  MSStringParserData *_parseData;
-}; 
+    MSStringParserData* _parseData;
+};
 
-#endif 
-
-
-
-
-
+#endif

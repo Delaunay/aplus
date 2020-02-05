@@ -1,5 +1,5 @@
 #ifndef included_cxc_cxc_h
-#define included_cxc_cxc_h        
+#define included_cxc_cxc_h
 
 /*****************************************************************************/
 /*                                                                           */
@@ -29,45 +29,45 @@
 #define MAXITEMS_ERROR 16
 
 typedef struct _PointerTable {
-  long		length;		/* number of pointers allocated */
-  void		**ptr;
+    long length; /* number of pointers allocated */
+    void** ptr;
 } PointerTable;
 
 typedef struct _MaskTable {
-  unsigned long	mask;
-  char		*string;
-  I		msymbol;
-  char		found;
+    unsigned long mask;
+    char* string;
+    I msymbol;
+    char found;
 } MaskTable;
 
 typedef struct _EnumTable {
-  unsigned long	value;
-  char		*string;
-  I		msymbol;
+    unsigned long value;
+    char* string;
+    I msymbol;
 } EnumTable;
 
-#define ST_BOOL		0
-#define ST_CHAR		1
-#define ST_INT		2
-#define ST_INTENUM	3
-#define ST_LONGMASK	4
-#define ST_ULONG	5
-#define ST_MULTIINT	6
-#define ST_VOID		7
+#define ST_BOOL 0
+#define ST_CHAR 1
+#define ST_INT 2
+#define ST_INTENUM 3
+#define ST_LONGMASK 4
+#define ST_ULONG 5
+#define ST_MULTIINT 6
+#define ST_VOID 7
 
 typedef struct _StructureTable {
-  unsigned long	mask;
-  char		*string;
-  unsigned int	offset;
-  int		type;
-  void		*table;
-  I		msymbol;
+    unsigned long mask;
+    char* string;
+    unsigned int offset;
+    int type;
+    void* table;
+    I msymbol;
 } StructureTable;
 
-extern PointerTable *AllocPointerTable();
+extern PointerTable* AllocPointerTable();
 extern void FreePointerTable();
-extern char *AToString();
-extern void *FetchPointer();
+extern char* AToString();
+extern void* FetchPointer();
 extern int FetchIndex();
 extern void RemovePointer();
 extern I InternPointer();

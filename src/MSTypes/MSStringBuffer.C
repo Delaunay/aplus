@@ -1,15 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1997-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1997-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-extern "C"
-{
-#include <string.h>
+extern "C" {
 #include <stdlib.h>
+#include <string.h>
 }
 
 #ifdef __cfront
@@ -39,55 +38,64 @@ extern "C"
 #include <MSTypes/MSStringBufferInlines.C>
 #endif
 
-MSBaseStringBuffer::~MSBaseStringBuffer() {}
+MSBaseStringBuffer::~MSBaseStringBuffer()
+{
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::className                                                    |
 ------------------------------------------------------------------------------*/
-const char *MSStringBuffer::className(void) const
-{ return "MSStringBuffer"; }
+const char* MSStringBuffer::className(void) const
+{
+    return "MSStringBuffer";
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::asDebugInfo                                                  |
 ------------------------------------------------------------------------------*/
 MSString MSStringBuffer::asDebugInfo(void) const
 {
-  MSString result(className());
-  result+="(@";
-  result+=MSString((unsigned long)this).d2x().lowerCase();
-  result+=",refs=";
-  result+=MSString(useCount());
-  result+=",len=";
-  result+=MSString(length());
-  result+=",data=[";
-  if (length()>23)
-   {
-     result+=MSString(contents(),10);
-     result+="...";
-     result+=MSString(contents()+length()-10,10);
-   }
-  else result+=contents();
-  result+="])";
-  return result;
+    MSString result(className());
+    result += "(@";
+    result += MSString((unsigned long)this).d2x().lowerCase();
+    result += ",refs=";
+    result += MSString(useCount());
+    result += ",len=";
+    result += MSString(length());
+    result += ",data=[";
+    if (length() > 23) {
+        result += MSString(contents(), 10);
+        result += "...";
+        result += MSString(contents() + length() - 10, 10);
+    } else
+        result += contents();
+    result += "])";
+    return result;
 }
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::charType                                                     |
 ------------------------------------------------------------------------------*/
 MSStringEnum::CharType MSStringBuffer::charType(unsigned) const
-{ return MSStringEnum::SBCS; }
+{
+    return MSStringEnum::SBCS;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::allocate                                                     |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::allocate(unsigned newLen) const
-{ return new (newLen)MSStringBuffer(newLen); }
+MSStringBuffer* MSStringBuffer::allocate(unsigned newLen) const
+{
+    return new (newLen) MSStringBuffer(newLen);
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::null                                                         |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::null(void) const
-{ return MSStringBuffer::defaultBuffer(); }
+MSStringBuffer* MSStringBuffer::null(void) const
+{
+    return MSStringBuffer::defaultBuffer();
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::defaultBuffer                                                |
@@ -100,10 +108,10 @@ MSStringBuffer *MSStringBuffer::null(void) const
 | are a single null character.  This ensures that using a null                 |
 | MSString equates to using a null string(in more of the C sense).             |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::defaultBuffer(void)
+MSStringBuffer* MSStringBuffer::defaultBuffer(void)
 {
-  static MSStringBuffer *pNullBuffer = MSStringBuffer::initialize();
-  return pNullBuffer;
+    static MSStringBuffer* pNullBuffer = MSStringBuffer::initialize();
+    return pNullBuffer;
 }
 
 /*------------------------------------------------------------------------------
@@ -111,25 +119,30 @@ MSStringBuffer *MSStringBuffer::defaultBuffer(void)
 |                                                                              |
 | Build DBCS table and return pointer to appropriate(null) MSStringBuffer.     |
 ------------------------------------------------------------------------------*/
-extern MSStringBuffer *createMSMBStringBuffer(void);
+extern MSStringBuffer* createMSMBStringBuffer(void);
 
-MSStringBuffer *MSStringBuffer::initialize(void)
+MSStringBuffer* MSStringBuffer::initialize(void)
 {
-  if (MB_CUR_MAX>1) return (MSStringBuffer *)createMSMBStringBuffer();
-  return new(0) MSStringBuffer(0);
+    if (MB_CUR_MAX > 1)
+        return (MSStringBuffer*)createMSMBStringBuffer();
+    return new (0) MSStringBuffer(0);
 }
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::next                                                         |
 ------------------------------------------------------------------------------*/
-char *MSStringBuffer::next(const char *prev)
-{ return(char*)prev++; }
+char* MSStringBuffer::next(const char* prev)
+{
+    return (char*)prev++;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::next                                                         |
 ------------------------------------------------------------------------------*/
-const char *MSStringBuffer::next(const char *prev) const
-{ return prev++; }
+const char* MSStringBuffer::next(const char* prev) const
+{
+    return prev++;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::MSStringBuffer                                               |
@@ -148,8 +161,12 @@ const char *MSStringBuffer::next(const char *prev) const
 |      the static MSStringBuffer::nullBuffer object.                           |
 |   2. This method should be inline(in context of MSStringBuffer::newBuffer).  |
 ------------------------------------------------------------------------------*/
-MSStringBuffer::MSStringBuffer(unsigned length):refs(1),len(length)
-{ data[length]='\0'; }
+MSStringBuffer::MSStringBuffer(unsigned length)
+    : refs(1)
+    , len(length)
+{
+    data[length] = '\0';
+}
 MSStringBuffer::~MSStringBuffer() {}
 
 /*------------------------------------------------------------------------------
@@ -158,34 +175,37 @@ MSStringBuffer::~MSStringBuffer() {}
 | Allocate a new MSStringBuffer of the same type as the receiver and           |
 | initialize it with the provided data.                                        |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::newBuffer(const void *p1,unsigned len1,
-                                          const void *p2,unsigned len2,
-                                          const void *p3,unsigned len3,char padChar) const
+MSStringBuffer* MSStringBuffer::newBuffer(const void* p1, unsigned len1,
+    const void* p2, unsigned len2,
+    const void* p3, unsigned len3, char padChar) const
 {
-  unsigned newLen=checkAddition(checkAddition(len1,len2),len3);
-  MSStringBuffer *buffer;
-  if (newLen)
-   {
-     buffer=allocate(newLen);
-     char *p=buffer->contents();
-     // Copy first portion(or pad).
-     if (p1) memcpy(p,p1,len1);
-     else    memset(p,padChar,len1);
-     p+=len1;
-     // Copy second portion(or pad).
-     if (p2) memcpy(p,p2,len2);
-     else    memset(p,padChar,len2);
-     p+=len2;
-     // Copy third portion(or pad).
-     if (p3) memcpy(p,p3,len3);
-     else    memset(p,padChar,len3);
-   }
-  else
-   {
-     buffer=null();
-     buffer->addRef();
-   }
-  return buffer;
+    unsigned newLen = checkAddition(checkAddition(len1, len2), len3);
+    MSStringBuffer* buffer;
+    if (newLen) {
+        buffer = allocate(newLen);
+        char* p = buffer->contents();
+        // Copy first portion(or pad).
+        if (p1)
+            memcpy(p, p1, len1);
+        else
+            memset(p, padChar, len1);
+        p += len1;
+        // Copy second portion(or pad).
+        if (p2)
+            memcpy(p, p2, len2);
+        else
+            memset(p, padChar, len2);
+        p += len2;
+        // Copy third portion(or pad).
+        if (p3)
+            memcpy(p, p3, len3);
+        else
+            memset(p, padChar, len3);
+    } else {
+        buffer = null();
+        buffer->addRef();
+    }
+    return buffer;
 }
 
 /*------------------------------------------------------------------------------
@@ -210,8 +230,10 @@ MSStringBuffer *MSStringBuffer::newBuffer(const void *p1,unsigned len1,
 | Delete the storage using the inverse of the operator used to allocate it.    |
 ------------------------------------------------------------------------------*/
 
-void MSStringBuffer::operator delete(void *p)
-{ ::delete [](char*)p; }
+void MSStringBuffer::operator delete(void* p)
+{
+    ::delete[](char*) p;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::addRef                                                       |
@@ -261,18 +283,17 @@ void MSStringBuffer::operator delete(void *p)
 |           ...                                                                |
 |           }                                                                  |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::rightJustify(unsigned newLength,char padCharacter)
+MSStringBuffer* MSStringBuffer::rightJustify(unsigned newLength, char padCharacter)
 {
-  if (newLength!=length())
-   {
-     unsigned prefix=(newLength>length())?newLength-length():0;
-     unsigned fromReceiver=(length()<newLength)?length():newLength;
-     return newBuffer(0,prefix,
-		      contents()+length()-fromReceiver,fromReceiver,
-		      0,0,
-		      padCharacter);
-   }
-  return this;
+    if (newLength != length()) {
+        unsigned prefix = (newLength > length()) ? newLength - length() : 0;
+        unsigned fromReceiver = (length() < newLength) ? length() : newLength;
+        return newBuffer(0, prefix,
+            contents() + length() - fromReceiver, fromReceiver,
+            0, 0,
+            padCharacter);
+    }
+    return this;
 }
 
 /*------------------------------------------------------------------------------
@@ -288,20 +309,20 @@ MSStringBuffer *MSStringBuffer::rightJustify(unsigned newLength,char padCharacte
 | Notes:                                                                       |
 |   1. See notes 1. and 2. under MSStringBuffer::rightJustify.                 |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::remove(unsigned startPos,unsigned numChars)
+MSStringBuffer* MSStringBuffer::remove(unsigned startPos, unsigned numChars)
 {
-  if (startPos<length()&&length()!=0)
-   {
-     // Default numChars to rest of string:
-     if (numChars>length()-startPos) numChars=length()-startPos;
-     
-     // Initialize from current contents before/after deleted chars:
-     return newBuffer(contents(),startPos,
-		      contents()+startPos+numChars,length()-numChars-startPos,
-		      0,0,
-		      0);
-   }
-  return this;
+    if (startPos < length() && length() != 0) {
+        // Default numChars to rest of string:
+        if (numChars > length() - startPos)
+            numChars = length() - startPos;
+
+        // Initialize from current contents before/after deleted chars:
+        return newBuffer(contents(), startPos,
+            contents() + startPos + numChars, length() - numChars - startPos,
+            0, 0,
+            0);
+    }
+    return this;
 }
 
 /*------------------------------------------------------------------------------
@@ -311,8 +332,8 @@ MSStringBuffer *MSStringBuffer::remove(unsigned startPos,unsigned numChars)
 ------------------------------------------------------------------------------*/
 unsigned MSStringBuffer::overflow(void)
 {
-//  ITHROWLIBRARYERROR(ICMSStringHEADEROVERFLOW,IErrorInfo::invalidRequest,IException::recoverable);
-  return 0;
+    //  ITHROWLIBRARYERROR(ICMSStringHEADEROVERFLOW,IErrorInfo::invalidRequest,IException::recoverable);
+    return 0;
 }
 /*******************************************************************************
 * DESCRIPTION:                                                                 *
@@ -348,7 +369,10 @@ unsigned MSStringBuffer::overflow(void)
 |      code page basis.                                                        |
 ------------------------------------------------------------------------------*/
 #if defined(__APPLE__)
-int MS_ISALNUM(int c) { return isalnum(c); }
+int MS_ISALNUM(int c)
+{
+    return isalnum(c);
+}
 int MS_ISALPHA(int c) { return isalpha(c); }
 int MS_ISCNTRL(int c) { return iscntrl(c); }
 int MS_ISUPPER(int c) { return isupper(c); }
@@ -372,126 +396,166 @@ int MS_ISDIGIT(int c) { return isdigit(c); }
 #endif
 
 MSBoolean MSStringBuffer::isAlphanumeric() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISALNUM))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISALNUM)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isAlphabetic                                                 |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isAlphabetic() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISALPHA))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISALPHA)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isASCII                                                      |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isASCII() const
-{ 
-  unsigned i=length();
-  const unsigned char *p=(unsigned char *)contents();
-  while (i--) if (*p++>127) return MSFalse;
-  return MSTrue;
+{
+    unsigned i = length();
+    const unsigned char* p = (unsigned char*)contents();
+    while (i--)
+        if (*p++ > 127)
+            return MSFalse;
+    return MSTrue;
 }
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isControl                                                    |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isControl() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISCNTRL))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISCNTRL)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isDigits                                                     |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isDigits() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISDIGIT))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISDIGIT)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isGraphics                                                   |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isGraphics() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISGRAPH))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISGRAPH)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isHexDigits                                                  |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isHexDigits() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISXDIGIT))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISXDIGIT)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isLowerCase                                                  |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isLowerCase() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISLOWER))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISLOWER)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isPrintable                                                  |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isPrintable() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISPRINT))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISPRINT)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isPunctuation                                                |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isPunctuation() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISPUNCT))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISPUNCT)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isUpperCase                                                  |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isUpperCase() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISUPPER))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(MS_ISUPPER)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isWhiteSpace                                                 |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isWhiteSpace() const
-{ return MSBoolean(indexOfAnyBut(MSStringTest(APLUS_ISPACE))==length()); }
+{
+    return MSBoolean(indexOfAnyBut(MSStringTest(APLUS_ISPACE)) == length());
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isMBCS                                                       |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isMBCS() const
-{ return MSFalse; }
+{
+    return MSFalse;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isDBCS                                                       |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isDBCS() const
-{ return isMBCS(); }
+{
+    return isMBCS();
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isSBCS                                                      |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isSBCS() const
-{ return MSTrue; }
+{
+    return MSTrue;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::includesMBCS                                                 |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::includesMBCS() const
-{ return MSFalse; }
+{
+    return MSFalse;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::includesDBCS                                                 |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::includesDBCS() const
-{ return includesMBCS(); }
+{
+    return includesMBCS();
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::includesSBCS                                                 |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::includesSBCS() const
-{ return MSTrue; }
+{
+    return MSTrue;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isValidMBCS                                                  |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isValidMBCS() const
-{ return MSTrue; }
+{
+    return MSTrue;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::isValidDBCS                                                  |
 ------------------------------------------------------------------------------*/
 MSBoolean MSStringBuffer::isValidDBCS() const
-{ return isValidMBCS(); }
+{
+    return isValidMBCS();
+}
 
 /*******************************************************************************
 * DESCRIPTION:                                                                 *
@@ -523,22 +587,23 @@ MSBoolean MSStringBuffer::isValidDBCS() const
 |   1. A quick check is made to see if the receiver's buffer and the           |
 |      argument coincide(in which case "equal" is returned).                   |
 ------------------------------------------------------------------------------*/
-MSStringBuffer::Comparison MSStringBuffer::compare(const void *pArg,unsigned argLen) const
+MSStringBuffer::Comparison MSStringBuffer::compare(const void* pArg, unsigned argLen) const
 {
-  Comparison result=lessThan;
-  if (contents()==pArg&&length()==argLen) result=equal;
-  else if (length()>0)
-   {
-     if (argLen>0)
-      {
-	int rc=memcmp(contents(),pArg,(length()<argLen)?length():argLen);
-	if (rc==0) result=(length()==argLen)?equal:(length()<argLen)?lessThan:greaterThan;
-	else result=(rc<0)?lessThan:greaterThan;
-      }
-     else result=greaterThan;
-   }
-  else if (argLen==0) result=equal;
-  return result;
+    Comparison result = lessThan;
+    if (contents() == pArg && length() == argLen)
+        result = equal;
+    else if (length() > 0) {
+        if (argLen > 0) {
+            int rc = memcmp(contents(), pArg, (length() < argLen) ? length() : argLen);
+            if (rc == 0)
+                result = (length() == argLen) ? equal : (length() < argLen) ? lessThan : greaterThan;
+            else
+                result = (rc < 0) ? lessThan : greaterThan;
+        } else
+            result = greaterThan;
+    } else if (argLen == 0)
+        result = equal;
+    return result;
 }
 
 /*******************************************************************************
@@ -561,18 +626,19 @@ MSStringBuffer::Comparison MSStringBuffer::compare(const void *pArg,unsigned arg
 | from the receiver(for length fromReceiver) and padding with the              |
 | argument pad character if extra is required.                                 |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::subString(unsigned startPos_,unsigned len_,char padCharacter_) const
+MSStringBuffer* MSStringBuffer::subString(unsigned startPos_, unsigned len_, char padCharacter_) const
 {
-  // Calculate how much can come from receiver.
-  unsigned int fromReceiver=(startPos_<length())?length()-startPos_:0;
-  // Reduce if request length is shorter...
-  if (len_<fromReceiver) fromReceiver=len_;
-  // Initialize what we can from the receiver and leave
-  // room for the remainder.
-  return newBuffer(contents()+startPos_,fromReceiver,
-                   0,len_-fromReceiver,
-                   0,0,
-                   padCharacter_);
+    // Calculate how much can come from receiver.
+    unsigned int fromReceiver = (startPos_ < length()) ? length() - startPos_ : 0;
+    // Reduce if request length is shorter...
+    if (len_ < fromReceiver)
+        fromReceiver = len_;
+    // Initialize what we can from the receiver and leave
+    // room for the remainder.
+    return newBuffer(contents() + startPos_, fromReceiver,
+        0, len_ - fromReceiver,
+        0, 0,
+        padCharacter_);
 }
 
 /*******************************************************************************
@@ -596,8 +662,10 @@ MSStringBuffer *MSStringBuffer::subString(unsigned startPos_,unsigned len_,char 
 | The check for this condition is made carefully to avoid overflow             |
 | situations.                                                                  |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::startSearch(unsigned startPos,unsigned searchLen) const
-{ return (startPos>length()||searchLen>length()-startPos)?length():startPos; }
+unsigned MSStringBuffer::startSearch(unsigned startPos, unsigned searchLen) const
+{
+    return (startPos > length() || searchLen > length() - startPos) ? length() : startPos;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::startBackwardsSearch                                         |
@@ -617,15 +685,16 @@ unsigned MSStringBuffer::startSearch(unsigned startPos,unsigned searchLen) const
 | Finally,the starting point is moved back so that the search string           |
 | starting at that point won't run off the end of the buffer.                  |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::startBackwardsSearch(unsigned startPos,unsigned searchLen) const
+unsigned MSStringBuffer::startBackwardsSearch(unsigned startPos, unsigned searchLen) const
 {
-  if (searchLen<=length())
-   {
-     if (startPos>=length()) startPos=length()-1;
-     if (startPos>length()-searchLen) startPos=length()-searchLen;
-   }
-  else startPos=length();
-  return startPos;
+    if (searchLen <= length()) {
+        if (startPos >= length())
+            startPos = length() - 1;
+        if (startPos > length() - searchLen)
+            startPos = length() - searchLen;
+    } else
+        startPos = length();
+    return startPos;
 }
 
 /*------------------------------------------------------------------------------
@@ -646,24 +715,24 @@ unsigned MSStringBuffer::startBackwardsSearch(unsigned startPos,unsigned searchL
 |      special code to handle that case here,as well.                          |
 |   2. If the search string is null,then length() is returned.                 |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::indexOf(const char *pSearchString,unsigned searchLen,unsigned startPos) const
+unsigned MSStringBuffer::indexOf(const char* pSearchString, unsigned searchLen, unsigned startPos) const
 {
-  if (searchLen>0&&length()>0)
-   {
-     if (searchLen==1) return indexOfAnyOf(pSearchString,searchLen,startPos);
-     startPos=startSearch(startPos,searchLen);
-     if (startPos<length()&&searchLen)
-      {
-        const char *p=contents();
-        int diffLength=length()-searchLen;
-	while (startPos<=diffLength)
-	 {
-	   if (memcmp(p+startPos,pSearchString,searchLen)==0) return startPos;
-	   else startPos++;
-	 }
-      }
-   }
-  return length();
+    if (searchLen > 0 && length() > 0) {
+        if (searchLen == 1)
+            return indexOfAnyOf(pSearchString, searchLen, startPos);
+        startPos = startSearch(startPos, searchLen);
+        if (startPos < length() && searchLen) {
+            const char* p = contents();
+            int diffLength = length() - searchLen;
+            while (startPos <= diffLength) {
+                if (memcmp(p + startPos, pSearchString, searchLen) == 0)
+                    return startPos;
+                else
+                    startPos++;
+            }
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -671,8 +740,10 @@ unsigned MSStringBuffer::indexOf(const char *pSearchString,unsigned searchLen,un
 |                                                                              |
 | Simply invokes the functionally equivalent indexOfAnyOf function.            |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::indexOf(const MSStringTest &aTest,unsigned startPos) const
-{ return indexOfAnyOf(aTest,startPos); }
+unsigned MSStringBuffer::indexOf(const MSStringTest& aTest, unsigned startPos) const
+{
+    return indexOfAnyOf(aTest, startPos);
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::indexOfAnyBut                                                |
@@ -694,31 +765,31 @@ unsigned MSStringBuffer::indexOf(const MSStringTest &aTest,unsigned startPos) co
 |                                                                              |
 | If all characters pass the test,return length().                             |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::indexOfAnyBut(const char *pValidChars,unsigned numValidChars,unsigned startPos) const
+unsigned MSStringBuffer::indexOfAnyBut(const char* pValidChars, unsigned numValidChars, unsigned startPos) const
 {
-  startPos=startSearch(startPos,1);
-  if (startPos<length())
-   {
-     switch(numValidChars)
-      {
-      case 0:
-        return startPos;
-      case 1:
-        while (startPos<length())
-	 {
-	   if (contents()[startPos]!=*pValidChars) return startPos;
-           else startPos++;
-	 }
-        break;
-      default:
-        while (startPos<length())
-	 {
-	   if (memchr(pValidChars,contents()[startPos],numValidChars)==0) return startPos;
-           else startPos++;
-	 }
-      }
-   }
-  return length();
+    startPos = startSearch(startPos, 1);
+    if (startPos < length()) {
+        switch (numValidChars) {
+        case 0:
+            return startPos;
+        case 1:
+            while (startPos < length()) {
+                if (contents()[startPos] != *pValidChars)
+                    return startPos;
+                else
+                    startPos++;
+            }
+            break;
+        default:
+            while (startPos < length()) {
+                if (memchr(pValidChars, contents()[startPos], numValidChars) == 0)
+                    return startPos;
+                else
+                    startPos++;
+            }
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -731,18 +802,18 @@ unsigned MSStringBuffer::indexOfAnyBut(const char *pValidChars,unsigned numValid
 |                                                                              |
 | If all characters pass the test,return length().                             |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::indexOfAnyBut(const MSStringTest &aTest,unsigned startPos) const
+unsigned MSStringBuffer::indexOfAnyBut(const MSStringTest& aTest, unsigned startPos) const
 {
-  startPos=startSearch(startPos,1);
-  if (startPos<length())
-   {
-     while (startPos<length())
-      {
-	if (!aTest.test(contents()[startPos])) return startPos;
-        else startPos++;
-      }
-   }
-  return length();
+    startPos = startSearch(startPos, 1);
+    if (startPos < length()) {
+        while (startPos < length()) {
+            if (!aTest.test(contents()[startPos]))
+                return startPos;
+            else
+                startPos++;
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -765,29 +836,29 @@ unsigned MSStringBuffer::indexOfAnyBut(const MSStringTest &aTest,unsigned startP
 |                                                                              |
 | If all characters fail the test,return length().                             |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::indexOfAnyOf(const char *pValidChars,unsigned numValidChars,unsigned startPos) const
+unsigned MSStringBuffer::indexOfAnyOf(const char* pValidChars, unsigned numValidChars, unsigned startPos) const
 {
-  startPos=startSearch(startPos,1);
-  if (startPos<length())
-   {
-     switch(numValidChars)
-      {
-        const char *p;
+    startPos = startSearch(startPos, 1);
+    if (startPos < length()) {
+        switch (numValidChars) {
+            const char* p;
         case 0:
-          break;
+            break;
         case 1:
-          p=(const char *)memchr(contents()+startPos,*pValidChars,length()-startPos);
-          if (p) return p-contents();
-          break;
+            p = (const char*)memchr(contents() + startPos, *pValidChars, length() - startPos);
+            if (p)
+                return p - contents();
+            break;
         default:
-          while (startPos<length())
-	   {
-	     if (memchr(pValidChars,contents()[startPos],numValidChars)) return startPos;
-             else startPos++;
-	   }
-      }
-   }
-  return length();
+            while (startPos < length()) {
+                if (memchr(pValidChars, contents()[startPos], numValidChars))
+                    return startPos;
+                else
+                    startPos++;
+            }
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -800,18 +871,18 @@ unsigned MSStringBuffer::indexOfAnyOf(const char *pValidChars,unsigned numValidC
 |                                                                              |
 | If all characters fail the test,return length().                             |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::indexOfAnyOf(const MSStringTest &aTest,unsigned startPos) const
+unsigned MSStringBuffer::indexOfAnyOf(const MSStringTest& aTest, unsigned startPos) const
 {
-  startPos=startSearch(startPos,1);
-  if (startPos<length())
-   {
-     while (startPos<length())
-      {
-	if (aTest.test(contents()[startPos])) return startPos;
-        else startPos++;
-      }
-   }
-  return length();
+    startPos = startSearch(startPos, 1);
+    if (startPos < length()) {
+        while (startPos < length()) {
+            if (aTest.test(contents()[startPos]))
+                return startPos;
+            else
+                startPos++;
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -829,31 +900,31 @@ unsigned MSStringBuffer::indexOfAnyOf(const MSStringTest &aTest,unsigned startPo
 |           string                                                             |
 | If no match is found,return length().                                        |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::lastIndexOf(const char *pSearchString,unsigned searchLen,unsigned startPos) const
+unsigned MSStringBuffer::lastIndexOf(const char* pSearchString, unsigned searchLen, unsigned startPos) const
 {
-  startPos=startBackwardsSearch(startPos,searchLen);
-  if (startPos<length())
-   {
-     switch(searchLen)
-      {
+    startPos = startBackwardsSearch(startPos, searchLen);
+    if (startPos < length()) {
+        switch (searchLen) {
         case 0:
-          break;
+            break;
         case 1:
-          while (startPos<length())
-           { 
-             if (contents()[startPos]==pSearchString[0]) return startPos;
-             else startPos--;
-	   }
-          break;
+            while (startPos < length()) {
+                if (contents()[startPos] == pSearchString[0])
+                    return startPos;
+                else
+                    startPos--;
+            }
+            break;
         default:
-          while (startPos<length())
-           {
-             if (memcmp(contents()+startPos,pSearchString,searchLen)==0) return startPos;
-             else startPos--;
-	   }
-      }
-   }
-  return length();
+            while (startPos < length()) {
+                if (memcmp(contents() + startPos, pSearchString, searchLen) == 0)
+                    return startPos;
+                else
+                    startPos--;
+            }
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -861,8 +932,10 @@ unsigned MSStringBuffer::lastIndexOf(const char *pSearchString,unsigned searchLe
 |                                                                              |
 |  Simply invoke the functionally equivalent lastIndexOfAnyOf.                 |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::lastIndexOf(const MSStringTest &aTest,unsigned startPos) const
-{ return lastIndexOfAnyOf(aTest,startPos); }
+unsigned MSStringBuffer::lastIndexOf(const MSStringTest& aTest, unsigned startPos) const
+{
+    return lastIndexOfAnyOf(aTest, startPos);
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::lastIndexOfAnyBut                                            |
@@ -885,33 +958,32 @@ unsigned MSStringBuffer::lastIndexOf(const MSStringTest &aTest,unsigned startPos
 |                                                                              |
 |    If all characters pass the test,return length().                          |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::lastIndexOfAnyBut(const char *pValidChars,unsigned numValidChars,unsigned startPos) const
+unsigned MSStringBuffer::lastIndexOfAnyBut(const char* pValidChars, unsigned numValidChars, unsigned startPos) const
 {
-  startPos=startBackwardsSearch(startPos,1);
-  if (startPos<length())
-   {
-     switch(numValidChars)
-      {
+    startPos = startBackwardsSearch(startPos, 1);
+    if (startPos < length()) {
+        switch (numValidChars) {
         case 0:
-          return startPos;
+            return startPos;
         case 1:
-          while (startPos<length())
-	   {
-	     if (contents()[startPos]!=*pValidChars) return startPos;
-	     else startPos--;
-	   }
-          break;
+            while (startPos < length()) {
+                if (contents()[startPos] != *pValidChars)
+                    return startPos;
+                else
+                    startPos--;
+            }
+            break;
         default:
-          while (startPos<length())
-	   {
-	     if (memchr(pValidChars,contents()[startPos],numValidChars)==0) return startPos;
-	     else startPos--;
-	   }
-      }
-   }
-  return length();
+            while (startPos < length()) {
+                if (memchr(pValidChars, contents()[startPos], numValidChars) == 0)
+                    return startPos;
+                else
+                    startPos--;
+            }
+        }
+    }
+    return length();
 }
-
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::lastIndexOfAnyBut                                            |
@@ -923,18 +995,18 @@ unsigned MSStringBuffer::lastIndexOfAnyBut(const char *pValidChars,unsigned numV
 |                                                                              |
 | If all characters pass the test,return length().                             |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::lastIndexOfAnyBut(const MSStringTest &aTest,unsigned startPos) const
+unsigned MSStringBuffer::lastIndexOfAnyBut(const MSStringTest& aTest, unsigned startPos) const
 {
-  startPos=startBackwardsSearch(startPos,1);
-  if (startPos<length())
-   {
-     while (startPos<length())
-      {
-	if (!aTest.test(contents()[startPos])) return startPos;
-	else startPos--;
-      }
-   }
-  return length();
+    startPos = startBackwardsSearch(startPos, 1);
+    if (startPos < length()) {
+        while (startPos < length()) {
+            if (!aTest.test(contents()[startPos]))
+                return startPos;
+            else
+                startPos--;
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -955,31 +1027,31 @@ unsigned MSStringBuffer::lastIndexOfAnyBut(const MSStringTest &aTest,unsigned st
 |                                                                              |
 | If all characters fail the test,return length().                             |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::lastIndexOfAnyOf(const char *pValidChars,unsigned numValidChars,unsigned startPos) const
+unsigned MSStringBuffer::lastIndexOfAnyOf(const char* pValidChars, unsigned numValidChars, unsigned startPos) const
 {
-  startPos=startBackwardsSearch(startPos,1);
-  if (startPos<length())
-   {
-     switch(numValidChars)
-      {
+    startPos = startBackwardsSearch(startPos, 1);
+    if (startPos < length()) {
+        switch (numValidChars) {
         case 0:
-          break;
+            break;
         case 1:
-          while (startPos<length())
-	   {
-	     if (contents()[startPos]==*pValidChars) return startPos;
-	     else startPos--;
-	   }
-          break;
+            while (startPos < length()) {
+                if (contents()[startPos] == *pValidChars)
+                    return startPos;
+                else
+                    startPos--;
+            }
+            break;
         default:
-          while (startPos<length())
-	   {
-	     if (memchr(pValidChars,contents()[startPos],numValidChars)) return startPos;
-	     else startPos--;
-	   }
-      }
-   }
-  return length();
+            while (startPos < length()) {
+                if (memchr(pValidChars, contents()[startPos], numValidChars))
+                    return startPos;
+                else
+                    startPos--;
+            }
+        }
+    }
+    return length();
 }
 
 /*------------------------------------------------------------------------------
@@ -992,18 +1064,18 @@ unsigned MSStringBuffer::lastIndexOfAnyOf(const char *pValidChars,unsigned numVa
 |                                                                              |
 | If all characters fail the test,return length().                             |
 ------------------------------------------------------------------------------*/
-unsigned MSStringBuffer::lastIndexOfAnyOf(const MSStringTest &aTest,unsigned startPos) const
+unsigned MSStringBuffer::lastIndexOfAnyOf(const MSStringTest& aTest, unsigned startPos) const
 {
-  startPos=startBackwardsSearch(startPos,1);
-  if (startPos<length())
-   {
-     while (startPos<length())
-      {
-	if (aTest.test(contents()[startPos])) return startPos;
-	else startPos--;
-      }
-   }
-  return length();
+    startPos = startBackwardsSearch(startPos, 1);
+    if (startPos < length()) {
+        while (startPos < length()) {
+            if (aTest.test(contents()[startPos]))
+                return startPos;
+            else
+                startPos--;
+        }
+    }
+    return length();
 }
 /*******************************************************************************
 * DESCRIPTION:                                                                 *
@@ -1050,42 +1122,45 @@ unsigned MSStringBuffer::lastIndexOfAnyOf(const MSStringTest &aTest,unsigned sta
 | In the latter case,a substring of the receiver(the center portion            |
 | of the requested length) is copied to the result buffer.                     |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::center(unsigned newLength,char padCharacter)
+MSStringBuffer* MSStringBuffer::center(unsigned newLength, char padCharacter)
 {
-  MSStringBuffer *result=this;
-  if (newLength!=length())
-   {
-     // Initialize parameters to likely values:
-     unsigned prefix=0,suffix=0,fromReceiver=length(),startPos=1;
-     
-     // Adjust initialization parameters:
-     if (newLength>length())
-      {
-	prefix =(newLength-length())/2;
-	suffix=newLength-length()-prefix;
-      }
-     else
-      {
-	fromReceiver=newLength;
-	startPos=(length()-fromReceiver)/2+1;
-      }
-     // Allocate space and copy receiver to middle:
-     result=newBuffer(0,prefix,
-		      contents()+startPos-1,fromReceiver,
-		      0,suffix,
-		      padCharacter);
-   }
-  else addRef();
-  return result;
-} 
+    MSStringBuffer* result = this;
+    if (newLength != length()) {
+        // Initialize parameters to likely values:
+        unsigned prefix = 0, suffix = 0, fromReceiver = length(), startPos = 1;
+
+        // Adjust initialization parameters:
+        if (newLength > length()) {
+            prefix = (newLength - length()) / 2;
+            suffix = newLength - length() - prefix;
+        } else {
+            fromReceiver = newLength;
+            startPos = (length() - fromReceiver) / 2 + 1;
+        }
+        // Allocate space and copy receiver to middle:
+        result = newBuffer(0, prefix,
+            contents() + startPos - 1, fromReceiver,
+            0, suffix,
+            padCharacter);
+    } else
+        addRef();
+    return result;
+}
 
 // Class to maintain a linked list of occurrences of patterns.
-struct Occurrence 
-{
-  Occurrence   *pNext; // Pointer to next occurrence.
-  unsigned int  pos; // Index of this occurrence.
-  Occurrence(unsigned int i):pNext(0),pos(i) {}
-  ~Occurrence() { if (pNext!=0) delete pNext; };
+struct Occurrence {
+    Occurrence* pNext; // Pointer to next occurrence.
+    unsigned int pos; // Index of this occurrence.
+    Occurrence(unsigned int i)
+        : pNext(0)
+        , pos(i)
+    {
+    }
+    ~Occurrence()
+    {
+        if (pNext != 0)
+            delete pNext;
+    };
 };
 
 /*------------------------------------------------------------------------------
@@ -1104,83 +1179,81 @@ struct Occurrence
 | to record the position in the receiver of the pattern occurrence and a       |
 | pointer to the Occurrence object for the next occurrence of the pattern.     |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::change(const char *pPattern,unsigned patternLen,
-                                       const char *pReplacement,unsigned replacementLen,
-                                       unsigned startPos,unsigned numChanges)
+MSStringBuffer* MSStringBuffer::change(const char* pPattern, unsigned patternLen,
+    const char* pReplacement, unsigned replacementLen,
+    unsigned startPos, unsigned numChanges)
 {
-  MSStringBuffer *result=this;
-  
-  unsigned count=0; // Number of occurrences.
-  
-  // Initialize occurrence chain with a dummy entry at head.
-  // pOccurrence is used to step through the chain; it points
-  // to the last occurrence during search,current occurrence
-  // during pattern replacement.  Note that when "head" is
-  // destructed,it will delete all the other Occurrences.
-  Occurrence  head       =Occurrence(0);
-  Occurrence *pOccurrence=&head;
-  
-  // Search for occurrences till all(we need) are found:
-  while (count<numChanges)
-   {
-     if ((startPos=indexOf(pPattern,patternLen,startPos))<length())
-      {
-	// Occurrence found...
-	count++;
-	pOccurrence=pOccurrence->pNext=new Occurrence(startPos);
-	startPos+=patternLen;
-      }
-     else break;  // No more occurrences...
-   }
+    MSStringBuffer* result = this;
 
-  if (count!=0)
-   { 
-     // Occurrences were found,replace them...
-     // Add dummy occurrence at end to ensure tail end of receiver
-     // gets copied to destination:
-     pOccurrence->pNext=new Occurrence(length()+1);
-     // Start at first actual occurrence:
-     pOccurrence=head.pNext;
-     const char *pSource=contents()+pOccurrence->pos;
-     
-     // Allocate new buffer if size is changing:
-     if (patternLen!=replacementLen)
-      {
-	unsigned newLen=length();
-	if (patternLen>replacementLen) newLen-=checkMultiplication(patternLen-replacementLen,count);
-	else newLen=checkAddition(newLen,checkMultiplication(replacementLen-patternLen,count));
-	// Allocate new buffer and fill with old contents up to
-	// first occurrence of the pattern:
-	result=newBuffer(contents(),pSource-contents(),
-			 0,newLen-(pSource-contents()),
-			 0,0,
-			 0);
-      }
-     else
-      { // See if we need new buffer for receiver:
-	if (useCount()==1) addRef(); // Hang on to this buffer.
-	else result=newBuffer(contents(),length()); // Copy shared buffer.
-      }
-     
-     char *pDest=result->contents()+(pOccurrence->pos);
-     
-     // For each occurrence,replace pattern and copy up to next occurrence:
-     while (count--)
-      {
-	unsigned previousPos=pOccurrence->pos;
-	pOccurrence=pOccurrence->pNext;
-	memcpy(pDest,pReplacement,replacementLen);
-	pDest  +=replacementLen;
-	pSource+=patternLen;
-	// Copy source string up to next occurrence:
-	unsigned n=(pOccurrence->pos-previousPos)-patternLen;
-	if (patternLen!=replacementLen) memcpy(pDest,pSource,n);
-	pDest  +=n;
-	pSource+=n;
-      }
-   }
-  else addRef(); // No change,reuse receiver:
-  return result;
+    unsigned count = 0; // Number of occurrences.
+
+    // Initialize occurrence chain with a dummy entry at head.
+    // pOccurrence is used to step through the chain; it points
+    // to the last occurrence during search,current occurrence
+    // during pattern replacement.  Note that when "head" is
+    // destructed,it will delete all the other Occurrences.
+    Occurrence head = Occurrence(0);
+    Occurrence* pOccurrence = &head;
+
+    // Search for occurrences till all(we need) are found:
+    while (count < numChanges) {
+        if ((startPos = indexOf(pPattern, patternLen, startPos)) < length()) {
+            // Occurrence found...
+            count++;
+            pOccurrence = pOccurrence->pNext = new Occurrence(startPos);
+            startPos += patternLen;
+        } else
+            break; // No more occurrences...
+    }
+
+    if (count != 0) {
+        // Occurrences were found,replace them...
+        // Add dummy occurrence at end to ensure tail end of receiver
+        // gets copied to destination:
+        pOccurrence->pNext = new Occurrence(length() + 1);
+        // Start at first actual occurrence:
+        pOccurrence = head.pNext;
+        const char* pSource = contents() + pOccurrence->pos;
+
+        // Allocate new buffer if size is changing:
+        if (patternLen != replacementLen) {
+            unsigned newLen = length();
+            if (patternLen > replacementLen)
+                newLen -= checkMultiplication(patternLen - replacementLen, count);
+            else
+                newLen = checkAddition(newLen, checkMultiplication(replacementLen - patternLen, count));
+            // Allocate new buffer and fill with old contents up to
+            // first occurrence of the pattern:
+            result = newBuffer(contents(), pSource - contents(),
+                0, newLen - (pSource - contents()),
+                0, 0,
+                0);
+        } else { // See if we need new buffer for receiver:
+            if (useCount() == 1)
+                addRef(); // Hang on to this buffer.
+            else
+                result = newBuffer(contents(), length()); // Copy shared buffer.
+        }
+
+        char* pDest = result->contents() + (pOccurrence->pos);
+
+        // For each occurrence,replace pattern and copy up to next occurrence:
+        while (count--) {
+            unsigned previousPos = pOccurrence->pos;
+            pOccurrence = pOccurrence->pNext;
+            memcpy(pDest, pReplacement, replacementLen);
+            pDest += replacementLen;
+            pSource += patternLen;
+            // Copy source string up to next occurrence:
+            unsigned n = (pOccurrence->pos - previousPos) - patternLen;
+            if (patternLen != replacementLen)
+                memcpy(pDest, pSource, n);
+            pDest += n;
+            pSource += n;
+        }
+    } else
+        addRef(); // No change,reuse receiver:
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1196,34 +1269,29 @@ MSStringBuffer *MSStringBuffer::change(const char *pPattern,unsigned patternLen,
 | buffer.  Then,we loop,copying as much as we have(or need) from               |
 | the beginning of the buffer to the end.                                      |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::copy(unsigned int numCopies)
+MSStringBuffer* MSStringBuffer::copy(unsigned int numCopies)
 {
-  MSStringBuffer *result=this;
-  if (length()!=0&&numCopies!=1)
-   { // MSStringBuffer contents will change.
-     if (numCopies)
-      {
-	// Initialize new buffer with first copy:
-	result=newBuffer(contents(),length(),0,checkMultiplication(--numCopies,length()));
-	// Make additional copies:
-	// Where second copy goes.
-	char *pDest=result->contents()+length(); 
-	while (numCopies>0)
-	 { // Duplicate as much as we can from what we've already got:
-	   unsigned n =(pDest-result->contents()<numCopies*length())?pDest-result->contents():numCopies*length();
-	   memcpy(pDest,result->contents(),n);
-	   pDest+=n;
-	   numCopies-=n/length();
-	 }
-      }
-     else
-      {
-	result=null();
-	result->addRef();
-      }
-   }
-  else addRef(); // This buffer will be maintained:
-  return result;
+    MSStringBuffer* result = this;
+    if (length() != 0 && numCopies != 1) { // MSStringBuffer contents will change.
+        if (numCopies) {
+            // Initialize new buffer with first copy:
+            result = newBuffer(contents(), length(), 0, checkMultiplication(--numCopies, length()));
+            // Make additional copies:
+            // Where second copy goes.
+            char* pDest = result->contents() + length();
+            while (numCopies > 0) { // Duplicate as much as we can from what we've already got:
+                unsigned n = (pDest - result->contents() < numCopies * length()) ? pDest - result->contents() : numCopies * length();
+                memcpy(pDest, result->contents(), n);
+                pDest += n;
+                numCopies -= n / length();
+            }
+        } else {
+            result = null();
+            result->addRef();
+        }
+    } else
+        addRef(); // This buffer will be maintained:
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1252,39 +1320,35 @@ MSStringBuffer *MSStringBuffer::copy(unsigned int numCopies)
 |                                                                              |
 |  All this is accomplished with a single call to newBuffer().                 |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::insert(const char *pInsert,unsigned len_,
-                                       unsigned index,char padCharacter)
+MSStringBuffer* MSStringBuffer::insert(const char* pInsert, unsigned len_,
+    unsigned index, char padCharacter)
 {
-  MSStringBuffer *result=this;
-  if (len_!=0||index>length())
-   {
-     unsigned len1=(length()<index)?length():index;
-     unsigned len2,len3;
-     const char *p1=contents(),*p2,*p3;
-     // See if we need to pad the receiver:
-     if (index>length())
-      {
-	// Second initializer is pad characters:
-	// Third initializer is the string to be inserted:
-	len2=index-length(),p2=0;
-        len3=len_,p3=pInsert;
-      }
-     else
-      {
-	// Second initializer is the string to be inserted:
-	// Third initializer is the rest of the receiver:
-	len2=len_,p2=pInsert;
-        len3=length()-index,p3=contents()+index;
-      }
-     // Return new buffer:
-     result=newBuffer(p1,len1,
-		      p2,len2,
-		      p3,len3,
-		      padCharacter);
-   } 
-  else addRef();
-  return result;
-} 
+    MSStringBuffer* result = this;
+    if (len_ != 0 || index > length()) {
+        unsigned len1 = (length() < index) ? length() : index;
+        unsigned len2, len3;
+        const char *p1 = contents(), *p2, *p3;
+        // See if we need to pad the receiver:
+        if (index > length()) {
+            // Second initializer is pad characters:
+            // Third initializer is the string to be inserted:
+            len2 = index - length(), p2 = 0;
+            len3 = len_, p3 = pInsert;
+        } else {
+            // Second initializer is the string to be inserted:
+            // Third initializer is the rest of the receiver:
+            len2 = len_, p2 = pInsert;
+            len3 = length() - index, p3 = contents() + index;
+        }
+        // Return new buffer:
+        result = newBuffer(p1, len1,
+            p2, len2,
+            p3, len3,
+            padCharacter);
+    } else
+        addRef();
+    return result;
+}
 
 /*------------------------------------------------------------------------------
 | MSStringBuffer::leftJustify                                                  |
@@ -1298,18 +1362,17 @@ MSStringBuffer *MSStringBuffer::insert(const char *pInsert,unsigned len_,
 | string of pad characters(of sufficient length to fill the result out to      |
 | the specified length).                                                       |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::leftJustify(unsigned newLength,char padCharacter)
+MSStringBuffer* MSStringBuffer::leftJustify(unsigned newLength, char padCharacter)
 {
-  MSStringBuffer *result=this;
-  if (newLength!=length())
-   {
-     result=newBuffer(contents(),(length()<newLength)?length():newLength,
-		      0,(newLength>length())?newLength-length():0,
-		      0,0,
-		      padCharacter);
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    if (newLength != length()) {
+        result = newBuffer(contents(), (length() < newLength) ? length() : newLength,
+            0, (newLength > length()) ? newLength - length() : 0,
+            0, 0,
+            padCharacter);
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1319,25 +1382,25 @@ MSStringBuffer *MSStringBuffer::leftJustify(unsigned newLength,char padCharacter
 | letter and if found,convert it to lower case.  Quit as soon as               |
 | the search for a capital(via indexOfAnyOf()) fails.                          |
 ------------------------------------------------------------------------------*/
-static const char caps[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static const char caps[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-MSStringBuffer *MSStringBuffer::lowerCase()
+MSStringBuffer* MSStringBuffer::lowerCase()
 {
-  MSStringBuffer *result=this;
-  unsigned pos=indexOfAnyOf(caps,26,0);
-  if (pos<length())
-   {
-     if (useCount()>1) result=newBuffer(contents(),length());
-     else addRef();
-     char *p=result->contents();
-     while (pos<length())
-      {
-	p[pos]+='a'-'A';
-	pos=indexOfAnyOf(caps,26,pos+1);
-      }
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    unsigned pos = indexOfAnyOf(caps, 26, 0);
+    if (pos < length()) {
+        if (useCount() > 1)
+            result = newBuffer(contents(), length());
+        else
+            addRef();
+        char* p = result->contents();
+        while (pos < length()) {
+            p[pos] += 'a' - 'A';
+            pos = indexOfAnyOf(caps, 26, pos + 1);
+        }
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1358,35 +1421,33 @@ MSStringBuffer *MSStringBuffer::lowerCase()
 |   4. The portion of the receiver following the portion of it                |
 |      which was overlaid is copied(may be null).                             |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::overlayWith(const char *pOverlay,unsigned len_,
-                                            unsigned index,char padCharacter)
+MSStringBuffer* MSStringBuffer::overlayWith(const char* pOverlay, unsigned len_,
+    unsigned index, char padCharacter)
 {
-  MSStringBuffer *result=this;
-  if (len_!=0||index>length())
-   {
-     unsigned  len1=(length()<index)?length():index,len2,len3;
-     const char *p1=contents(),*p2,*p3;
-     // Rest is pad+overlay or overlay+rest:
-     if (len1<index)
-      {
-	// Second initializer is pad characters:
-	len2=index-len1,p2=0;
-	// Third initializer is the string to be overlayed:
-	len3=len_,p3=pOverlay;
-      }
-     else
-      { 
-	// Second initializer is the string to be overlayed:
-	len2=len_,p2=pOverlay;
-	// Third initializer is the rest of the receiver:
-	if (length()>=index+len_) len3=length()-index-len_,p3=contents()+index+len_;
-	else len3=0,p3=0;
-      }
-     // Return new buffer:
-     result=newBuffer(p1,len1,p2,len2,p3,len3,padCharacter);
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    if (len_ != 0 || index > length()) {
+        unsigned len1 = (length() < index) ? length() : index, len2, len3;
+        const char *p1 = contents(), *p2, *p3;
+        // Rest is pad+overlay or overlay+rest:
+        if (len1 < index) {
+            // Second initializer is pad characters:
+            len2 = index - len1, p2 = 0;
+            // Third initializer is the string to be overlayed:
+            len3 = len_, p3 = pOverlay;
+        } else {
+            // Second initializer is the string to be overlayed:
+            len2 = len_, p2 = pOverlay;
+            // Third initializer is the rest of the receiver:
+            if (length() >= index + len_)
+                len3 = length() - index - len_, p3 = contents() + index + len_;
+            else
+                len3 = 0, p3 = 0;
+        }
+        // Return new buffer:
+        result = newBuffer(p1, len1, p2, len2, p3, len3, padCharacter);
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1396,20 +1457,25 @@ MSStringBuffer *MSStringBuffer::overlayWith(const char *pOverlay,unsigned len_,
 | not guaranteed to not have null characters,we can't use strrev()             |
 | and instead roll our own.                                                    |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::reverse()
+MSStringBuffer* MSStringBuffer::reverse()
 {
-  MSStringBuffer *result=this;
-  if (length()>1)
-   {
-     if (useCount()>1) result=newBuffer(contents(),length());
-     else addRef();
-     char* p1=result->contents();
-     char* p2=result->contents()+result->length()-1;
-     char c;
-     while (p1<p2) { c=*p1; *p1++=*p2; *p2--=c; }
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    if (length() > 1) {
+        if (useCount() > 1)
+            result = newBuffer(contents(), length());
+        else
+            addRef();
+        char* p1 = result->contents();
+        char* p2 = result->contents() + result->length() - 1;
+        char c;
+        while (p1 < p2) {
+            c = *p1;
+            *p1++ = *p2;
+            *p2-- = c;
+        }
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1425,50 +1491,53 @@ MSStringBuffer *MSStringBuffer::reverse()
 |    3. Allocate space for and copy the intervening characters                 |
 |    4. Return the resulting buffer.                                           |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::strip(const char *pChars,unsigned len_,MSStringEnum::StripMode mode)
+MSStringBuffer* MSStringBuffer::strip(const char* pChars, unsigned len_, MSStringEnum::StripMode mode)
 {
-  MSStringBuffer *result=this;
-  if (length()!=0)
-   {
-     unsigned start=0,stop=length()-1;
-     unsigned newLength=length();
-     switch (mode)
-      {
-      case MSStringEnum::Trailing:
-	stop=lastIndexOfAnyBut(pChars,len_,length());
-	if (stop<length()) newLength=stop+1;
-	else if (stop==length()) newLength=0;
-	break;
-      case MSStringEnum::Leading:	
-	start=indexOfAnyBut(pChars,len_,0);
-        if (start<length()) newLength=length()-start;
-	else if (start==length()) newLength=0;
-        break;
-      case MSStringEnum::Both:	
-	start=indexOfAnyBut(pChars,len_,0);
-	stop=lastIndexOfAnyBut(pChars,len_,length());
-	if (start==stop&&start==length()) newLength=0;
-	else
-	 {
-	   if (start==length()) start=0;	
-	   if (stop==length()) stop=length()-1;
-	   newLength=stop-start+1;
-	 }
-	break;
-      }
-     if (newLength!=length())
-      { 
-	if (newLength>0&&start<length()) result=newBuffer(contents()+start,newLength);
-	else
-	 {
-	   result=null();
-	   result->addRef();
-	 }
-      }
-     else addRef();
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    if (length() != 0) {
+        unsigned start = 0, stop = length() - 1;
+        unsigned newLength = length();
+        switch (mode) {
+        case MSStringEnum::Trailing:
+            stop = lastIndexOfAnyBut(pChars, len_, length());
+            if (stop < length())
+                newLength = stop + 1;
+            else if (stop == length())
+                newLength = 0;
+            break;
+        case MSStringEnum::Leading:
+            start = indexOfAnyBut(pChars, len_, 0);
+            if (start < length())
+                newLength = length() - start;
+            else if (start == length())
+                newLength = 0;
+            break;
+        case MSStringEnum::Both:
+            start = indexOfAnyBut(pChars, len_, 0);
+            stop = lastIndexOfAnyBut(pChars, len_, length());
+            if (start == stop && start == length())
+                newLength = 0;
+            else {
+                if (start == length())
+                    start = 0;
+                if (stop == length())
+                    stop = length() - 1;
+                newLength = stop - start + 1;
+            }
+            break;
+        }
+        if (newLength != length()) {
+            if (newLength > 0 && start < length())
+                result = newBuffer(contents() + start, newLength);
+            else {
+                result = null();
+                result->addRef();
+            }
+        } else
+            addRef();
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1484,50 +1553,53 @@ MSStringBuffer *MSStringBuffer::strip(const char *pChars,unsigned len_,MSStringE
 | 3. Allocate space for and copy the intervening characters                    |
 | 4. Return the resulting buffer.                                              |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::strip(const MSStringTest &aTest,MSStringEnum::StripMode mode)
+MSStringBuffer* MSStringBuffer::strip(const MSStringTest& aTest, MSStringEnum::StripMode mode)
 {
-  MSStringBuffer *result=this;
-  if (length()!=0)
-   {
-     unsigned start=0,stop=length()-1;
-     unsigned newLength=length();
-     switch (mode)
-      {
-      case MSStringEnum::Trailing:
-	stop=lastIndexOfAnyBut(aTest,length());
-	if (stop<length()) newLength=stop+1;
-	else if (stop==length()) newLength=0;
-	break;
-      case MSStringEnum::Leading:	
-	start=indexOfAnyBut(aTest,0);
-        if (start<length()) newLength=length()-start;
-	else if (start==length()) newLength=0;	
-        break;
-      case MSStringEnum::Both:	
-	start=indexOfAnyBut(aTest,0);
-	stop=lastIndexOfAnyBut(aTest,length());
-	if (start==stop&&start==length()) newLength=0;
-	else
-	 {
-	   if (start==length()) start=0;	
-	   if (stop==length()) stop=length()-1;
-	   newLength=stop-start+1;
-	 }
-	break;
-      }
-     if (newLength!=length())
-      { 
-	if (newLength>0&&start<length()) result=newBuffer(contents()+start,newLength);
-	else
-	 {
-	   result=null();
-	   result->addRef();
-	 }
-      }
-     else addRef();
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    if (length() != 0) {
+        unsigned start = 0, stop = length() - 1;
+        unsigned newLength = length();
+        switch (mode) {
+        case MSStringEnum::Trailing:
+            stop = lastIndexOfAnyBut(aTest, length());
+            if (stop < length())
+                newLength = stop + 1;
+            else if (stop == length())
+                newLength = 0;
+            break;
+        case MSStringEnum::Leading:
+            start = indexOfAnyBut(aTest, 0);
+            if (start < length())
+                newLength = length() - start;
+            else if (start == length())
+                newLength = 0;
+            break;
+        case MSStringEnum::Both:
+            start = indexOfAnyBut(aTest, 0);
+            stop = lastIndexOfAnyBut(aTest, length());
+            if (start == stop && start == length())
+                newLength = 0;
+            else {
+                if (start == length())
+                    start = 0;
+                if (stop == length())
+                    stop = length() - 1;
+                newLength = stop - start + 1;
+            }
+            break;
+        }
+        if (newLength != length()) {
+            if (newLength > 0 && start < length())
+                result = newBuffer(contents() + start, newLength);
+            else {
+                result = null();
+                result->addRef();
+            }
+        } else
+            addRef();
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1540,37 +1612,38 @@ MSStringBuffer *MSStringBuffer::strip(const MSStringTest &aTest,MSStringEnum::St
 | then it is effectively padded with the pad character.  The process stops     |
 | when the call to indexOfAnyOf() fails.                                       |
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::translate(const char *pInputChars,unsigned inputLen,
-					  const char *pOutputChars,unsigned outputLen,
-                                          char padCharacter)
+MSStringBuffer* MSStringBuffer::translate(const char* pInputChars, unsigned inputLen,
+    const char* pOutputChars, unsigned outputLen,
+    char padCharacter)
 {
-  MSStringBuffer *result=this;
-  unsigned pos=indexOfAnyOf(pInputChars,inputLen,0);
-  if (pos<length())
-   {
-     // Changes will occur,make sure string contents are private:
-     if (useCount()>1) result=newBuffer(contents(),length());
-     else addRef();
-     char *p=result->contents();
-     // Create copies of source/target characters to avoid
-     // problems if either overlap the receiver:
-     char *pIn  =(char*) memcpy(new char[inputLen],pInputChars,inputLen);
-     char *pOut =(char*) memcpy(new char[inputLen],
-                             pOutputChars,
-			     (outputLen<inputLen)?outputLen:inputLen);
-     if (outputLen<inputLen) memset(pOut+outputLen,padCharacter,inputLen-outputLen);
-     // Translate all occurrences of input chars:
-     while (pos<length())
-      {
-	unsigned i=(char*) memchr(pIn,p[pos],inputLen)-pIn;
-	p[pos]=pOut[i];
-	pos=indexOfAnyOf(pIn,inputLen,pos+1);
-      }
-     delete pIn;
-     delete pOut;
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    unsigned pos = indexOfAnyOf(pInputChars, inputLen, 0);
+    if (pos < length()) {
+        // Changes will occur,make sure string contents are private:
+        if (useCount() > 1)
+            result = newBuffer(contents(), length());
+        else
+            addRef();
+        char* p = result->contents();
+        // Create copies of source/target characters to avoid
+        // problems if either overlap the receiver:
+        char* pIn = (char*)memcpy(new char[inputLen], pInputChars, inputLen);
+        char* pOut = (char*)memcpy(new char[inputLen],
+            pOutputChars,
+            (outputLen < inputLen) ? outputLen : inputLen);
+        if (outputLen < inputLen)
+            memset(pOut + outputLen, padCharacter, inputLen - outputLen);
+        // Translate all occurrences of input chars:
+        while (pos < length()) {
+            unsigned i = (char*)memchr(pIn, p[pos], inputLen) - pIn;
+            p[pos] = pOut[i];
+            pos = indexOfAnyOf(pIn, inputLen, pos + 1);
+        }
+        delete pIn;
+        delete pOut;
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1580,25 +1653,25 @@ MSStringBuffer *MSStringBuffer::translate(const char *pInputChars,unsigned input
 | and if found,convert it to upper case.  Quit as soon as the search for a     |
 | lowercase(via indexOfAnyOf()) fails.                                         |
 ------------------------------------------------------------------------------*/
-static const char lowers[]="abcdefghijklmnopqrstuvwxyz";
+static const char lowers[] = "abcdefghijklmnopqrstuvwxyz";
 
-MSStringBuffer *MSStringBuffer::upperCase()
+MSStringBuffer* MSStringBuffer::upperCase()
 {
-  MSStringBuffer *result=this;
-  unsigned pos=indexOfAnyOf(lowers,26,0);
-  if (pos<length())
-   {
-     if (useCount()>1) result=newBuffer(contents(),length());
-     else addRef();
-     char *p=result->contents();
-     while (pos<length())
-      {
-	p[pos]+='A'-'a';
-	pos=indexOfAnyOf(lowers,26,pos+1);
-      }
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    unsigned pos = indexOfAnyOf(lowers, 26, 0);
+    if (pos < length()) {
+        if (useCount() > 1)
+            result = newBuffer(contents(), length());
+        else
+            addRef();
+        char* p = result->contents();
+        while (pos < length()) {
+            p[pos] += 'A' - 'a';
+            pos = indexOfAnyOf(lowers, 26, pos + 1);
+        }
+    } else
+        addRef();
+    return result;
 }
 
 /*------------------------------------------------------------------------------
@@ -1606,72 +1679,80 @@ MSStringBuffer *MSStringBuffer::upperCase()
 | MSStringBuffer *MSStringBuffer::take(unsigned count)
 | MSStringBuffer *MSStringBuffer::drop(unsigned count)
 ------------------------------------------------------------------------------*/
-MSStringBuffer *MSStringBuffer::rotate(int count)
+MSStringBuffer* MSStringBuffer::rotate(int count)
 {
-  MSStringBuffer *result=this;
-  unsigned n=(count>=0)?count:-count; 
-  if (n>0&&n!=length())
-   {
-     if (useCount()>1) result=newBuffer(contents(),length());
-     else addRef();
-     char *dp=result->contents();
-     unsigned i=0,j=0;
-     if (n>length()) n%=length();
-     if (count<0) n=length()-n;
-     if (n>0)
-      {
-        char *tp=new char[n];
-	for (i=0;i<n;i++) tp[i]=dp[i];
-        unsigned rotateLength=length()-n;
-	for (i=0;i<rotateLength;i++) dp[i]=dp[i+n];
-	for (i=rotateLength,j=0;j<n;i++,j++) dp[i]=tp[j];
-        dp[length()]='\0';
-        delete [] tp;
-      }
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    unsigned n = (count >= 0) ? count : -count;
+    if (n > 0 && n != length()) {
+        if (useCount() > 1)
+            result = newBuffer(contents(), length());
+        else
+            addRef();
+        char* dp = result->contents();
+        unsigned i = 0, j = 0;
+        if (n > length())
+            n %= length();
+        if (count < 0)
+            n = length() - n;
+        if (n > 0) {
+            char* tp = new char[n];
+            for (i = 0; i < n; i++)
+                tp[i] = dp[i];
+            unsigned rotateLength = length() - n;
+            for (i = 0; i < rotateLength; i++)
+                dp[i] = dp[i + n];
+            for (i = rotateLength, j = 0; j < n; i++, j++)
+                dp[i] = tp[j];
+            dp[length()] = '\0';
+            delete[] tp;
+        }
+    } else
+        addRef();
+    return result;
 }
 
-MSStringBuffer *MSStringBuffer::drop(int count)
+MSStringBuffer* MSStringBuffer::drop(int count)
 {
-  MSStringBuffer *result=this;
-  unsigned an=(count>=0)?count:-count; 
-  if (count!=0&&an<=length())
-   {
-     unsigned n=length()-an;
-     result=newBuffer((count<0)?contents():0,n);
-     char *dp=result->contents();
-     const char *sp=contents();
-     if (count>=0) for (unsigned i=0;i<n;i++) dp[i]=sp[i+count];
-     dp[n]='\0';
-   }
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    unsigned an = (count >= 0) ? count : -count;
+    if (count != 0 && an <= length()) {
+        unsigned n = length() - an;
+        result = newBuffer((count < 0) ? contents() : 0, n);
+        char* dp = result->contents();
+        const char* sp = contents();
+        if (count >= 0)
+            for (unsigned i = 0; i < n; i++)
+                dp[i] = sp[i + count];
+        dp[n] = '\0';
+    } else
+        addRef();
+    return result;
 }
 
-MSStringBuffer *MSStringBuffer::take(int count)
+MSStringBuffer* MSStringBuffer::take(int count)
 {
-  MSStringBuffer *result=this;
-  unsigned an=(count>=0)?count:-count; 
-  if (an>0)
-   {
-     unsigned n=an;
-     int i=0;
-     if (an<=length()) result=newBuffer(contents(),an);
-     else result=newBuffer(contents(),length(),0,an-length());
-     char *dp=result->contents();
-     const char *sp=contents();
-     if (count<0)       
-      {
-        int k=int(length())-int(n);
-        for (i=0;i<n;i++) dp[i]=(k+i>=0)?sp[k+i]:' ';
-      }  
-     else if (count>=0) for (i=length();i<n;i++) dp[i]=' ';
-     dp[n]='\0';
-   }
-  else if (an==0) result=newBuffer(0,0,0,0,0,0);
-  else addRef();
-  return result;
+    MSStringBuffer* result = this;
+    unsigned an = (count >= 0) ? count : -count;
+    if (an > 0) {
+        unsigned n = an;
+        int i = 0;
+        if (an <= length())
+            result = newBuffer(contents(), an);
+        else
+            result = newBuffer(contents(), length(), 0, an - length());
+        char* dp = result->contents();
+        const char* sp = contents();
+        if (count < 0) {
+            int k = int(length()) - int(n);
+            for (i = 0; i < n; i++)
+                dp[i] = (k + i >= 0) ? sp[k + i] : ' ';
+        } else if (count >= 0)
+            for (i = length(); i < n; i++)
+                dp[i] = ' ';
+        dp[n] = '\0';
+    } else if (an == 0)
+        result = newBuffer(0, 0, 0, 0, 0, 0);
+    else
+        addRef();
+    return result;
 }
-

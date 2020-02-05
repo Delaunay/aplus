@@ -9,61 +9,60 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSGUI/MSOptionMenu.H>
-#include <AplusGUI/Macros.H>
-#include <AplusGUI/AplusModel.H>
 #include <AplusGUI/AplusCommon.H>
+#include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSOptionMenu.H>
 
-class  AplusChoice : public MSOptionMenu
-{
+class AplusChoice : public MSOptionMenu {
 public:
-  AplusChoice(MSWidget *);
-  ~AplusChoice(void);
-  virtual MSBoolean verifyData(V,A);
+    AplusChoice(MSWidget*);
+    ~AplusChoice(void);
+    virtual MSBoolean verifyData(V, A);
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
 protected:
-  virtual void addSenderNotify(MSEventSender *);
-  virtual void receiveEvent(MSEvent &);
+    virtual void addSenderNotify(MSEventSender*);
+    virtual void receiveEvent(MSEvent&);
 
-  virtual void updateData(void);
-  virtual void update(V,int,int,UpdateType) {}
-  virtual void update(V,A,A,I);
-  virtual void update(const MSIndexVector &v_) { MSOptionMenu::update(v_); }
-     
-  virtual void updateTitle(void);
-  virtual void updateFont(Font);
-  void updateOptions(void);
-  Font dataFont(void);
-  virtual const char *formatOutput(MSString&);
-  virtual const char *itemLabel(unsigned);
-  virtual unsigned long itemForeground(unsigned);
-  
-  virtual void updateForeground(unsigned long);
+    virtual void updateData(void);
+    virtual void update(V, int, int, UpdateType) {}
+    virtual void update(V, A, A, I);
+    virtual void update(const MSIndexVector& v_) { MSOptionMenu::update(v_); }
 
-  virtual void activate(int);
-  virtual void activate(void) { MSOptionMenu::activate(); }
+    virtual void updateTitle(void);
+    virtual void updateFont(Font);
+    void updateOptions(void);
+    Font dataFont(void);
+    virtual const char* formatOutput(MSString&);
+    virtual const char* itemLabel(unsigned);
+    virtual unsigned long itemForeground(unsigned);
 
-  A itemValue(int);
-  AplusModel *model(void) { return (AplusModel *)MSView::model(); }
-  const AplusModel *model(void) const { return (const AplusModel *)MSView::model(); }
+    virtual void updateForeground(unsigned long);
 
-  virtual MSBoolean hasModel(void) const;  // see the comment in AplusChoice.C
+    virtual void activate(int);
+    virtual void activate(void) { MSOptionMenu::activate(); }
 
-  virtual void setWidth(void);
+    A itemValue(int);
+    AplusModel* model(void) { return (AplusModel*)MSView::model(); }
+    const AplusModel* model(void) const { return (const AplusModel*)MSView::model(); }
 
-  void updateModelVector(A);
-  void setChoice(void);
-  virtual MSBoolean isProtected(void) const;
-  
-  MSStringVector& modelBuffer(void) { return _modelBuffer; }
+    virtual MSBoolean hasModel(void) const; // see the comment in AplusChoice.C
 
-  MSStringVector _modelBuffer;
-  A _itemVal;
+    virtual void setWidth(void);
 
-  STANDARD_WIDGET_METHODS_H
+    void updateModelVector(A);
+    void setChoice(void);
+    virtual MSBoolean isProtected(void) const;
+
+    MSStringVector& modelBuffer(void) { return _modelBuffer; }
+
+    MSStringVector _modelBuffer;
+    A _itemVal;
+
+    STANDARD_WIDGET_METHODS_H
 };
 
-#endif  //AplusGUIHEADER
+#endif //AplusGUIHEADER

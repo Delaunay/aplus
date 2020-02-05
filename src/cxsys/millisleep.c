@@ -8,12 +8,11 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-millisleep(i)
-int i;
+millisleep(i) int i;
 {
-	struct timeval tv;
+    struct timeval tv;
 
-	tv.tv_sec = 0;
-	tv.tv_usec = i*1000;
-	select(0, NULL, NULL, NULL, &tv);
+    tv.tv_sec = 0;
+    tv.tv_usec = i * 1000;
+    select(0, NULL, NULL, NULL, &tv);
 }

@@ -11,12 +11,11 @@
 #include <dap/fds.h>
 
 /* external function definitions */
-int 
-fdsisset(fd_set * p, int fd)
+int fdsisset(fd_set* p, int fd)
 {
-  if ((p != (fd_set *) (0))
-      && (fd >= 0) && (fd < fds_size)) {
-    return !(!(FD_ISSET(fd, p)));
-  }
-  return 0;
+    if ((p != (fd_set*)(0))
+        && (fd >= 0) && (fd < fds_size)) {
+        return !(!(FD_ISSET(fd, p)));
+    }
+    return 0;
 }

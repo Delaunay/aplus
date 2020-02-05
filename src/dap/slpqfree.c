@@ -19,28 +19,27 @@
 #include <dap/slpq.h>
 
 /* external function definitions */
-void 
-slpqfree(struct slpq * p)
+void slpqfree(struct slpq* p)
 {
-  /* free always tolarates a null argument */
-  if (p != (struct slpq *) (0)) {
-    struct node *np;
-    struct slpqent *ep;
+    /* free always tolarates a null argument */
+    if (p != (struct slpq*)(0)) {
+        struct node* np;
+        struct slpqent* ep;
 
-    /* cause all scheduled slpqents to forget this slpq */
-    for (np = slpqents.f; np != &slpqents; np = np->f) {
-      if ((ep = SLPQENTAT(np))->sp == p) {
-	ep->sp = (struct slpq *) (0);
-      }
+        /* cause all scheduled slpqents to forget this slpq */
+        for (np = slpqents.f; np != &slpqents; np = np->f) {
+            if ((ep = SLPQENTAT(np))->sp == p) {
+                ep->sp = (struct slpq*)(0);
+            }
+        }
+        /* free all waiting slpqent's */
+        while ((np = p->wq->f) != p->wq) {
+            noderemove(np);
+            bfree((char*)SLPQENTAT(np));
+            nodefree(np);
+        }
+        nodefree(p->wq); /* free the wait queue head node */
+        bfree((char*)p); /* free the sleep queue struture */
     }
-    /* free all waiting slpqent's */
-    while ((np = p->wq->f) != p->wq) {
-      noderemove(np);
-      bfree((char *) SLPQENTAT(np));
-      nodefree(np);
-    }
-    nodefree(p->wq);		/* free the wait queue head node */
-    bfree((char *) p);		/* free the sleep queue struture */
-  }
-  return;
+    return;
 }

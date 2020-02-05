@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 1998-2008 Morgan Stanley All rights reserved. 
+// Copyright (c) 1998-2008 Morgan Stanley All rights reserved.
 // See .../src/LICENSE for terms of distribution
 //
 //
@@ -12,19 +12,14 @@
 
 class MSWidget;
 
-class MSGUIExport MSWidgetFreezer
-{
+class MSGUIExport MSWidgetFreezer {
 public:
-  MSWidgetFreezer(MSWidget *);
-  ~MSWidgetFreezer();
+    MSWidgetFreezer(MSWidget*);
+    ~MSWidgetFreezer();
 
 private:
-  MSWidget  *_widget;
-  MSBoolean _wasFrozen;
+    MSWidget* _widget;
+    MSBoolean _wasFrozen;
 };
 
-#endif 
-
-
-
-
+#endif

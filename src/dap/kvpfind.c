@@ -9,24 +9,24 @@
 
 /* header file inclusions */
 #include <a/development.h>
-#include <string.h>
-#include <dap/node.h>
 #include <dap/kvp.h>
+#include <dap/node.h>
+#include <string.h>
 
 /* external function definitions */
-struct node *
-kvpfind(struct node * hnp, char *key)
+struct node*
+kvpfind(struct node* hnp, char* key)
 {
-  struct node *np;
+    struct node* np;
 
-  for (np = hnp->f; np != hnp; np = np->f) {
-    char *tstkey = (char *) (KVPAT(np)->key);
-    if (*key != *tstkey)
-      continue;
-    if (*key == '\0')
-      return np;
-    if (strcmp((DEV_STRARG) key + 1, (DEV_STRARG) tstkey + 1) == 0)
-      return np;
-  }
-  return (struct node *) (0);
+    for (np = hnp->f; np != hnp; np = np->f) {
+        char* tstkey = (char*)(KVPAT(np)->key);
+        if (*key != *tstkey)
+            continue;
+        if (*key == '\0')
+            return np;
+        if (strcmp((DEV_STRARG)key + 1, (DEV_STRARG)tstkey + 1) == 0)
+            return np;
+    }
+    return (struct node*)(0);
 }

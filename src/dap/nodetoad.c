@@ -13,20 +13,19 @@
 #include <dap/node.h>
 
 /* external function definitions */
-void 
-nodetoad(struct node * p)
+void nodetoad(struct node* p)
 {
-  if (p != (struct node *) (0)) {
-    struct node *o = p->b;
-    struct node *q = p->f;
-    struct node *r;
+    if (p != (struct node*)(0)) {
+        struct node* o = p->b;
+        struct node* q = p->f;
+        struct node* r;
 
-    o->f = q;
-    q->b = o;
-    p->f = r = q->f;
-    p->b = q;
-    q->f = p;
-    r->b = p;
-  }
-  return;
+        o->f = q;
+        q->b = o;
+        p->f = r = q->f;
+        p->b = q;
+        q->f = p;
+        r->b = p;
+    }
+    return;
 }

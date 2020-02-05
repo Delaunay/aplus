@@ -12,18 +12,17 @@
 #include <dap/buff.h>
 
 /* external function definitions */
-int 
-buffstuff_r(struct buff * p, char *value, int size)
+int buffstuff_r(struct buff* p, char* value, int size)
 {
-  if ((p != (struct buff *) (0))
-      && (size > 0)) {
-    if (p->max - p->put < size) {
-      if (buffroom_r(p, size)) {
-	return -1;
-      }
+    if ((p != (struct buff*)(0))
+        && (size > 0)) {
+        if (p->max - p->put < size) {
+            if (buffroom_r(p, size)) {
+                return -1;
+            }
+        }
+        bcopy(value, p->put, size);
+        p->put += size;
     }
-    bcopy(value, p->put, size);
-    p->put += size;
-  }
-  return 0;
+    return 0;
 }

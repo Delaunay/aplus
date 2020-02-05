@@ -9,60 +9,55 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <MSGUI/MSHPane.H>
-#include <MSGUI/MSVPane.H>
-#include <AplusGUI/Macros.H>
 #include <AplusGUI/AplusEvent.H>
 #include <AplusGUI/AplusModel.H>
+#include <AplusGUI/Macros.H>
+#include <MSGUI/MSHPane.H>
+#include <MSGUI/MSVPane.H>
 
-class AplusPane : public MSPane
-{
+class AplusPane : public MSPane {
 public:
-  AplusPane(MSWidget *);
-  ~AplusPane(void);
-  virtual void receiveEvent(MSEvent &);
-  virtual MSBoolean verifyData(V,A) { return MSTrue; }
+    AplusPane(MSWidget*);
+    ~AplusPane(void);
+    virtual void receiveEvent(MSEvent&);
+    virtual MSBoolean verifyData(V, A) { return MSTrue; }
 
-  virtual void addSenderNotify(MSEventSender *);
+    virtual void addSenderNotify(MSEventSender*);
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
-  STANDARD_WIDGET_METHODS_H
+    STANDARD_WIDGET_METHODS_H
 };
 
-
-class AplusHPane : public MSHPane
-{
+class AplusHPane : public MSHPane {
 public:
-  AplusHPane(MSWidget *);
-  ~AplusHPane(void);
-  virtual void receiveEvent(MSEvent &);
-  virtual MSBoolean verifyData(V,A) { return MSTrue; }
+    AplusHPane(MSWidget*);
+    ~AplusHPane(void);
+    virtual void receiveEvent(MSEvent&);
+    virtual MSBoolean verifyData(V, A) { return MSTrue; }
 
-  virtual void addSenderNotify(MSEventSender *);
+    virtual void addSenderNotify(MSEventSender*);
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
-  STANDARD_WIDGET_METHODS_H
+    STANDARD_WIDGET_METHODS_H
 };
 
-
-class AplusVPane : public MSVPane
-{
+class AplusVPane : public MSVPane {
 public:
-  AplusVPane(MSWidget *);
-  ~AplusVPane(void);
-  virtual void receiveEvent(MSEvent &);
-  virtual MSBoolean verifyData(V,A) { return MSTrue; }
+    AplusVPane(MSWidget*);
+    ~AplusVPane(void);
+    virtual void receiveEvent(MSEvent&);
+    virtual MSBoolean verifyData(V, A) { return MSTrue; }
 
-  virtual void addSenderNotify(MSEventSender *);
+    virtual void addSenderNotify(MSEventSender*);
 
-  virtual const MSSymbol& widgetType(void) const;
-  static const MSSymbol& symbol(void);
+    virtual const MSSymbol& widgetType(void) const;
+    static const MSSymbol& symbol(void);
 
-  STANDARD_WIDGET_METHODS_H
+    STANDARD_WIDGET_METHODS_H
 };
 
 #endif // AplusPanesHEADER
