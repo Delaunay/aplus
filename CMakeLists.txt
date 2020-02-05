@@ -16,7 +16,6 @@ ELSE()
     # ADD_DEFINITIONS(-O2)                     # CMake Release is O3 by default
 ENDIF()
 
-ADD_DEFINITIONS(-O2)
 ADD_DEFINITIONS(-D_INTERPRETER_ONLY)
 ADD_DEFINITIONS(-fPIC)
 ADD_DEFINITIONS(-DBSTUB)
@@ -29,6 +28,14 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 # add cmake FindXXX script to find pre-compiled libraries if any
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+include(CodeCoverage)
+append_coverage_compiler_flags()
+
+# ADD_DEFINITIONS(-O0)
+# ADD_DEFINITIONS(-g)
+# ADD_DEFINITIONS(-ftest-coverage)
+# ADD_DEFINITIONS(-fprofile-arcs)
+# ADD_DEFINITIONS(--coverage)
 
 #   Cross compiling option
 #   CMAKE_CROSSCOMPILING true
@@ -52,7 +59,7 @@ SET(${CXX_STANDARD_REQUIRED} ON)    # Comment out if C++11 is not mendatory
 # Project's Options
 # ====================================
 
-OPTION(BUILD_TESTING        "Enable tests"       OFF)
+OPTION(BUILD_TESTING        "Enable tests"       ON)
 OPTION(BUILD_BENCHMARK      "Build Benchmarks"   OFF)
 OPTION(BUILD_EXAMPLES       "Build Examples"     OFF)
 OPTION(BUILD_DOCUMENTATION  "Build docs"         OFF)
