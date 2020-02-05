@@ -16,8 +16,10 @@ ELSE()
     # ADD_DEFINITIONS(-O2)                     # CMake Release is O3 by default
 ENDIF()
 
+ADD_DEFINITIONS(-O2)
 ADD_DEFINITIONS(-D_INTERPRETER_ONLY)
 ADD_DEFINITIONS(-fPIC)
+ADD_DEFINITIONS(-DBSTUB)
 
 # specify where compiled files must go
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -122,3 +124,21 @@ ADD_CUSTOM_TARGET(clang-tidy DEBUG
 
 # clang sanitizer require compilation
 # lldb
+
+
+# Resource Files
+# ==============
+FILE(GLOB_RECURSE MAKE_FILES Makefile.am Makefile.in Makefile)
+# FILE(GLOB_RECURSE JSON_FILES *.json)
+
+add_custom_target(zothers ALL SOURCES
+    ${MAKE_FILES}
+    ${JSON_FILES}
+    README.md
+    config/compile
+    config/depcomp
+    config/ltconfig
+    config/ltmain.sh
+    config/missing
+)
+

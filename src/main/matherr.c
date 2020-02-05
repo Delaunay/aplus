@@ -7,4 +7,4 @@
 /*****************************************************************************/
 #include <math.h>
 
-int matherr(struct exception *exc) {return 1;}
+int matherr(struct exception* exc) { return 1; }

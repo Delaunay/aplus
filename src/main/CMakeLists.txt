@@ -2,7 +2,7 @@
 INCLUDE_DIRECTORIES(.)
 INCLUDE_DIRECTORIES(..)
 
-file(GLOB APLUS_SRC *.c)
+file(GLOB APLUS_SRC *.c *.cpp)
 file(GLOB APLUS_HDS *.h)
 
 # main library (prevent recompilation when building tests)

@@ -26,18 +26,18 @@ CFLAGS = @CFLAGS@ -DBSTUB
 INCLUDES = -I.. $(X_INCLUDES)
 
 aplus_LDADD = \
-	$(top_srcdir)/src/IPC/libIPC.la \
+    $(top_srcdir)/src/IPC/libIPC.la \
 	$(top_srcdir)/src/cxs/libcxs.la \
 	$(top_srcdir)/src/cxb/libcxb.la \
-	$(top_srcdir)/src/AplusGUI/libAplusGUI.la \
+    $(top_srcdir)/src/AplusGUI/libAplusGUI.la \
 	$(top_srcdir)/src/cxsys/libcxsys.la \
 	$(top_srcdir)/src/cxc/libcxc.la \
 	$(top_srcdir)/src/esf/libesf.la \
 	$(top_srcdir)/src/a/liba.la \
 	$(top_srcdir)/src/dap/libdap.la \
-	$(top_srcdir)/src/MSGUI/libMSGUI.la \
-	$(top_srcdir)/src/MSIPC/libMSIPC.la \
-	$(top_srcdir)/src/MSTypes/libMSTypes.la 
+    $(top_srcdir)/src/MSGUI/libMSGUI.la \
+    $(top_srcdir)/src/MSIPC/libMSIPC.la \
+    $(top_srcdir)/src/MSTypes/libMSTypes.la
 
 aplus_LDFLAGS = \
 	-L$(top_srcdir)/src/IPC \

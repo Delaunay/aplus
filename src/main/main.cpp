@@ -6,10 +6,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-extern "C" int aplus_main(long, char**);
+extern "C" {
 
-int main(int c, char **v)
+int aplus_main(long, char**);
+
+int main(int c, char** v)
 {
-	return aplus_main(c, v);
+    return aplus_main(c, v);
 }
-
+}
