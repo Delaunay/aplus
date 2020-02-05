@@ -128,17 +128,11 @@ ADD_CUSTOM_TARGET(clang-tidy DEBUG
 
 # Resource Files
 # ==============
-FILE(GLOB_RECURSE MAKE_FILES Makefile.am Makefile.in Makefile)
 # FILE(GLOB_RECURSE JSON_FILES *.json)
 
 add_custom_target(zothers ALL SOURCES
     ${MAKE_FILES}
     ${JSON_FILES}
     README.md
-    config/compile
-    config/depcomp
-    config/ltconfig
-    config/ltmain.sh
-    config/missing
 )
 
