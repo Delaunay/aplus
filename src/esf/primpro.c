@@ -5,13 +5,16 @@
 /*                                                                           */
 /*                                                                           */
 /*****************************************************************************/
+
+#include <limits.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/times.h>
+#include <unistd.h>
+
 #include <a/fir.h>
 #include <a/k.h>
 #include <a/x.h>
-#include <limits.h>
-#include <stdio.h>
-#include <sys/times.h>
-#include <unistd.h>
 
 #define NUM_TYPES 4
 #define NUM_BUCKETS 9

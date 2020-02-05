@@ -6,16 +6,11 @@
 /*                                                                           */
 /*****************************************************************************/
 
-#include <stdio.h>
-#if defined(__cplusplus)
-#include <strings.h>
-#else
-#include <string.h>
-#endif
-#if !defined(__cfront)
-#include <stdarg.h>
-#endif
 #include <errno.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/time.h>
 #include <time.h>
 

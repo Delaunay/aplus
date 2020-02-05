@@ -8,6 +8,7 @@
 /*****************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
 
 #include <a/development.h>
 #include <a/arthur.h>

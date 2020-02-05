@@ -13,9 +13,9 @@
  */
 
 /* header file inclusions */
-#if !defined(__cfront)
 #include <stdarg.h>
-#endif
+#include <string.h>
+
 #include <dap/balloc.h>
 
 /* external function definitions */

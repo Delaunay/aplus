@@ -7,6 +7,8 @@
 /*****************************************************************************/
 
 #include <rpcsvc/ypclnt.h>
+#include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
 
 int getmuser(char* name, char* Unix, char* Mainframe)
@@ -15,15 +17,15 @@ int getmuser(char* name, char* Unix, char* Mainframe)
     static char *val, *dom;
 
     if (dom == (char*)(0))
-        (void)yp_get_default_domain(&dom);
+        ( void ) yp_get_default_domain(&dom);
+
     if (val)
         free(val);
 
-    if ((ret = yp_match(dom, "musers", name,
-             strlen(name), &val, &len))
-        == 0) {
+    if ((ret = yp_match(dom, "musers", name, strlen(name), &val, &len)) == 0) {
         (void)sscanf(val, "%s %s", Unix, Mainframe);
         return (0);
-    } else
-        return (ret);
+    }
+
+    return (ret);
 }

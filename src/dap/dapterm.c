@@ -7,6 +7,8 @@
 /*****************************************************************************/
 /* contributed by Daniel F. Fisher */
 
+#include <string.h>
+
 /* header file inclusions */
 #include <dap/balloc.h>
 #include <dap/chan.h>
