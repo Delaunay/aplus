@@ -20,6 +20,7 @@
 #include <pthread.h> /* Needed for locking in *_cover()  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <a/fir.h>
 #include <a/fncdcls.h>

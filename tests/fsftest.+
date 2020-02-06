@@ -197,6 +197,16 @@ if (~(É5) ½ 1.0 2.0 3.0 4.0 5.0 É 1.0 2.0 3.0 4.0 5.0) {
   Õ"Passed: gcc optimization challenge (johns)";
 }
 
+
+my_function {a;b}: {
+    a + b;
+}
+
+c û my_function {1; 2};
+
+
+sys.exit 0;
+
 ã Last Test
 ã Õ"Testing timers...(will fire in 1 second and print finished message)";
 ã tf{h;a;d}:{

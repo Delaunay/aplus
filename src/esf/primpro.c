@@ -46,6 +46,13 @@ static I (*cpuMonadic)[][NUM_TYPES][NUM_CPU_BUCKETS] = NULL;
 
 static I clockTicksPerSec = 1;
 
+int
+fast_log10(I n)
+{
+    /* Get the number of character needed to print */
+    return (n < 2) ? 0 : (n < 10) ? 1 : (n < 100) ? 2 : (n < 1000) ? 3 : (n < 10000) ? 4 : (n < 100000) ? 5 : (n < 1000000) ? 6 : 7;
+}
+
 I profileDyadic(A a, A w, I i)
 {
     struct tms tStart, tEnd;
@@ -55,16 +62,14 @@ I profileDyadic(A a, A w, I i)
     if (i < sizeP2) {
         if (QA(a) && a->t <= Et) {
             typeIdx = (a->t != Et) ? a->t : 3; /* Set type index */
-            sizeIdx = (a->n < 2) ? 1 : /* Set size index */
-                (a->n < 10) ? 2 : (a->n < 100) ? 3 : (a->n < 1000) ? 4 : (a->n < 10000) ? 5 : (a->n < 100000) ? 6 : (a->n < 1000000) ? 7 : 8;
+            sizeIdx = fast_log10(a->n) + 1;
             (*dyadic)[i][typeIdx][sizeIdx]++; /* increment count */
             (*dyadic)[i][typeIdx][0] = 1; /* isSet indicator */
         }
 
         if (QA(w) && w->t <= Et) {
             typeIdx = (w->t != Et) ? w->t : 3; /* Set type index */
-            sizeIdx = (w->n < 2) ? 1 : /* Set size index */
-                (w->n < 10) ? 2 : (w->n < 100) ? 3 : (w->n < 1000) ? 4 : (w->n < 10000) ? 5 : (w->n < 100000) ? 6 : (w->n < 1000000) ? 7 : 8;
+            sizeIdx = fast_log10(a->n) + 1;
             (*dyadic)[i][typeIdx][sizeIdx]++; /* increment count */
             (*dyadic)[i][typeIdx][0] = 1; /* isSet indicator */
         }
@@ -90,8 +95,7 @@ I profileMonadic(A a, I i)
 
     if (i < sizeP1 && QA(a) && a->t <= Et) {
         typeIdx = (a->t != Et) ? a->t : 3; /* Set type index */
-        sizeIdx = (a->n < 2) ? 1 : /* Set size index */
-            (a->n < 10) ? 2 : (a->n < 100) ? 3 : (a->n < 1000) ? 4 : (a->n < 10000) ? 5 : (a->n < 100000) ? 6 : (a->n < 1000000) ? 7 : 8;
+        sizeIdx = fast_log10(a->n) + 1;
         (*monadic)[i][typeIdx][sizeIdx]++; /* increment count */
         (*monadic)[i][typeIdx][0] = 1; /* isSet indicator */
     }
@@ -282,8 +286,6 @@ A ep_profile(A aObj)
     return (A)gi(0);
 }
 
-void profileInstall()
-{
+void profileInstall(){
     install(ep_profile, "_profile", A_, 1, A_, 0, 0, 0, 0, 0, 0, 0);
-    return;
 }
