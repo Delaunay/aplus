@@ -9,3 +9,4 @@ Makefile
 .libs/
 CMakeLists.txt.user
 autom4te.cache/
+symbols

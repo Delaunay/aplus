@@ -111,13 +111,8 @@ A getBeamMSyncMode(void)
 
 void ki(void)
 {
-#if defined(HAVE_SVR4)
     aplusPageMask = sysconf(_SC_PAGESIZE) - 1;
-#elif __VISUAL_C_2_0__
-    aplusPageMask = CLBYTES;
-#else
-    aplusPageMask = getpagesize() - 1;
-#endif
+
     X = Y = XY = (K = MY) + 2000;
     *X = *K = 0;
     *++K = 0;
@@ -336,16 +331,28 @@ I tr1(I r, I* d)
             ((C*)z->p)[_n] = 0;                    \
         R z;                                       \
     }
-A gm(I t, I m, I n) GA(t, 2, m* n, *z->d = m; z->d[1] = n)
-    A gv(I t, I n) GA(t, 1, n, *z->d = n)
-        A gd(I t, A a) GA(t, a->r, a->n, mv(z->d, a->d, a->r))
-            A ga(I t, I r, I n, I* d) GA(t, r, n, mv(z->d, d, r))
-                A ga_oa(I t, I r, I n, I* d) GA_OA(t, r, n, mv(z->d, d, r))
-                    A gc(I t, I r, I n, I* d, I* p) GA(t, r, n, mv(z->d, d, r); ttmv(t, z->p, p, n))
-                        A gi(I i) GA(It, 0, 1, *z->p = i)
-                            A gs(I t) GA3(t, 0, 1)
-                                A gf(F f) GA(Ft, 0, 1, *(F*)z->p = f)
-                                    A ge(I x)
+A
+gm(I t, I m, I n)
+    GA(t, 2, m* n, *z->d = m; z->d[1] = n)
+
+        A gv(I t, I n)
+            GA(t, 1, n, *z->d = n)
+
+                A gd(I t, A a)
+                    GA(t, a->r, a->n, mv(z->d, a->d, a->r))
+                        A ga(I t, I r, I n, I* d)
+                            GA(t, r, n, mv(z->d, d, r))
+                                A ga_oa(I t, I r, I n, I* d)
+                                    GA_OA(t, r, n, mv(z->d, d, r))
+                                        A gc(I t, I r, I n, I* d, I* p)
+                                            GA(t, r, n, mv(z->d, d, r); ttmv(t, z->p, p, n))
+                                                A gi(I i)
+                                                    GA(It, 0, 1, *z->p = i)
+                                                        A gs(I t)
+                                                            GA3(t, 0, 1)
+                                                                A gf(F f)
+                                                                    GA(Ft, 0, 1, *( F* ) z->p = f)
+                                                                        A ge(I x)
 {
     A z = gs(Et);
     *z->p = x;
